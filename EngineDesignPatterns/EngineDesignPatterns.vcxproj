@@ -123,10 +123,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ECS\main.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ECS\Mesh.h" />
+    <ClInclude Include="ECS\SceneObject.h" />
     <ClInclude Include="ECS\System.h" />
     <ClInclude Include="ECS\Transform.h" />
   </ItemGroup>

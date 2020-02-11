@@ -15,11 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ECS\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="ECS\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -29,5 +24,13 @@
     <ClInclude Include="ECS\System.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ECS\SceneObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
