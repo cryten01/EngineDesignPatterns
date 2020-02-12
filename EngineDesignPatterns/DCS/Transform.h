@@ -1,16 +1,16 @@
 #pragma once
 
 // Data
-struct TransformData : Component
+struct TransformData : Data
 {
 	float x, y, z;
 };
 
 // Functional behavior
-class TransformSystem
+class TransformSystem : System
 {
 public:
-	static void ChangePosition(TransformData& data) 
+	void ChangePosition(TransformData& data) 
 	{
 		data.x = 10;
 		data.y = 10;

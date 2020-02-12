@@ -15,16 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ECS\Transform.h">
+    <ClInclude Include="Node\Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Mesh.h">
+    <ClInclude Include="DCS\DCS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\System.h">
+    <ClInclude Include="DCS\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\SceneObject.h">
+    <ClInclude Include="DCS\Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Node\Messaging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DCS\Data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

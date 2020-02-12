@@ -1,19 +1,19 @@
 #pragma once
 
-#include "System.h"
+#include "DCS.h"
 #include <vector>
 
 // Data
-struct MeshData : Component
+struct MeshData : Data
 {
 	std::vector<float> points;
 };
 
 // Functional behavior
-class MeshSystem
+class MeshSystem : System
 {
 public:
-	static void ChangePointAt(MeshData& data)
+	void ChangePointAt(MeshData& data)
 	{
 		data.points.at(0) = 100;
 	}

@@ -1,39 +1,58 @@
 #include <iostream>
 
-#include "ECS/System.h"
-#include "ECS/Transform.h"
-#include "ECS/Mesh.h"
+#include "DCS/DCS.h"
+#include "DCS/Transform.h"
+#include "DCS/Mesh.h"
+#include "DCS/Data.h"
+
+#include "Node/Node.h"
 
 
-void RunECSTest() 
+// Data types
+// Groups of different data types (0-n)
+
+// Function types
+// Groups of function types (0-n)
+
+// Separate isolated units
+
+// Node = Container of functionality that processes data, composed of other nodes
+// Message = Container of data that can be send across links
+// Connections = represented by the amount of node references each node has
+
+// Static methods are loaded during runtime (no loading control)
+
+
+void RunDCSTest() 
 {
-	Entity entity;
+	DataSystem dataSystem;
+	DataContainer container;
+
 	TransformData transData1;
-	TransformData transData2;
-	MeshData meshData;
-
-
-	meshData.points.push_back(2);
-	meshData.points.push_back(3);
-	meshData.points.push_back(5);
-
 	transData1.x = 2;
 	transData1.y = 2;
 	transData1.z = 2;
-	
+
+	TransformData transData2;
 	transData2.x = 3;
 	transData2.y = 4;
 	transData2.z = 5;
 
-	System::AddData<TransformData>(transData1, entity.dataList);
-	System::AddData<TransformData>(transData2, entity.dataList);
-	System::AddData<MeshData>(meshData, entity.dataList);
+	MeshData meshData;
+	meshData.points.push_back(2);
+	meshData.points.push_back(3);
+	meshData.points.push_back(5);
 
-	TransformData transform = System::GetData<TransformData>(entity.dataList);
-	std::vector<TransformData> transform2 = System::GetAllData<TransformData>(entity.dataList);
-	MeshData mesh = System::GetData<MeshData>(entity.dataList);
 
-	std::cout << System::HasData<MeshData>(entity.dataList) << std::endl;
+	dataSystem.AddData<TransformData>(transData1, container.dataList);
+	dataSystem.AddData<TransformData>(transData2, container.dataList);
+	dataSystem.AddData<MeshData>(meshData, container.dataList);
+
+	TransformData transform = dataSystem.GetData<TransformData>(container.dataList);
+	std::vector<TransformData> transform2 = dataSystem.GetAllData<TransformData>(container.dataList);
+	MeshData mesh = dataSystem.GetData<MeshData>(container.dataList);
+
+	std::cout << dataSystem.HasData<MeshData>(container.dataList) << std::endl;
 	std::cout << transform.x << std::endl;
 	std::cout << transform2.at(1).y << std::endl;
 	std::cin.get();
@@ -42,5 +61,5 @@ void RunECSTest()
 
 int main()
 {
-	RunECSTest();
+	RunDCSTest();
 }
