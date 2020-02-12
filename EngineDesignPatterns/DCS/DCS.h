@@ -9,27 +9,25 @@
 // Save multi-threading
 
 
+// Abstract type for all data types
 struct Data
 {
     size_t type; // Needed for casting
 };
 
 
-// Collection of data
-struct DataContainer
+// Abstract type for all system types
+struct System
 {
-	std::vector<Data*> dataList;
+	size_t type; // Needed for casting
 };
 
 
-
-struct System 
+// Generic container of data, systems or any other type
+template <typename T>
+struct Container 
 {
+    std::vector<T*> elements;
 };
 
 
-// Collection of systems
-struct SystemsContainer 
-{
-    std::vector<System*> systemList;
-};

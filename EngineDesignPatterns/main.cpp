@@ -25,8 +25,10 @@
 
 void RunDCSTest() 
 {
+	Container<Data> container;
+	Container<System> systemsContainer;
+
 	DataSystem dataSystem;
-	DataContainer container;
 
 	TransformData transData1;
 	transData1.x = 2;
@@ -44,15 +46,15 @@ void RunDCSTest()
 	meshData.points.push_back(5);
 
 
-	dataSystem.AddData<TransformData>(transData1, container.dataList);
-	dataSystem.AddData<TransformData>(transData2, container.dataList);
-	dataSystem.AddData<MeshData>(meshData, container.dataList);
+	dataSystem.AddData<TransformData>(transData1, container.elements);
+	dataSystem.AddData<TransformData>(transData2, container.elements);
+	dataSystem.AddData<MeshData>(meshData, container.elements);
 
-	TransformData transform = dataSystem.GetData<TransformData>(container.dataList);
-	std::vector<TransformData> transform2 = dataSystem.GetAllData<TransformData>(container.dataList);
-	MeshData mesh = dataSystem.GetData<MeshData>(container.dataList);
+	TransformData transform = dataSystem.GetData<TransformData>(container.elements);
+	std::vector<TransformData> transform2 = dataSystem.GetAllData<TransformData>(container.elements);
+	MeshData mesh = dataSystem.GetData<MeshData>(container.elements);
 
-	std::cout << dataSystem.HasData<MeshData>(container.dataList) << std::endl;
+	std::cout << dataSystem.HasData<MeshData>(container.elements) << std::endl;
 	std::cout << transform.x << std::endl;
 	std::cout << transform2.at(1).y << std::endl;
 	std::cin.get();
