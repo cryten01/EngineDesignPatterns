@@ -3,7 +3,7 @@
 #include "DCS/DCS.h"
 #include "DCS/Transform.h"
 #include "DCS/Mesh.h"
-#include "DCS/Data.h"
+#include "DCS/Element.h"
 
 #include "Node/Node.h"
 
@@ -28,7 +28,7 @@ void RunDCSTest()
 	Container<Data> container;
 	Container<System> systemsContainer;
 
-	DataSystem dataSystem;
+	ElementSystem elementSystem;
 
 	TransformData transData1;
 	transData1.x = 2;
@@ -46,15 +46,15 @@ void RunDCSTest()
 	meshData.points.push_back(5);
 
 
-	dataSystem.AddData<TransformData>(transData1, container.elements);
-	dataSystem.AddData<TransformData>(transData2, container.elements);
-	dataSystem.AddData<MeshData>(meshData, container.elements);
+	elementSystem.AddElement(transData1, container.elements);
+	elementSystem.AddElement(transData2, container.elements);
+	elementSystem.AddElement(meshData, container.elements);
 
-	TransformData transform = dataSystem.GetData<TransformData>(container.elements);
-	std::vector<TransformData> transform2 = dataSystem.GetAllData<TransformData>(container.elements);
-	MeshData mesh = dataSystem.GetData<MeshData>(container.elements);
+	TransformData transform = elementSystem.GetElement<TransformData>(container.elements);
+	std::vector<TransformData> transform2 = elementSystem.GetAllElements<TransformData>(container.elements);
+	MeshData mesh = elementSystem.GetElement<MeshData>(container.elements);
 
-	std::cout << dataSystem.HasData<MeshData>(container.elements) << std::endl;
+	std::cout << mesh.points.at(0) << std::endl;
 	std::cout << transform.x << std::endl;
 	std::cout << transform2.at(1).y << std::endl;
 	std::cin.get();

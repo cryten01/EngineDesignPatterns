@@ -127,7 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DCS\Mesh.h" />
-    <ClInclude Include="DCS\Data.h" />
+    <ClInclude Include="DCS\Element.h" />
     <ClInclude Include="DCS\DCS.h" />
     <ClInclude Include="DCS\Transform.h" />
     <ClInclude Include="Node\Messaging.h" />

@@ -22,12 +22,11 @@ struct System
 	size_t type; // Needed for casting
 };
 
-
 // Generic container of data, systems or any other type
-template <typename T>
+template <typename S>
 struct Container 
 {
-    std::vector<T*> elements;
+    std::vector<S*> elements;
 };
 
 

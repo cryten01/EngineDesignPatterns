@@ -30,7 +30,7 @@
     <ClInclude Include="Node\Messaging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DCS\Data.h">
+    <ClInclude Include="DCS\Element.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
