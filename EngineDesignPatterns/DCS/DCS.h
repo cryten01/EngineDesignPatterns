@@ -32,7 +32,7 @@ struct Data
  *	Container of elements.
  *  Note that there can be only 1 unit per component type
  */
-struct Container 
+struct ContainerD
 {
 	size_t guid;
 	std::bitset<32> dataTypes;

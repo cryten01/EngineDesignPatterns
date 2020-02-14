@@ -2,26 +2,18 @@
 
 #include <iostream>
 #include "DataSet.h"
+#include "DCFC.h"
 
 // Avoid type checks
 // No inheritance only composition
 // Every struct must be unique
 // Function and data are treated as same
-
-
 // Overriding the same function possible only with inheritance
 
-struct FunctionSet 
-{
-	size_t id;
-	size_t tHash;
-	const char* tName;
-};
 
-
-struct TransformFS : FunctionSet
+struct TransformFS : Set
 {
-	void OnReceive(DSContainer dc)
+	void OnReceive(Container dc)
 	{
 		// Check signature (cast test?)
 	}
@@ -43,30 +35,30 @@ struct TransformFS : FunctionSet
 };
 
 
-struct MessagingFS : FunctionSet
+struct MessagingFS : Set
 {
-	void Send(std::vector<MessagingFS> m, DSContainer dc)
+	void Send(std::vector<MessagingFS> m, Container dc)
 	{
 		for (auto i : m)
 			i.OnReceive(dc);
 	}
 
 	// Must be redefined in every class?
-	void OnReceive(DSContainer dc)
+	void OnReceive(Container dc)
 	{
 		std::cout << "Message received" << std::endl;
 	};
 };
 
 
-struct SetFS : FunctionSet
+struct SetFS : Set
 {
 	/**
 	 * A factory for creating different types of data sets.
 	 * Set hash and type name so that each unit can be casted safely.
 	 */
 	template<typename T>
-	T CreateSet() 
+	T CreateSet()
 	{
 		T set;
 		set.tHash = typeid(T).hash_code();
@@ -74,15 +66,16 @@ struct SetFS : FunctionSet
 		return set;
 	}
 
-	template<typename C, typename T>
-	void AttachSet(C& container, T& set)
+
+	void AttachSet(Container& container, Set& set)
 	{
 		container.sets.push_back(&set);
 		std::cout << "Attached set" << std::endl;
 	}
 
-	template<typename C, typename T>
-	void GetSet(C& container, T& set) 
+
+	template<typename T>
+	void GetSet(Container& container, T& set)
 	{
 		for (auto ds : container.sets)
 		{
@@ -93,8 +86,8 @@ struct SetFS : FunctionSet
 		}
 	}
 
-	template <typename C, typename T>
-	void RemoveSet(C& container)
+	template<typename T>
+	void RemoveSet(Container& container)
 	{
 		for (size_t i = 0; i < container.sets.size(); i++)
 		{
@@ -105,8 +98,8 @@ struct SetFS : FunctionSet
 		}
 	}
 
-	template <typename C, typename T>
-	bool HasSet(C& container)
+	template<typename T>
+	bool HasSet(Container& container)
 	{
 		for (auto ds : container.sets)
 		{
@@ -121,14 +114,12 @@ struct SetFS : FunctionSet
 };
 
 
-struct FSContainer
+struct FSContainer : Container
 {
-	std::vector<FunctionSet*> sets;
-
-	//TransformFS transform;
-	SetFS set;
+	SetFS sets;
 	MessagingFS messaging;
 };
+
 
 
 

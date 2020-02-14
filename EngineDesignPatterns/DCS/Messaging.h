@@ -20,7 +20,7 @@ struct MessageData
 
 struct MessageSystem
 {
-	void Send(Container container, MessageData recipents) 
+	void Send(ContainerD container, MessageData recipents) 
 	{
 		for (auto conn : recipents.connections)
 		{
@@ -28,7 +28,7 @@ struct MessageSystem
 		}
 	};
 
-	void Receive(Container container)
+	void Receive(ContainerD container)
 	{
 	};
 };

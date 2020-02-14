@@ -39,6 +39,12 @@
     <ClInclude Include="DCFC\FunctionSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DCFC\DCFC.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Depot\Owner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

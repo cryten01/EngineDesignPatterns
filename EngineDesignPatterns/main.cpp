@@ -7,9 +7,10 @@
 #include "DCS/Element.h"
 
 
-#include "DCFC/DataSet.h"
+//#include "DCFC/DataSet.h"
 #include "DCFC/FunctionSet.h"
 
+#include "Depot/Owner.h"
 
 /**
  *	Entity Component System (Separation Function/Data, Composition over inheritance, Save Multi Threading)
@@ -37,7 +38,7 @@
 void RunDCSTest()
 {
 	ContainerSystem		containerSystem;
-	Container			container;
+	ContainerD			container;
 
 
 	SampleSystem tsys;
@@ -98,39 +99,54 @@ void RunDCFCTest()
 {
 	//std::shared_ptr<TransformData> td = std::make_shared<TransformData>();
 
+	// Simple Function Container  (no functions)
+	// Base Function Container (basic functions)
+
 	// Game object Data
-	DSContainer dsContainer1;	
-	DSContainer dsContainer2;
+	Container dsContainer1;
+	Container dsContainer2;
 
 	// Game object Behavior
 	FSContainer fsContainer1;	
 	FSContainer fsContainer2;
 	FSContainer fsContainer3;
 
-
+	//TransformFS tfs;
 	TransformFS tfs;
-	fsContainer1.set.AttachSet(fsContainer1, tfs);
-	fsContainer1.set.GetSet(fsContainer1, tfs);
+	fsContainer1.sets.AttachSet(fsContainer1, tfs);
+	fsContainer1.sets.GetSet(fsContainer1, tfs);
 
 
 	// Container Test
-	TransformDS td = fsContainer1.set.CreateSet<TransformDS>();
-	LightDS lds = fsContainer1.set.CreateSet<LightDS>();
-	fsContainer1.set.AttachSet(dsContainer1, td);
-	fsContainer1.set.AttachSet(dsContainer1, lds);
-	fsContainer2.set.GetSet(dsContainer1, td);
-	fsContainer2.set.GetSet(dsContainer1, lds);
-	fsContainer2.set.RemoveSet<DSContainer, TransformDS>(dsContainer1);
-	fsContainer2.set.RemoveSet<DSContainer, LightDS>(dsContainer1);
-	bool check = fsContainer2.set.HasSet<DSContainer, TransformDS>(dsContainer1);
+	TransformDS td = fsContainer1.sets.CreateSet<TransformDS>();
+	LightDS lds = fsContainer1.sets.CreateSet<LightDS>();
+	fsContainer1.sets.AttachSet(dsContainer1, td);
+	fsContainer1.sets.AttachSet(dsContainer1, lds);
+	fsContainer2.sets.GetSet(dsContainer1, td);
+	fsContainer2.sets.GetSet(dsContainer1, lds);
+	fsContainer2.sets.RemoveSet<TransformDS>(dsContainer1);
+	fsContainer2.sets.RemoveSet<LightDS>(dsContainer1);
+	bool check = fsContainer2.sets.HasSet<TransformDS>(dsContainer1);
 
 	// Messaging Test
 	fsContainer1.messaging.Send({ fsContainer2.messaging }, dsContainer1);
 	fsContainer2.messaging.Send({ fsContainer1.messaging, fsContainer3.messaging }, dsContainer2);
 }
 
+
+void RunLockerTest() 
+{
+	OwnerFactory factory;
+	Depot<TransformDS> deposit;
+
+	Owner owner1 = factory.CreateOwner();
+	TransformDS ds = deposit.GetDeposit(owner1.guid);
+	// Do something
+	deposit.MakeDesposit(owner1.guid, ds);
+}
+
 int main()
 {
-	RunDCFCTest();
+	RunLockerTest();
 	std::cin.get();
 }

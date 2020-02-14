@@ -128,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DCFC\DataSet.h" />
+    <ClInclude Include="DCFC\DCFC.h" />
     <ClInclude Include="DCFC\FunctionSet.h" />
     <ClInclude Include="DCS\Container.h" />
     <ClInclude Include="DCS\Element.h" />
@@ -135,6 +136,7 @@
     <ClInclude Include="DCS\DCS.h" />
     <ClInclude Include="DCS\Messaging.h" />
     <ClInclude Include="DCS\Transform.h" />
+    <ClInclude Include="Depot\Owner.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
