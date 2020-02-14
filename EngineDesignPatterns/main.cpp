@@ -6,11 +6,9 @@
 #include "DCS/Container.h"
 #include "DCS/Element.h"
 
-#include "Cell/Cell.h"
 
-
-#include "Cell/DataSet.h"
-#include "Cell/FunctionSet.h"
+#include "DCFC/DataSet.h"
+#include "DCFC/FunctionSet.h"
 
 
 /**
@@ -21,22 +19,22 @@
 
 
 
-// Data types
-// Groups of different data types (0-n)
+ // Data types
+ // Groups of different data types (0-n)
 
-// Function types
-// Groups of function types (0-n)
+ // Function types
+ // Groups of function types (0-n)
 
-// Separate isolated units
+ // Separate isolated units
 
-// Node = Container of functionality that processes data, composed of other nodes
-// Message = Container of data that can be send across links
-// Connections = represented by the amount of node references each node has
+ // Node = Container of functionality that processes data, composed of other nodes
+ // Message = Container of data that can be send across links
+ // Connections = represented by the amount of node references each node has
 
-// Static methods are loaded during runtime (no loading control)
+ // Static methods are loaded during runtime (no loading control)
 
 
-void RunDCSTest() 
+void RunDCSTest()
 {
 	ContainerSystem		containerSystem;
 	Container			container;
@@ -96,13 +94,30 @@ void RunNodeTest()
 }
 
 
-void RunDCFCTest() 
+void RunDCFCTest()
 {
-	DataContainer dc1;
-	FuncContainer fc1;
-	FuncContainer fc2;
+	//std::shared_ptr<TransformData> td = std::make_shared<TransformData>();
 
-	fc1.messaging.Send(fc2.messaging, dc1);
+	// Game object Data
+	DSContainer dc1;	
+	DSContainer dc2;
+
+	// Game object Behavior
+	FSContainer fc1;	
+	FSContainer fc2;
+	FSContainer fc3;
+
+	// Container Test
+	TransformDS td = fc1.container.CreateDataSetOfType<TransformDS>();
+	LightDS lds = fc1.container.CreateDataSetOfType<LightDS>();
+	fc1.container.AttachDataSet(dc1, td);
+	fc1.container.AttachDataSet(dc1, lds);
+	fc2.container.GetDataSetOfType<TransformDS>(dc1, td);
+	fc2.container.GetDataSetOfType<LightDS>(dc1, lds);
+
+	// Messaging Test
+	fc1.messaging.Send({ fc2.messaging }, dc1);
+	fc2.messaging.Send({ fc1.messaging, fc3.messaging }, dc2);
 }
 
 int main()

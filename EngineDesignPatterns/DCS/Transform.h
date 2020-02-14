@@ -1,7 +1,7 @@
 #pragma once
 
 // Data
-struct TransformData : DataSet
+struct TransformData : Data
 {
 	float x, y, z;
 };
@@ -9,7 +9,7 @@ struct TransformData : DataSet
 // Functional behavior (enables function injection)
 // Modification only locally (= all inputs/outputs are not allowed to be modified)
 // Data is not allowed to be mutated from multiple people at the same time
-struct SampleSystem : FunctionSet
+struct SampleSystem : Function
 {
 	void SingleMutation(TransformData& copy)
 	{

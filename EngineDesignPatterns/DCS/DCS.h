@@ -14,14 +14,14 @@
 /**
  *  Abstract type of a single elementary unit
  */
-struct FunctionSet
+struct Function
 {
 	size_t guid;
 	size_t type; // Needed for casting from abstract to specific
 };
 
 
-struct DataSet
+struct Data
 {
 	size_t guid;
 	size_t type; // Needed for casting from abstract to specific
@@ -36,7 +36,7 @@ struct Container
 {
 	size_t guid;
 	std::bitset<32> dataTypes;
-	std::vector<DataSet*> data;
+	std::vector<Data*> data;
 };
 
 

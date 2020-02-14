@@ -4,13 +4,13 @@
 #include <vector>
 
 // Data
-struct MeshData : DataSet
+struct MeshData : Data
 {
 	std::vector<float> points;
 };
 
 // Functional behavior
-class MeshSystem : FunctionSet
+class MeshSystem : Function
 {
 public:
 	void ChangePointAt(MeshData& data)

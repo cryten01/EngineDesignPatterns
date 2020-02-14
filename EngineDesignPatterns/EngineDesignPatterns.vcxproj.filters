@@ -33,16 +33,10 @@
     <ClInclude Include="DCS\Element.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cell\Cell.h">
+    <ClInclude Include="DCFC\DataSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cell\FunctionSet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Cell\DataSet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Cell\FCDC.h">
+    <ClInclude Include="DCFC\FunctionSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

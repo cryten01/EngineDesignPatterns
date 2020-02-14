@@ -10,7 +10,7 @@
 
 // Container operations
 
-struct ContainerSystem : FunctionSet
+struct ContainerSystem : Function
 {
 public:	// Use VA_ARGS for ensuring all necessary values
 	template <typename T>
@@ -22,14 +22,14 @@ public:	// Use VA_ARGS for ensuring all necessary values
 	}
 
 	template <typename T>
-	void AddElement(T& element, std::vector<DataSet*>& elementList)
+	void AddElement(T& element, std::vector<Data*>& elementList)
 	{
 		elementList.push_back(&element);
 	}
 
 
 	template <typename T>
-	void RemoveElement(T& element, std::vector<DataSet*>& elementList)
+	void RemoveElement(T& element, std::vector<Data*>& elementList)
 	{
 		for (size_t i = 0; i < elementList.size(); i++)
 		{
@@ -40,7 +40,7 @@ public:	// Use VA_ARGS for ensuring all necessary values
 
 
 	template <typename T>
-	T& GetElement(std::vector<DataSet*>& elementList)
+	T& GetElement(std::vector<Data*>& elementList)
 	{
 		for (auto element : elementList)
 		{
@@ -53,7 +53,7 @@ public:	// Use VA_ARGS for ensuring all necessary values
 
 
 	template <typename T>
-	std::vector<T> GetAllElements(std::vector<DataSet*>& elementList)
+	std::vector<T> GetAllElements(std::vector<Data*>& elementList)
 	{
 		std::vector<T> list;
 
@@ -70,7 +70,7 @@ public:	// Use VA_ARGS for ensuring all necessary values
 
 
 	template <typename T>
-	bool HasElement(std::vector<DataSet*>& elementList)
+	bool HasElement(std::vector<Data*>& elementList)
 	{
 		for (auto element : elementList)
 		{

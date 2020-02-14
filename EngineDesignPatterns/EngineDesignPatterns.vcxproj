@@ -76,6 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\Gerhard\Desktop\EngineDesignPatterns\external\GLM;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -126,10 +127,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Cell\Cell.h" />
-    <ClInclude Include="Cell\DataSet.h" />
-    <ClInclude Include="Cell\FCDC.h" />
-    <ClInclude Include="Cell\FunctionSet.h" />
+    <ClInclude Include="DCFC\DataSet.h" />
+    <ClInclude Include="DCFC\FunctionSet.h" />
     <ClInclude Include="DCS\Container.h" />
     <ClInclude Include="DCS\Element.h" />
     <ClInclude Include="DCS\Mesh.h" />
