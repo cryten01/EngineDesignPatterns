@@ -11,8 +11,15 @@
 
 // Overriding the same function possible only with inheritance
 
+struct FunctionSet 
+{
+	size_t id;
+	size_t tHash;
+	const char* tName;
+};
 
-struct TransformFS
+
+struct TransformFS : FunctionSet
 {
 	void OnReceive(DSContainer dc)
 	{
@@ -36,7 +43,7 @@ struct TransformFS
 };
 
 
-struct MessagingFS
+struct MessagingFS : FunctionSet
 {
 	void Send(std::vector<MessagingFS> m, DSContainer dc)
 	{
@@ -52,47 +59,74 @@ struct MessagingFS
 };
 
 
-struct ContainerFS 
+struct SetFS : FunctionSet
 {
 	/**
 	 * A factory for creating different types of data sets.
 	 * Set hash and type name so that each unit can be casted safely.
 	 */
 	template<typename T>
-	T CreateDataSetOfType() 
+	T CreateSet() 
 	{
 		T set;
-		set.hash = typeid(T).hash_code();
-		set.name = typeid(T).name();
+		set.tHash = typeid(T).hash_code();
+		set.tName = typeid(T).name();
 		return set;
 	}
 
-	template<typename T>
-	void AttachDataSet(DSContainer& container, T& set) 
+	template<typename C, typename T>
+	void AttachSet(C& container, T& set)
 	{
-		container.dataSets.push_back(&set);
+		container.sets.push_back(&set);
+		std::cout << "Attached set" << std::endl;
 	}
 
-	template<typename T>
-	void GetDataSetOfType(DSContainer& container, T& set) 
+	template<typename C, typename T>
+	void GetSet(C& container, T& set) 
 	{
-		for (auto ds : container.dataSets)
+		for (auto ds : container.sets)
 		{
-			if (ds->hash == typeid(T).hash_code())
+			if (ds->tHash == typeid(T).hash_code())
 			{
-				std::cout << "Found object" << std::endl;
 				set = *static_cast<T*>(ds);
 			}
 		}
+	}
+
+	template <typename C, typename T>
+	void RemoveSet(C& container)
+	{
+		for (size_t i = 0; i < container.sets.size(); i++)
+		{
+			if (container.sets.at(i)->tHash == typeid(T).hash_code())
+			{
+				container.sets.erase(container.sets.begin() + i);
+			}
+		}
+	}
+
+	template <typename C, typename T>
+	bool HasSet(C& container)
+	{
+		for (auto ds : container.sets)
+		{
+			if (ds->tHash == typeid(T).hash_code())
+			{
+				return true;
+			}
+		}
+
+		return false;
 	}
 };
 
 
 struct FSContainer
 {
-	bool active = true;
-	TransformFS transform;
-	ContainerFS container;
+	std::vector<FunctionSet*> sets;
+
+	//TransformFS transform;
+	SetFS set;
 	MessagingFS messaging;
 };
 

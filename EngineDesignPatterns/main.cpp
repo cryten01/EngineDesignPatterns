@@ -99,25 +99,34 @@ void RunDCFCTest()
 	//std::shared_ptr<TransformData> td = std::make_shared<TransformData>();
 
 	// Game object Data
-	DSContainer dc1;	
-	DSContainer dc2;
+	DSContainer dsContainer1;	
+	DSContainer dsContainer2;
 
 	// Game object Behavior
-	FSContainer fc1;	
-	FSContainer fc2;
-	FSContainer fc3;
+	FSContainer fsContainer1;	
+	FSContainer fsContainer2;
+	FSContainer fsContainer3;
+
+
+	TransformFS tfs;
+	fsContainer1.set.AttachSet(fsContainer1, tfs);
+	fsContainer1.set.GetSet(fsContainer1, tfs);
+
 
 	// Container Test
-	TransformDS td = fc1.container.CreateDataSetOfType<TransformDS>();
-	LightDS lds = fc1.container.CreateDataSetOfType<LightDS>();
-	fc1.container.AttachDataSet(dc1, td);
-	fc1.container.AttachDataSet(dc1, lds);
-	fc2.container.GetDataSetOfType<TransformDS>(dc1, td);
-	fc2.container.GetDataSetOfType<LightDS>(dc1, lds);
+	TransformDS td = fsContainer1.set.CreateSet<TransformDS>();
+	LightDS lds = fsContainer1.set.CreateSet<LightDS>();
+	fsContainer1.set.AttachSet(dsContainer1, td);
+	fsContainer1.set.AttachSet(dsContainer1, lds);
+	fsContainer2.set.GetSet(dsContainer1, td);
+	fsContainer2.set.GetSet(dsContainer1, lds);
+	fsContainer2.set.RemoveSet<DSContainer, TransformDS>(dsContainer1);
+	fsContainer2.set.RemoveSet<DSContainer, LightDS>(dsContainer1);
+	bool check = fsContainer2.set.HasSet<DSContainer, TransformDS>(dsContainer1);
 
 	// Messaging Test
-	fc1.messaging.Send({ fc2.messaging }, dc1);
-	fc2.messaging.Send({ fc1.messaging, fc3.messaging }, dc2);
+	fsContainer1.messaging.Send({ fsContainer2.messaging }, dsContainer1);
+	fsContainer2.messaging.Send({ fsContainer1.messaging, fsContainer3.messaging }, dsContainer2);
 }
 
 int main()

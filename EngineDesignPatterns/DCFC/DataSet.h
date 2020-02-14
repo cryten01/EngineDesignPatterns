@@ -4,8 +4,9 @@
 
 struct DataSet
 {
-	size_t hash;
-	const char* name;
+	size_t id;
+	size_t tHash;
+	const char* tName;
 };
 
 struct TransformDS : DataSet
@@ -30,7 +31,10 @@ struct KeyInputDS : DataSet
 };
 
 
+/**
+ * A generic data set container that can be passed between different function container.
+ */
 struct DSContainer
 {
-	std::vector<DataSet*> dataSets;
+	std::vector<DataSet*> sets;
 };
