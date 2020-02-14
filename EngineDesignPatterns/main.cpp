@@ -3,9 +3,22 @@
 #include "DCS/DCS.h"
 #include "DCS/Transform.h"
 #include "DCS/Mesh.h"
+#include "DCS/Container.h"
 #include "DCS/Element.h"
 
-#include "Node/Node.h"
+#include "Cell/Cell.h"
+
+
+#include "Cell/DataSet.h"
+#include "Cell/FunctionSet.h"
+
+
+/**
+ *	Entity Component System (Separation Function/Data, Composition over inheritance, Save Multi Threading)
+ *	Functional Programming (Immutability, Reduce Side effects, Save Multi Threading)
+ *	Actor Model (Event Based, Save Multi Threading)
+ */
+
 
 
 // Data types
@@ -25,10 +38,14 @@
 
 void RunDCSTest() 
 {
-	Container<Data> container;
-	Container<System> systemsContainer;
+	ContainerSystem		containerSystem;
+	Container			container;
 
-	ElementSystem elementSystem;
+
+	SampleSystem tsys;
+	MeshSystem msys;
+
+
 
 	TransformData transData1;
 	transData1.x = 2;
@@ -46,13 +63,13 @@ void RunDCSTest()
 	meshData.points.push_back(5);
 
 
-	elementSystem.AddElement(transData1, container.elements);
-	elementSystem.AddElement(transData2, container.elements);
-	elementSystem.AddElement(meshData, container.elements);
+	containerSystem.AddElement(transData1, container.data);
+	containerSystem.AddElement(transData2, container.data);
+	containerSystem.AddElement(meshData, container.data);
 
-	TransformData transform = elementSystem.GetElement<TransformData>(container.elements);
-	std::vector<TransformData> transform2 = elementSystem.GetAllElements<TransformData>(container.elements);
-	MeshData mesh = elementSystem.GetElement<MeshData>(container.elements);
+	TransformData transform = containerSystem.GetElement<TransformData>(container.data);
+	std::vector<TransformData> transform2 = containerSystem.GetAllElements<TransformData>(container.data);
+	MeshData mesh = containerSystem.GetElement<MeshData>(container.data);
 
 	std::cout << mesh.points.at(0) << std::endl;
 	std::cout << transform.x << std::endl;
@@ -61,7 +78,35 @@ void RunDCSTest()
 }
 
 
+
+void RunNodeTest()
+{
+	//TransformNode node1;
+	//TransformNode node2;
+	//MaterialNode node3;
+
+	//node1.Data.active = true;
+
+	//node1.Connect(node2);
+	//node1.Send(node1.Data);
+	//node1.Connect(node3);
+	//node1.Send(node2.Data);
+
+
+}
+
+
+void RunDCFCTest() 
+{
+	DataContainer dc1;
+	FuncContainer fc1;
+	FuncContainer fc2;
+
+	fc1.messaging.Send(fc2.messaging, dc1);
+}
+
 int main()
 {
-	RunDCSTest();
+	RunDCFCTest();
+	std::cin.get();
 }

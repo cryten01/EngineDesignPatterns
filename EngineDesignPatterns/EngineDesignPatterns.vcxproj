@@ -126,12 +126,16 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DCS\Mesh.h" />
+    <ClInclude Include="Cell\Cell.h" />
+    <ClInclude Include="Cell\DataSet.h" />
+    <ClInclude Include="Cell\FCDC.h" />
+    <ClInclude Include="Cell\FunctionSet.h" />
+    <ClInclude Include="DCS\Container.h" />
     <ClInclude Include="DCS\Element.h" />
+    <ClInclude Include="DCS\Mesh.h" />
     <ClInclude Include="DCS\DCS.h" />
+    <ClInclude Include="DCS\Messaging.h" />
     <ClInclude Include="DCS\Transform.h" />
-    <ClInclude Include="Node\Messaging.h" />
-    <ClInclude Include="Node\Node.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

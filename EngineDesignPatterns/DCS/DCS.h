@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <memory>
+#include <bitset>
 
 // WHY?
 // Separate Data and Function
@@ -9,24 +10,33 @@
 // Save multi-threading
 
 
-// Abstract type for all data types
-struct Data
+
+/**
+ *  Abstract type of a single elementary unit
+ */
+struct FunctionSet
 {
-    size_t type; // Needed for casting
+	size_t guid;
+	size_t type; // Needed for casting from abstract to specific
 };
 
 
-// Abstract type for all system types
-struct System
+struct DataSet
 {
-	size_t type; // Needed for casting
+	size_t guid;
+	size_t type; // Needed for casting from abstract to specific
 };
 
-// Generic container of data, systems or any other type
-template <typename S>
+
+/**
+ *	Container of elements.
+ *  Note that there can be only 1 unit per component type
+ */
 struct Container 
 {
-    std::vector<S*> elements;
+	size_t guid;
+	std::bitset<32> dataTypes;
+	std::vector<DataSet*> data;
 };
 
 
