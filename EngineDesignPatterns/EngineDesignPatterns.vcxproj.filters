@@ -45,22 +45,16 @@
     <ClInclude Include="FDC\FunctionSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NECS\Key.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NECS\KeyNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NECS\Node.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NECS\StorageNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NECS\Testing.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Concepts\FunctionPointers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DOD\Key.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DOD\PubSub.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DOD\Storage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

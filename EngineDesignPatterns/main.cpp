@@ -3,8 +3,8 @@
 #include "FDC/DataSet.h"
 #include "FDC/FunctionSet.h"
 
-#include "NECS/KeyNode.h"
-#include "NECS/StorageNode.h"
+#include "DOD/Key.h"
+#include "DOD/Storage.h"
 
 #include "Concepts/FunctionPointers.h"
 
@@ -70,18 +70,26 @@ void RunDCFCTest()
 }
 
 
-void RunNodeTest() 
+void RunDODTest() 
 {
-	KeyNode keyNode;
-	StorageNode<TransformData> transNode;
-	StorageNode<LightData> lightNode;
+	KeyFactory factory;
+	Storage<TransformData> storage;
 
-	keyNode.messaging.Subscribe(&transNode);
-	keyNode.messaging.Subscribe(&lightNode);
+	TransformData data;
+	data.orientation = glm::vec3(0);
+	data.position = glm::vec3(0);
+	data.scale = glm::vec3(1);
+
+	Key key = OnKeyIssue(factory);
+
+	MakeEntry(storage, key, data);
+	TransformData data2 = GetEntry(storage, key);
+
 }
 
 int main()
 {
+	RunDODTest();
 	RunVoidFuncPtrTest();
 	RunParamFuncPtrTest();
 	std::cin.get();

@@ -128,13 +128,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Concepts\FunctionPointers.h" />
-    <ClInclude Include="NECS\Node.h" />
+    <ClInclude Include="DOD\PubSub.h" />
     <ClInclude Include="FDC\DataSet.h" />
     <ClInclude Include="FDC\DCFC.h" />
     <ClInclude Include="FDC\FunctionSet.h" />
-    <ClInclude Include="NECS\StorageNode.h" />
-    <ClInclude Include="NECS\Key.h" />
-    <ClInclude Include="NECS\KeyNode.h" />
+    <ClInclude Include="DOD\Storage.h" />
+    <ClInclude Include="DOD\Key.h" />
     <ClInclude Include="ECS\Component.h" />
     <ClInclude Include="ECS\ComponentManager.h" />
     <ClInclude Include="ECS\Coordinator.h" />
@@ -142,7 +141,6 @@
     <ClInclude Include="ECS\EntityManager.h" />
     <ClInclude Include="ECS\System.h" />
     <ClInclude Include="ECS\SystemManager.h" />
-    <ClInclude Include="NECS\Testing.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
