@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <functional>
 
 // Behavior changes in different classes 
 // Behavior is always the same
@@ -7,32 +8,43 @@
 // Publish:		Key owners can return their key. This notifies all depots (Event listeners)
 // Function callback
 
-struct Node
-{
-};
+template <typename T>
+using CallbackFnPtr = bool(*)(T);
 
+
+template <typename T>
 struct Connections 
 {
-	std::vector<Node*> conn;
+	std::vector<CallbackFnPtr<T>> callbacks;
 };
 
 
 template <typename T>
-void Publish(Connections& connections, T value)
+void Publish(Connections<T>& connections, T value)
 {
-	// Send to all connections
-}
-
-void Subscribe(Connections& connections, Node* node)
-{
-	connections.conn.push_back(node);
-}
-
-void Unsubscribe(Connections& connections, Node* node)
-{
-	for (size_t i = 0; i < connections.conn.size(); i++)
+	for (auto callback : connections.callbacks) 
 	{
-		if (connections.conn.at(i) == node)
-			connections.conn.erase(connections.conn.begin() + i);
+		std::cout << "Publish called" << std::endl;
+		callback(value);
+	}
+}
+
+template <typename T>
+void Subscribe(Connections<T>& connections, CallbackFnPtr<T> callback)
+{
+	std::cout << "Registered function" << std::endl;
+	connections.callbacks.push_back(callback);
+}
+
+template <typename T>
+void Unsubscribe(Connections<T>& connections, CallbackFnPtr<T> callback)
+{
+	for (size_t i = 0; i < connections.callbacks.size(); i++)
+	{
+		if (connections.callbacks.at(i) == callback) 
+		{
+			std::cout << "Unregistered function" << std::endl;
+			connections.callbacks.erase(connections.callbacks.begin() + i);
+		}
 	}
 }

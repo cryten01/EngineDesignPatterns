@@ -128,7 +128,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Concepts\FunctionPointers.h" />
+    <ClInclude Include="Concepts\Generics.h" />
     <ClInclude Include="DOD\PubSub.h" />
+    <ClInclude Include="DOD\Register.h" />
     <ClInclude Include="FDC\DataSet.h" />
     <ClInclude Include="FDC\DCFC.h" />
     <ClInclude Include="FDC\FunctionSet.h" />

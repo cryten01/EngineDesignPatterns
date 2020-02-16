@@ -12,28 +12,33 @@
  * Cons:
  *	N log n access times
  */
+ // aka Component Array
+
+
+
+struct Storage
+{};
 
 template <typename T>
-struct Storage
+struct TStorage : Storage
 {
-	std::map<Key, T> map;
+	std::map<Key, T> storageMap;
 };
 
-
 template<typename T>
-void MakeEntry(Storage<T>& storage, Key& key, T value)
+void MakeEntry(std::shared_ptr<TStorage<T>> storage, Key& key, T value)
 {
-	storage.map.emplace(key, value);
+	storage->storageMap.emplace(key, value);
 }
 
 template<typename T>
-T& GetEntry(Storage<T>& storage, Key& key)
+T& GetEntry(std::shared_ptr<TStorage<T>> storage, Key& key)
 {
-	return storage.map.find(key)->second;
+	return storage->storageMap.find(key)->second;
 }
 
 template<typename T>
-void ClearEntry(Storage<T>& storage, Key& key)
+void ClearEntry(std::shared_ptr<TStorage<T>> storage, Key& key)
 {
-	storage.map.erase(key);
+	storage->storageMap.erase(key);
 }

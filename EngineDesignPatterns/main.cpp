@@ -5,6 +5,8 @@
 
 #include "DOD/Key.h"
 #include "DOD/Storage.h"
+#include "DOD/Register.h"
+#include "DOD/PubSub.h"
 
 #include "Concepts/FunctionPointers.h"
 
@@ -31,7 +33,7 @@
  // Static methods are loaded during runtime (no loading control)
 
 
-void RunDCFCTest()
+void RunFDCTest()
 {
 	//std::shared_ptr<TransformData> td = std::make_shared<TransformData>();
 
@@ -70,21 +72,37 @@ void RunDCFCTest()
 }
 
 
+bool OnReceive(TransformData data) 
+{
+	std::cout << "Received transform data" << std::endl;
+	return true;
+}
+
 void RunDODTest() 
 {
 	KeyFactory factory;
-	Storage<TransformData> storage;
+	Key key1 = IssueKey(factory);
+	Key key2 = IssueKey(factory);
+
+	RegisterData reg;
+	AddStorage<TransformData>(reg);
+	AddStorage<LightData>(reg);
 
 	TransformData data;
 	data.orientation = glm::vec3(0);
 	data.position = glm::vec3(0);
 	data.scale = glm::vec3(1);
 
-	Key key = OnKeyIssue(factory);
+	MakeEntry<TransformData>(reg, key1, data);
+	MakeEntry<TransformData>(reg, key2, data);
+	GetEntry<TransformData>(reg, key1);
+	ClearEntry<TransformData>(reg, key1);
 
-	MakeEntry(storage, key, data);
-	TransformData data2 = GetEntry(storage, key);
 
+	Connections<TransformData> tConn;
+	Subscribe(tConn, OnReceive);
+	Publish(tConn, data);
+	Unsubscribe(tConn, OnReceive);
 }
 
 int main()
