@@ -1,16 +1,12 @@
 #include <iostream>
 
-#include "DCS/DCS.h"
-#include "DCS/Transform.h"
-#include "DCS/Mesh.h"
-#include "DCS/Container.h"
-#include "DCS/Element.h"
+#include "FDC/DataSet.h"
+#include "FDC/FunctionSet.h"
 
+#include "NECS/KeyNode.h"
+#include "NECS/StorageNode.h"
 
-//#include "DCFC/DataSet.h"
-#include "DCFC/FunctionSet.h"
-
-#include "Depot/Owner.h"
+#include "Concepts/FunctionPointers.h"
 
 /**
  *	Entity Component System (Separation Function/Data, Composition over inheritance, Save Multi Threading)
@@ -35,66 +31,6 @@
  // Static methods are loaded during runtime (no loading control)
 
 
-void RunDCSTest()
-{
-	ContainerSystem		containerSystem;
-	ContainerD			container;
-
-
-	SampleSystem tsys;
-	MeshSystem msys;
-
-
-
-	TransformData transData1;
-	transData1.x = 2;
-	transData1.y = 2;
-	transData1.z = 2;
-
-	TransformData transData2;
-	transData2.x = 3;
-	transData2.y = 4;
-	transData2.z = 5;
-
-	MeshData meshData;
-	meshData.points.push_back(2);
-	meshData.points.push_back(3);
-	meshData.points.push_back(5);
-
-
-	containerSystem.AddElement(transData1, container.data);
-	containerSystem.AddElement(transData2, container.data);
-	containerSystem.AddElement(meshData, container.data);
-
-	TransformData transform = containerSystem.GetElement<TransformData>(container.data);
-	std::vector<TransformData> transform2 = containerSystem.GetAllElements<TransformData>(container.data);
-	MeshData mesh = containerSystem.GetElement<MeshData>(container.data);
-
-	std::cout << mesh.points.at(0) << std::endl;
-	std::cout << transform.x << std::endl;
-	std::cout << transform2.at(1).y << std::endl;
-	std::cin.get();
-}
-
-
-
-void RunNodeTest()
-{
-	//TransformNode node1;
-	//TransformNode node2;
-	//MaterialNode node3;
-
-	//node1.Data.active = true;
-
-	//node1.Connect(node2);
-	//node1.Send(node1.Data);
-	//node1.Connect(node3);
-	//node1.Send(node2.Data);
-
-
-}
-
-
 void RunDCFCTest()
 {
 	//std::shared_ptr<TransformData> td = std::make_shared<TransformData>();
@@ -112,21 +48,21 @@ void RunDCFCTest()
 	FSContainer fsContainer3;
 
 	//TransformFS tfs;
-	TransformFS tfs;
+	TransformFuncs tfs;
 	fsContainer1.sets.AttachSet(fsContainer1, tfs);
 	fsContainer1.sets.GetSet(fsContainer1, tfs);
 
 
 	// Container Test
-	TransformDS td = fsContainer1.sets.CreateSet<TransformDS>();
-	LightDS lds = fsContainer1.sets.CreateSet<LightDS>();
+	TransformData td = fsContainer1.sets.CreateSet<TransformData>();
+	LightData lds = fsContainer1.sets.CreateSet<LightData>();
 	fsContainer1.sets.AttachSet(dsContainer1, td);
 	fsContainer1.sets.AttachSet(dsContainer1, lds);
 	fsContainer2.sets.GetSet(dsContainer1, td);
 	fsContainer2.sets.GetSet(dsContainer1, lds);
-	fsContainer2.sets.RemoveSet<TransformDS>(dsContainer1);
-	fsContainer2.sets.RemoveSet<LightDS>(dsContainer1);
-	bool check = fsContainer2.sets.HasSet<TransformDS>(dsContainer1);
+	fsContainer2.sets.RemoveSet<TransformData>(dsContainer1);
+	fsContainer2.sets.RemoveSet<LightData>(dsContainer1);
+	bool check = fsContainer2.sets.HasSet<TransformData>(dsContainer1);
 
 	// Messaging Test
 	fsContainer1.messaging.Send({ fsContainer2.messaging }, dsContainer1);
@@ -134,19 +70,19 @@ void RunDCFCTest()
 }
 
 
-void RunLockerTest() 
+void RunNodeTest() 
 {
-	OwnerFactory factory;
-	Depot<TransformDS> deposit;
+	KeyNode keyNode;
+	StorageNode<TransformData> transNode;
+	StorageNode<LightData> lightNode;
 
-	Owner owner1 = factory.CreateOwner();
-	TransformDS ds = deposit.GetDeposit(owner1.guid);
-	// Do something
-	deposit.MakeDesposit(owner1.guid, ds);
+	keyNode.messaging.Subscribe(&transNode);
+	keyNode.messaging.Subscribe(&lightNode);
 }
 
 int main()
 {
-	RunLockerTest();
+	RunVoidFuncPtrTest();
+	RunParamFuncPtrTest();
 	std::cin.get();
 }

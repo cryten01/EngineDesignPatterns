@@ -15,34 +15,52 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DCS\DCS.h">
+    <ClInclude Include="ECS\ECS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DCS\Mesh.h">
+    <ClInclude Include="ECS\EntityManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DCS\Transform.h">
+    <ClInclude Include="ECS\Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DCS\Messaging.h">
+    <ClInclude Include="ECS\ComponentManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DCS\Container.h">
+    <ClInclude Include="ECS\System.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DCS\Element.h">
+    <ClInclude Include="ECS\SystemManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DCFC\DataSet.h">
+    <ClInclude Include="ECS\Coordinator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DCFC\FunctionSet.h">
+    <ClInclude Include="FDC\DataSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DCFC\DCFC.h">
+    <ClInclude Include="FDC\DCFC.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Depot\Owner.h">
+    <ClInclude Include="FDC\FunctionSet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NECS\Key.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NECS\KeyNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NECS\Node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NECS\StorageNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NECS\Testing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Concepts\FunctionPointers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
