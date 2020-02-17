@@ -9,14 +9,11 @@
 // A simple type alias (helps in changing data type if necessary)
 using Key = std::uint32_t;
 
-// Used to define the size of arrays later on
-const Key MAX_KEYS = 5000;
-
 
 struct KeyFactory
 {
-	Key mKeyCreator;
-	std::queue<Key> mFreeKeys;
+	Key keyCreator;
+	std::queue<Key> freeKeys;
 };
 
 
@@ -25,20 +22,20 @@ void ReturnKey(KeyFactory& factory, Key key)
 	// Notify Register that key has been returned
 
 	// Recycle key
-	factory.mFreeKeys.push(key);
+	factory.freeKeys.push(key);
 }
 
 Key IssueKey(KeyFactory& factory)
 {
-	if (!factory.mFreeKeys.empty())
+	if (!factory.freeKeys.empty())
 	{
-		Key key = factory.mFreeKeys.front();
-		factory.mFreeKeys.pop();
+		Key key = factory.freeKeys.front();
+		factory.freeKeys.pop();
 		return key;
 	}
 	else
 	{
-		factory.mKeyCreator++;
-		return factory.mKeyCreator;
+		factory.keyCreator++;
+		return factory.keyCreator;
 	}
 }

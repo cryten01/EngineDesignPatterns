@@ -60,7 +60,13 @@
     <ClInclude Include="DOD\Register.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\Storage.h">
+    <ClInclude Include="DOD\DataStorage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DOD\System.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Concepts\Inheritance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,11 +4,12 @@
 #include "FDC/FunctionSet.h"
 
 #include "DOD/Key.h"
-#include "DOD/Storage.h"
+#include "DOD/DataStorage.h"
 #include "DOD/Register.h"
 #include "DOD/PubSub.h"
 
 #include "Concepts/FunctionPointers.h"
+#include "Concepts/Inheritance.h"
 
 /**
  *	Entity Component System (Separation Function/Data, Composition over inheritance, Save Multi Threading)
@@ -84,7 +85,7 @@ void RunDODTest()
 	Key key1 = IssueKey(factory);
 	Key key2 = IssueKey(factory);
 
-	RegisterData reg;
+	StorageRegister reg;
 	AddStorage<TransformData>(reg);
 	AddStorage<LightData>(reg);
 
@@ -99,16 +100,26 @@ void RunDODTest()
 	ClearEntry<TransformData>(reg, key1);
 
 
-	Connections<TransformData> tConn;
+	// Subscribe to a system not data
+	Station<TransformData> tConn;
 	Subscribe(tConn, OnReceive);
 	Publish(tConn, data);
 	Unsubscribe(tConn, OnReceive);
+
+	std::shared_ptr<DataStorage> st1 = std::make_shared<TStorage<int>>();
+	std::static_pointer_cast<TStorage<int>>(st1)->storageMap;
+
+	std::shared_ptr<DataStorage> st2 = std::make_shared<TStorage<float>>();
 }
 
 int main()
 {
-	RunDODTest();
-	RunVoidFuncPtrTest();
-	RunParamFuncPtrTest();
+	//RunDODTest();
+	//RunVoidFuncPtrTest();
+	//RunParamFuncPtrTest();
+
+	InheritanceByElement();
+	//InheritanceByInterface();
+
 	std::cin.get();
 }

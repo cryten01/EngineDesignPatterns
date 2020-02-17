@@ -16,11 +16,11 @@
 
 
 
-struct Storage
+struct DataStorage
 {};
 
 template <typename T>
-struct TStorage : Storage
+struct TStorage : DataStorage
 {
 	std::map<Key, T> storageMap;
 };

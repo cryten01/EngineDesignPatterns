@@ -13,38 +13,38 @@ using CallbackFnPtr = bool(*)(T);
 
 
 template <typename T>
-struct Connections 
+struct Station
 {
-	std::vector<CallbackFnPtr<T>> callbacks;
+	std::vector<CallbackFnPtr<T>> subscriber;
 };
 
 
 template <typename T>
-void Publish(Connections<T>& connections, T value)
+void Publish(Station<T>& station, T event)
 {
-	for (auto callback : connections.callbacks) 
+	for (auto callback : station.subscriber)
 	{
 		std::cout << "Publish called" << std::endl;
-		callback(value);
+		callback(event);
 	}
 }
 
 template <typename T>
-void Subscribe(Connections<T>& connections, CallbackFnPtr<T> callback)
+void Subscribe(Station<T>& station, CallbackFnPtr<T> callback)
 {
 	std::cout << "Registered function" << std::endl;
-	connections.callbacks.push_back(callback);
+	station.subscriber.push_back(callback);
 }
 
 template <typename T>
-void Unsubscribe(Connections<T>& connections, CallbackFnPtr<T> callback)
+void Unsubscribe(Station<T>& station, CallbackFnPtr<T> callback)
 {
-	for (size_t i = 0; i < connections.callbacks.size(); i++)
+	for (size_t i = 0; i < station.subscriber.size(); i++)
 	{
-		if (connections.callbacks.at(i) == callback) 
+		if (station.subscriber.at(i) == callback)
 		{
 			std::cout << "Unregistered function" << std::endl;
-			connections.callbacks.erase(connections.callbacks.begin() + i);
+			station.subscriber.erase(station.subscriber.begin() + i);
 		}
 	}
 }

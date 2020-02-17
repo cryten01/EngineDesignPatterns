@@ -129,12 +129,14 @@
   <ItemGroup>
     <ClInclude Include="Concepts\FunctionPointers.h" />
     <ClInclude Include="Concepts\Generics.h" />
+    <ClInclude Include="Concepts\Inheritance.h" />
     <ClInclude Include="DOD\PubSub.h" />
     <ClInclude Include="DOD\Register.h" />
+    <ClInclude Include="DOD\System.h" />
     <ClInclude Include="FDC\DataSet.h" />
     <ClInclude Include="FDC\DCFC.h" />
     <ClInclude Include="FDC\FunctionSet.h" />
-    <ClInclude Include="DOD\Storage.h" />
+    <ClInclude Include="DOD\DataStorage.h" />
     <ClInclude Include="DOD\Key.h" />
     <ClInclude Include="ECS\Component.h" />
     <ClInclude Include="ECS\ComponentManager.h" />
