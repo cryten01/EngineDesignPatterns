@@ -54,19 +54,13 @@
     <ClInclude Include="DOD\PubSub.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Concepts\Generics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DOD\Register.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\DataStorage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DOD\System.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Concepts\Inheritance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DOD\Storage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,7 +4,7 @@
 #include "FDC/FunctionSet.h"
 
 #include "DOD/Key.h"
-#include "DOD/DataStorage.h"
+#include "DOD/Storage.h"
 #include "DOD/Register.h"
 #include "DOD/PubSub.h"
 
@@ -85,7 +85,7 @@ void RunDODTest()
 	Key key1 = IssueKey(factory);
 	Key key2 = IssueKey(factory);
 
-	StorageRegister reg;
+	Register reg;
 	AddStorage<TransformData>(reg);
 	AddStorage<LightData>(reg);
 
@@ -106,10 +106,10 @@ void RunDODTest()
 	Publish(tConn, data);
 	Unsubscribe(tConn, OnReceive);
 
-	std::shared_ptr<DataStorage> st1 = std::make_shared<TStorage<int>>();
+	std::shared_ptr<Storage> st1 = std::make_shared<TStorage<int>>();
 	std::static_pointer_cast<TStorage<int>>(st1)->storageMap;
 
-	std::shared_ptr<DataStorage> st2 = std::make_shared<TStorage<float>>();
+	std::shared_ptr<Storage> st2 = std::make_shared<TStorage<float>>();
 }
 
 int main()

@@ -1,42 +1,42 @@
 #pragma once
-#include "DataStorage.h"
+#include "Storage.h"
 
 // aka Component Manager
 
-struct StorageRegister
+struct Register
 {
-	std::map<size_t, std::shared_ptr<DataStorage>> registerMap;
+	std::map<size_t, std::shared_ptr<Storage>> registerMap;
 };
 
 template<typename T>
-void AddStorage(StorageRegister& r)
+void AddStorage(Register& r)
 {
 	size_t type = typeid(T).hash_code();
 
-	std::shared_ptr<DataStorage> entry = std::make_shared<TStorage<T>>();
+	std::shared_ptr<Storage> entry = std::make_shared<TStorage<T>>();
 
 	r.registerMap.emplace(type, entry);
 }
 
 template<typename T>
-std::shared_ptr<TStorage<T>> GetStorage(StorageRegister& r)
+std::shared_ptr<TStorage<T>> GetStorage(Register& r)
 {
 	size_t type = typeid(T).hash_code();
 
-	std::shared_ptr<DataStorage> entry = r.registerMap.find(type)->second;
+	std::shared_ptr<Storage> entry = r.registerMap.find(type)->second;
 
 	return std::static_pointer_cast<TStorage<T>>(entry);
 }
 
 template<typename T>
-void RemoveStorage(StorageRegister& r)
+void RemoveStorage(Register& r)
 {
 	size_t type = typeid(T).hash_code();
 	r.registerMap.erase(type);
 }
 
 
-bool OnKeyReturn(StorageRegister& r, Key key)
+bool OnKeyReturn(Register& r, Key key)
 {
 	// Clear key entries in relevant storages
 	// Bit set defines which storages are needed
@@ -44,19 +44,19 @@ bool OnKeyReturn(StorageRegister& r, Key key)
 }
 
 template<typename T>
-void MakeEntry(StorageRegister& r, Key& key, T value)
+void MakeEntry(Register& r, Key& key, T value)
 {
 	MakeEntry(GetStorage<T>(r), key, value);
 }
 
 template<typename T>
-T& GetEntry(StorageRegister& r, Key& key)
+T& GetEntry(Register& r, Key& key)
 {
 	return GetEntry(GetStorage<T>(r), key);
 }
 
 template<typename T>
-void ClearEntry(StorageRegister& r, Key& key)
+void ClearEntry(Register& r, Key& key)
 {
 	ClearEntry(GetStorage<T>(r), key);
 }

@@ -19,10 +19,10 @@ struct KeyFactory
 
 void ReturnKey(KeyFactory& factory, Key key)
 {
-	// Notify Register that key has been returned
-
 	// Recycle key
 	factory.freeKeys.push(key);
+
+	// Notify Register that key has been returned
 }
 
 Key IssueKey(KeyFactory& factory)
