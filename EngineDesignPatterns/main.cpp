@@ -82,42 +82,57 @@ bool OnReceive(MeshData data)
 	return true;
 }
 
-void RunDODTest() 
+
+
+void RunDODEventTest()
 {
-	KeyFactory factory;
-	Key key1 = IssueKey(factory);
-	Key key2 = IssueKey(factory);
-
-	Register reg;
-	AddStorage<MeshData>(reg);
-
-	MeshData data;
-	data.x = 10;
-	data.y = 11;
-	data.z = 12;
-
-	MakeEntry<MeshData>(reg, key1, data);
-	MakeEntry<MeshData>(reg, key2, data);
-	GetEntry<MeshData>(reg, key1);
-	ClearEntry<MeshData>(reg, key1);
-
-
 	// Subscribe to a system not data
 	Station<MeshData> tConn;
+
 	Subscribe(tConn, OnReceive);
-	Publish(tConn, data);
 	Unsubscribe(tConn, OnReceive);
+}
+
+
+void RunDODTest() 
+{
+	// Init systems
+	RegisterSystem regSystem;
+	KeyFactorySystem keySystem;
+
+	// Init data
+	Register reg;
+
+	KeyFactory factory;
+	Key key1 = keySystem.IssueKey(factory);
+	Key key2 = keySystem.IssueKey(factory);
+
+	// Create test data
+	regSystem.RegisterStorageSystem<MeshData>(reg);
+
+	for (size_t i = 0; i < 20; i++)
+	{
+		MeshData data;
+		data.x = i;
+		data.y = i + 1;
+		data.z = i + 2;
+
+		regSystem.MakeEntry<MeshData>(reg, key1, data);
+		data = regSystem.GetEntry<MeshData>(reg, key1);
+
+		std::cout << data.x << " " << data.y << " " << data.z << std::endl;
+	}
 }
 
 int main()
 {
-	//RunDODTest();
+	RunDODTest();
 	//RunVoidFuncPtrTest();
 	//RunParamFuncPtrTest();
 
 	//Casting();
 	//InheritanceByData();
-	InheritanceByInterface();
+	//InheritanceByInterface();
 
 	std::cin.get();
 }

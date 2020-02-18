@@ -5,62 +5,69 @@
 
 struct Register
 {
-	std::map<size_t, std::shared_ptr<Storage>> registerMap;
+	std::map<size_t, std::shared_ptr<StorageSystem>> registerMap;
 };
 
-template<typename T>
-void AddStorage(Register& r)
-{
-	size_t type = typeid(T).hash_code();
-	auto entry = std::make_shared<TStorage<T>>();
-	r.registerMap.emplace(type, entry);
-}
 
-template<typename T>
-std::shared_ptr<TStorage<T>> GetStorage(Register& r)
+class RegisterSystem
 {
-	size_t type = typeid(T).hash_code();
-	auto entry = r.registerMap.find(type)->second;
-	return std::static_pointer_cast<TStorage<T>>(entry);
-}
+public:
+	template<typename T>
+	void RegisterStorageSystem(Register& r)
+	{
+		size_t type = typeid(T).hash_code();
+		auto entry = std::make_shared<TStorageSystem<T>>();
+		r.registerMap.emplace(type, entry);
+	}
 
-template<typename T>
-void RemoveStorage(Register& r)
-{
-	size_t type = typeid(T).hash_code();
-	r.registerMap.erase(type);
-}
+	template<typename T>
+	void DeregisterStorageSystem(Register& r)
+	{
+		size_t type = typeid(T).hash_code();
+		r.registerMap.erase(type);
+	}
 
+	template<typename T>
+	void MakeEntry(Register& r, Key& key, T value)
+	{
+		std::shared_ptr<TStorageSystem<T>> system = GetStorageSystem<T>(r);
+		
+		system->MakeEntry(key, value);
+	}
 
-void ClearAllEntries(Register& r, Key& key)
-{
-	// Clear key entries in relevant storages
-	//for (auto entries : r.registerMap) 
-	//{
-	//	ClearEntry(entries.second, key);
-	//}
-}
+	template<typename T>
+	T& GetEntry(Register& r, Key& key)
+	{
+		std::shared_ptr<TStorageSystem<T>> system = GetStorageSystem<T>(r);
 
-template<typename T>
-void MakeEntry(Register& r, Key& key, T value)
-{
-	auto storage = GetStorage<T>(r);
-	MakeEntry<T>(storage, key, value);
-}
+		return system->GetEntry(key);
+	}
 
-template<typename T>
-T& GetEntry(Register& r, Key& key)
-{
-	auto storage = GetStorage<T>(r);
-	auto entry = GetEntry<T>(storage, key);
-	return entry;
-}
+	template<typename T>
+	void ClearEntry(Register& r, Key& key)
+	{
+		std::shared_ptr<TStorageSystem<T>> system = GetStorageSystem<T>(r);
 
-template<typename T>
-void ClearEntry(Register& r, Key& key)
-{
-	auto storage = GetStorage<T>(r);
-	ClearEntry(storage, key);
-}
+		system->ClearEntry(key);
+	}
+
+	void ClearAllEntries(Register& r, Key& key)
+	{
+		// Clear key entries in relevant storages
+		for (auto entry : r.registerMap) 
+		{
+			entry.second->ClearEntry(key);
+		}
+	}
+
+private:
+	template<typename T>
+	std::shared_ptr<TStorageSystem<T>> GetStorageSystem(Register& r)
+	{
+		size_t type = typeid(T).hash_code();
+		auto entry = r.registerMap.find(type)->second;
+		return std::static_pointer_cast<TStorageSystem<T>>(entry);
+	}
+};
 
 

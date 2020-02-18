@@ -5,41 +5,35 @@
 #include "Key.h"
 #include "Data.h"
 
-/**
- * Pros:
- *	Variable map size
- *	No empty spots
- *	No size per runtime necessary
- * Cons:
- *	N log n access times
- */
- // aka Component Array
 
-
-struct Storage
-{};
-
-template <typename T>
-struct TStorage : Storage
+class StorageSystem
 {
-    std::map<Key, T> storageMap;
+public:
+	virtual ~StorageSystem() = default;
+	virtual void ClearEntry(Key& key) = 0;
 };
 
 
-template<typename T>
-void MakeEntry(std::shared_ptr<TStorage<T>> storage, Key& key, T value)
+template <typename T>
+class TStorageSystem : public StorageSystem
 {
-	storage->storageMap.emplace(key, value);
-}
+public:
+	void MakeEntry(Key& key, T value)
+	{
+		storageMap.erase(key); // TODO: Replacing a value is only possible by erasing the key first
+		storageMap.emplace(key, value);
+	}
 
-template<typename T>
-T& GetEntry(std::shared_ptr<TStorage<T>> storage, Key& key)
-{
-	return storage->storageMap.find(key)->second;
-}
+	T& GetEntry(Key& key)
+	{
+		return storageMap.find(key)->second;
+	}
 
-template<typename T>
-void ClearEntry(std::shared_ptr<TStorage<T>> storage, Key& key)
-{
-	storage->storageMap.erase(key);
-}
+	virtual void ClearEntry(Key& key) override
+	{
+		storageMap.erase(key);
+	}
+
+private:
+	std::map<Key, T> storageMap; // N log(n) access times
+};
