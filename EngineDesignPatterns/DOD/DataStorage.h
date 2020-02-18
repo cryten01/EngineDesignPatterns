@@ -6,16 +6,16 @@
 #include "Data.h"
 
 
-class StorageSystem
+class DataStorageSystem
 {
 public:
-	virtual ~StorageSystem() = default;
+	virtual ~DataStorageSystem() = default;
 	virtual void ClearEntry(Key& key) = 0;
 };
 
 
 template <typename T>
-class TStorageSystem : public StorageSystem
+class TDataStorageSystem : public DataStorageSystem
 {
 public:
 	void MakeEntry(Key& key, T value)

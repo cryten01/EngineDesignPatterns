@@ -3,22 +3,22 @@
 #include <vector>
 #include <cstdint>
 
-
+#include "System.h"
 
 
 // A simple type alias (helps in changing data type if necessary)
 using Key = std::uint32_t;
 
-struct KeyFactory
+struct KeyFactoryData
 {
 	Key keyCreator;
 	std::queue<Key> freeKeys;
 };
 
-class KeyFactorySystem 
+class KeyFactorySystem : public System
 {
 public:
-	void ReturnKey(KeyFactory& factory, Key key)
+	void ReturnKey(KeyFactoryData& factory, Key key)
 	{
 		// Recycle key
 		factory.freeKeys.push(key);
@@ -26,7 +26,7 @@ public:
 		// Notify Register that key has been returned
 	}
 
-	Key IssueKey(KeyFactory& factory)
+	Key IssueKey(KeyFactoryData& factory)
 	{
 		if (!factory.freeKeys.empty())
 		{

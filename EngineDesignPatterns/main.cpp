@@ -4,10 +4,11 @@
 #include "FDC/FunctionSet.h"
 
 #include "DOD/Key.h"
-#include "DOD/Storage.h"
-#include "DOD/Register.h"
-#include "DOD/PubSub.h"
 #include "DOD/Data.h"
+#include "DOD/DataStorage.h"
+#include "DOD/DataRegistry.h"
+#include "DOD/SystemRegistry.h"
+#include "DOD/Station.h"
 
 #include "Concepts/FunctionPointers.h"
 #include "Concepts/InheritanceByData.h"
@@ -19,8 +20,6 @@
  *	Functional Programming (Immutability, Reduce Side effects, Save Multi Threading)
  *	Actor Model (Event Based, Save Multi Threading)
  */
-
-
 
  // Data types
  // Groups of different data types (0-n)
@@ -76,9 +75,9 @@ void RunFDCTest()
 }
 
 
-bool OnReceive(MeshData data) 
+bool OnReceive(KeyEvent data) 
 {
-	std::cout << "Received transform data" << std::endl;
+	std::cout << "Received data from event" << std::endl;
 	return true;
 }
 
@@ -86,29 +85,43 @@ bool OnReceive(MeshData data)
 
 void RunDODEventTest()
 {
-	// Subscribe to a system not data
-	Station<MeshData> tConn;
+	Station<KeyEvent> station; 	// Subscribe to a system not data
 
-	Subscribe(tConn, OnReceive);
-	Unsubscribe(tConn, OnReceive);
+	KeyEvent e;
+	e.key = 10;
+
+	// Get Station
+	// 
+	// Call ClearAllEntries();
+
+
+	StationSystem::Subscribe(station, OnReceive);
+	StationSystem::Publish(station, e);
+	StationSystem::Unsubscribe(station, OnReceive);
 }
 
 
 void RunDODTest() 
 {
+	SystemRegistryData sysRegData;
+	DataRegistryData reg;
+	KeyFactoryData factory;
+
 	// Init systems
-	RegisterSystem regSystem;
-	KeyFactorySystem keySystem;
+	SystemRegistrySystem sysreg;
+
+	sysreg.AddSystem<DataRegistrySystem>(sysRegData);
+	sysreg.AddSystem<KeyFactorySystem>(sysRegData);
 
 	// Init data
-	Register reg;
+	std::shared_ptr<DataRegistrySystem> regSystem = sysreg.GetSystem<DataRegistrySystem>(sysRegData);
+	std::shared_ptr<KeyFactorySystem> keySystem = sysreg.GetSystem<KeyFactorySystem>(sysRegData);
 
-	KeyFactory factory;
-	Key key1 = keySystem.IssueKey(factory);
-	Key key2 = keySystem.IssueKey(factory);
+	Key key1 = keySystem->IssueKey(factory);
+	Key key2 = keySystem->IssueKey(factory);
 
 	// Create test data
-	regSystem.RegisterStorageSystem<MeshData>(reg);
+	regSystem->RegisterStorageSystem<MeshData>(reg);
 
 	for (size_t i = 0; i < 20; i++)
 	{
@@ -117,8 +130,8 @@ void RunDODTest()
 		data.y = i + 1;
 		data.z = i + 2;
 
-		regSystem.MakeEntry<MeshData>(reg, key1, data);
-		data = regSystem.GetEntry<MeshData>(reg, key1);
+		regSystem->MakeEntry<MeshData>(reg, key1, data);
+		data = regSystem->GetEntry<MeshData>(reg, key1);
 
 		std::cout << data.x << " " << data.y << " " << data.z << std::endl;
 	}
@@ -127,6 +140,7 @@ void RunDODTest()
 int main()
 {
 	RunDODTest();
+	RunDODEventTest();
 	//RunVoidFuncPtrTest();
 	//RunParamFuncPtrTest();
 
