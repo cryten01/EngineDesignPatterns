@@ -3,6 +3,7 @@
 
 #include "../FDC/DataSet.h"
 #include "Key.h"
+#include "Data.h"
 
 /**
  * Pros:
@@ -15,15 +16,15 @@
  // aka Component Array
 
 
-
 struct Storage
 {};
 
 template <typename T>
 struct TStorage : Storage
 {
-	std::map<Key, T> storageMap;
+    std::map<Key, T> storageMap;
 };
+
 
 template<typename T>
 void MakeEntry(std::shared_ptr<TStorage<T>> storage, Key& key, T value)

@@ -57,10 +57,19 @@
     <ClInclude Include="DOD\Register.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Concepts\Inheritance.h">
+    <ClInclude Include="DOD\Storage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\Storage.h">
+    <ClInclude Include="DOD\Data.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Concepts\InheritanceByData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Concepts\InheritanceBySystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Concepts\StaticCasting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

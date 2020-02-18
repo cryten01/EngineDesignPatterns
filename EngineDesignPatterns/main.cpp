@@ -7,9 +7,12 @@
 #include "DOD/Storage.h"
 #include "DOD/Register.h"
 #include "DOD/PubSub.h"
+#include "DOD/Data.h"
 
 #include "Concepts/FunctionPointers.h"
-#include "Concepts/Inheritance.h"
+#include "Concepts/InheritanceByData.h"
+#include "Concepts/InheritanceBySystem.h"
+#include "Concepts/StaticCasting.h"
 
 /**
  *	Entity Component System (Separation Function/Data, Composition over inheritance, Save Multi Threading)
@@ -73,7 +76,7 @@ void RunFDCTest()
 }
 
 
-bool OnReceive(TransformData data) 
+bool OnReceive(MeshData data) 
 {
 	std::cout << "Received transform data" << std::endl;
 	return true;
@@ -86,30 +89,24 @@ void RunDODTest()
 	Key key2 = IssueKey(factory);
 
 	Register reg;
-	AddStorage<TransformData>(reg);
-	AddStorage<LightData>(reg);
+	AddStorage<MeshData>(reg);
 
-	TransformData data;
-	data.orientation = glm::vec3(0);
-	data.position = glm::vec3(0);
-	data.scale = glm::vec3(1);
+	MeshData data;
+	data.x = 10;
+	data.y = 11;
+	data.z = 12;
 
-	MakeEntry<TransformData>(reg, key1, data);
-	MakeEntry<TransformData>(reg, key2, data);
-	GetEntry<TransformData>(reg, key1);
-	ClearEntry<TransformData>(reg, key1);
+	MakeEntry<MeshData>(reg, key1, data);
+	MakeEntry<MeshData>(reg, key2, data);
+	GetEntry<MeshData>(reg, key1);
+	ClearEntry<MeshData>(reg, key1);
 
 
 	// Subscribe to a system not data
-	Station<TransformData> tConn;
+	Station<MeshData> tConn;
 	Subscribe(tConn, OnReceive);
 	Publish(tConn, data);
 	Unsubscribe(tConn, OnReceive);
-
-	std::shared_ptr<Storage> st1 = std::make_shared<TStorage<int>>();
-	std::static_pointer_cast<TStorage<int>>(st1)->storageMap;
-
-	std::shared_ptr<Storage> st2 = std::make_shared<TStorage<float>>();
 }
 
 int main()
@@ -118,7 +115,8 @@ int main()
 	//RunVoidFuncPtrTest();
 	//RunParamFuncPtrTest();
 
-	InheritanceByElement();
+	Casting();
+	//InheritanceByElement();
 	//InheritanceByInterface();
 
 	std::cin.get();
