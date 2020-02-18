@@ -12,6 +12,7 @@
  * For this version inheritance is used per component.
  *
  * Note that only components can be stored inside storages.
+ * Decoupling between data and logic is desired in both cases.
  */
 
 
@@ -28,104 +29,103 @@ struct BComp : Comp
 	float value;
 };
 
+// Decoupling between data and logic
+struct CompMap 
+{
+	std::map<int, std::shared_ptr<Comp>> storageMap;
+};
 
-class CompMap
+struct RegMap 
+{
+	std::map<std::string, CompMap> interfaceMap;
+};
+
+
+class CompMapSystem
 {
 public:
-	void ClearEntry(int id)
+	void ClearEntry(CompMap& map, int id)
 	{
-		storageMap.erase(id);
+		map.storageMap.erase(id);
 		std::cout << "Cleared Entry" << std::endl;
 	}
 
-	std::shared_ptr<Comp> GetEntry(int id)
+	std::shared_ptr<Comp> GetEntry(CompMap& map, int id)
 	{
 		std::cout << "Get Entry" << std::endl;
-		return storageMap.find(id)->second;
+		std::shared_ptr<Comp> entry = map.storageMap.find(id)->second;
+		return entry;
 	}
 
-	void AddEntry(int id, std::shared_ptr<Comp> value)
+	void AddEntry(CompMap& map, int id, std::shared_ptr<Comp> value)
 	{
-		storageMap.emplace(id, value);
+		map.storageMap.emplace(id, value);
 		std::cout << "Added Entry" << std::endl;
 	}
-
-	std::map<int, std::shared_ptr<Comp>> storageMap;
 };
 
 
 /**
  * Note that T is here to store the IData type as key and to cast the IData into the specific type.
  */
-class MapRegister
+class MapRegisterSystem
 {
 public:
 
 	template <typename T>
-	void CreateMap()
+	void AddMap(RegMap& map)
 	{
 		auto type = typeid(T).name();
-		interfaceMap.emplace(type, std::make_shared<CompMap>());
-		std::cout << "Created map with abstract Element" << std::endl;
+		map.interfaceMap.emplace(type, CompMap());
+		std::cout << "Created abstract component map" << std::endl;
 	}
 
 	template <typename T>
-	void AddEntry(int id, std::shared_ptr<Comp> value)
+	void AddEntry(RegMap& map, int id, std::shared_ptr<T> value)
 	{
 		auto type = typeid(T).name();
-		auto interface = interfaceMap.find(type)->second;
-		interface->AddEntry(id, value);
+		auto compMap = map.interfaceMap.find(type)->second;
+		system.AddEntry(compMap, id, value);
 	}
 
 	template <typename T>
-	std::shared_ptr<T> GetEntry(int id)
+	std::shared_ptr<T> GetEntry(RegMap& map, int id)
 	{
 		auto type = typeid(T).name();
-		auto interface = interfaceMap.find(type)->second;
-		std::shared_ptr<Comp> entry = interface->GetEntry(id);
+		auto compMap = map.interfaceMap.find(type)->second;
+		auto entry = system.GetEntry(compMap, id);
 		return std::static_pointer_cast<T>(entry);
 	}
 
-	void ClearAllEntries(int id)
+	void ClearAllEntries(RegMap& map, int id)
 	{
-		for (auto interface : interfaceMap)
+		for (auto interface : map.interfaceMap)
 		{
-			interface.second->ClearEntry(id);
+			auto compMap = interface.second;
+			system.ClearEntry(compMap, id);
 		}
 	}
 
-	std::map<std::string, std::shared_ptr<CompMap>> interfaceMap;
+private:
+	CompMapSystem system;
 };
 
 
 
-void InheritanceByElement()
+void InheritanceByData()
 {
-	MapRegister reg;
-	reg.CreateMap<int>();
-	reg.CreateMap<AComp>();
-	reg.CreateMap<BComp>();
+	RegMap regMap;
+	MapRegisterSystem system;
+	system.AddMap<int>(regMap);
+	system.AddMap<AComp>(regMap);
+	system.AddMap<BComp>(regMap);
 
-	AComp data1;
-	data1.value = 1234;
-	Comp* aCompRef = &data1;
+	std::shared_ptr<AComp> data = std::make_shared<AComp>();
+	data->value = 120;
 
-	AComp data2 = *static_cast<AComp*>(aCompRef);
+	system.AddEntry<AComp>(regMap, 0, data);
+	std::shared_ptr<AComp> result = system.GetEntry<AComp>(regMap, 0);
 
-	std::cout << data2.value << std::endl;
+	std::cout << result->value << std::endl;
 
-	// Note that only inherited IData types are possible!
-	//std::shared_ptr<AComp> aIData = std::make_shared<AComp>();
-	//aIData->value = 10;
-	//std::shared_ptr<BComp> bIData = std::make_shared<BComp>();
-	//bIData->value = 12;
-	//reg.AddEntry<AComp>(0, aIData);
-	//reg.AddEntry<BComp>(0, bIData);
-
-	//aIData = reg.GetEntry<AComp>(0);
-	//std::cout << aIData->value << std::endl;
-	//bIData = reg.GetEntry<BComp>(0);
-	//std::cout << bIData->value << std::endl;
-
-	//reg.ClearAllEntries(0);
 }

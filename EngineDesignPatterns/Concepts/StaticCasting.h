@@ -13,12 +13,12 @@ struct Specific : Abstract
 };
 
 
+
 void Casting() 
 {
-	// Raw pointer version
+	// Raw pointer version (no guarantee that value is alive!)
 	Specific<int> data;
 	data.val = 1234;
-
 	Abstract* aPtr = &data;
 	Specific<int>* sPtr = static_cast<Specific<int>*>(aPtr);
 

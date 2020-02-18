@@ -32,7 +32,7 @@ void RemoveStorage(Register& r)
 }
 
 
-void OnKeyReturn(Register& r, Key& key)
+void ClearAllEntries(Register& r, Key& key)
 {
 	// Clear key entries in relevant storages
 	//for (auto entries : r.registerMap) 

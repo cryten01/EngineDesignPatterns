@@ -28,13 +28,16 @@ public:
 	virtual void ClearEntry(int id) override
 	{
 		storageMap.erase(id);
-		std::cout << "Cleared Entry" << std::endl;
+	}
+
+	T& GetEntry(int id) 
+	{
+		return storageMap.find(id)->second;
 	}
 
 	void AddEntry(int id, T value)
 	{
 		storageMap.emplace(id, value);
-		std::cout << "Added Entry" << std::endl;
 	}
 
 private:
@@ -42,34 +45,59 @@ private:
 };
 
 
-struct MapSystemManager
+
+
+class MapSystemManager
 {
+public:
+
 	template <typename T> // Entry needs to be specific because of T
 	void CreateInterface()
 	{
 		auto type = typeid(T).name();
-		interfaceMap.emplace(type, std::make_shared<MapSystem<T>>());
+		IMapSystemsMap.emplace(type, std::make_shared<MapSystem<T>>());
+
 		std::cout << "Created interface with Implementation" << std::endl;
 	}
 
 	template <typename T>
 	void AddEntry(int id, T value)
 	{
-		auto type = typeid(T).name();
-		auto interface = interfaceMap.find(type)->second;
-		auto implementation = std::static_pointer_cast<MapSystem<T>>(interface);
-		implementation->AddEntry(id, value);
+		auto mapSystem = GetMapSystem<T>(id);
+		mapSystem->AddEntry(id, value);
+
+		std::cout << "Added Entry" << std::endl;
+	}
+
+	template <typename T>
+	T& GetEntry(int id)
+	{
+		std::cout << "Got Entry from interface" << std::endl;
+
+		auto mapSystem = GetMapSystem<T>(id);
+		return mapSystem->GetEntry(id);
 	}
 
 	void ClearAllEntries(int id)
 	{
-		for (auto interface : interfaceMap)
+		for (auto mapSystem : IMapSystemsMap) 
 		{
-			interface.second->ClearEntry(id);
+			mapSystem.second->ClearEntry(id);
+
+			std::cout << "Cleared Entry" << std::endl;
 		}
 	}
 
-	std::map<std::string, std::shared_ptr<IMapSystem>> interfaceMap;
+	template <typename T>
+	std::shared_ptr<MapSystem<T>> GetMapSystem(int id)
+	{
+		auto type = typeid(T).name();
+		auto interface = IMapSystemsMap.find(type)->second;
+		return std::static_pointer_cast<MapSystem<T>>(interface);
+	};
+
+private:
+	std::map<std::string, std::shared_ptr<IMapSystem>> IMapSystemsMap;
 };
 
 void InheritanceByInterface()
@@ -80,6 +108,11 @@ void InheritanceByInterface()
 
 	manager.AddEntry<int>(0, 10);
 	manager.AddEntry<float>(0, 0.5f);
+
+	int IResult = manager.GetEntry<int>(0);
+	float fResult = manager.GetEntry<float>(0);
+
+	std::cout << fResult << std::endl;
 
 	manager.ClearAllEntries(0);
 }

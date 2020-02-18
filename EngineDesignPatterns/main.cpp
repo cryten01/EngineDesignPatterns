@@ -115,9 +115,9 @@ int main()
 	//RunVoidFuncPtrTest();
 	//RunParamFuncPtrTest();
 
-	Casting();
-	//InheritanceByElement();
-	//InheritanceByInterface();
+	//Casting();
+	//InheritanceByData();
+	InheritanceByInterface();
 
 	std::cin.get();
 }
