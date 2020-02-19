@@ -4,6 +4,7 @@
 #include <cstdint>
 
 #include "System.h"
+#include "Station.h"
 
 // A simple type alias (helps in changing data type if necessary)
 using Entity = std::uint32_t;
@@ -24,7 +25,8 @@ public:
 		// Recycle entity
 		factory.freeEntities.push(entity);
 
-		// Notify Register that entity has been returned
+		// Notify storages over station that entity has been returned
+		StationSystem::Publish<Entity>(entity);
 	}
 
 	Entity IssueEntity(EntityFactoryData& factory)

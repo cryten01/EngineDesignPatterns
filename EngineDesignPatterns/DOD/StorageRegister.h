@@ -1,11 +1,24 @@
 #pragma once
 #include "Storage.h"
 #include "System.h"
+#include "Station.h"
 
 // Aka Component Manager
 class StorageRegister : public System
 {
 public:
+	StorageRegister() 
+	{
+		auto lambda = [this](Entity e) -> bool
+		{
+			this->ClearAllEntries(e);
+			return true;
+		};
+
+		std::cout << "Created Storage Register lambda()" << std::endl;
+		StationSystem::Subscribe<Entity>(lambda);
+	}
+
 	template<typename T>
 	void AddStorage()
 	{

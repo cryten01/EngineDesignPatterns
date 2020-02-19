@@ -54,20 +54,25 @@ void RunDODEventTest()
 {
 	StationData<EntityEvent> station; 	// Subscribe to a system not data
 
+
+	AType a;
+	a.InitCallbacks();
+
+	BType b;
+	b.InitCallbacks();
+
 	EntityEvent e;
 	e.entity = 10;
 
-	AType atype;
-	BType btype;
+	CollisionEvent c;
+	c.isColliding = true;
 
-	atype.Subscribe();
-	btype.Subscribe();
-
-	StationSystem::Publish(EntityEvent());
+	StationSystem::Publish(e);
+	StationSystem::Publish(c);
 
 	//StationSystem::Subscribe<EntityEvent>(btype.OnReceive);
 	//StationSystem::Subscribe<EntityEvent>(atype.OnFoo);
-	//StationSystem::Publish(e);
+
 	//StationSystem::Unsubscribe<EntityEvent>(btype.OnReceive);
 }
 
@@ -89,6 +94,7 @@ void RunDODTest()
 
 	// Create test data
 	storageSys->AddStorage<MeshData>();
+	storageSys->AddStorage<TestData>();
 
 	for (size_t i = 0; i < 20; i++)
 	{
@@ -96,18 +102,23 @@ void RunDODTest()
 		data.x = i;
 		data.y = i + 1;
 		data.z = i + 2;
+		storageSys->MakeEntry<MeshData>(entity2, data);
 
-		storageSys->MakeEntry<MeshData>(entity1, data);
-		data = storageSys->GetEntry<MeshData>(entity1);
+		TestData t;
+		t.y = 10;
+		storageSys->MakeEntry<TestData>(entity2, t);
 
-		std::cout << data.x << " " << data.y << " " << data.z << std::endl;
+		//data = storageSys->GetEntry<MeshData>(entity2);
+		//std::cout << data.x << " " << data.y << " " << data.z << std::endl;
 	}
+
+	entitySys->ReturnEntity(factory, entity2);
 }
 
 int main()
 {
 	RunDODTest();
-	RunDODEventTest();
+	//RunDODEventTest();
 
 	//RunVoidFuncPtrTest();
 	//RunParamFuncPtrTest();

@@ -10,14 +10,12 @@
 
 
 /**
- * Stations allow systems to communicate with each other without knowing the exact recipient.
+ * Stations allow systems to communicate with each other without knowing the recipient.
  * This is being realized with routing an event through a station<T>.
  */
 
 template <typename T>
 using CallbackFnPtr = std::function<bool(T)>; // Use lambdas because those are type independent
-
-
 
 template <typename T>
 struct StationData
@@ -25,12 +23,11 @@ struct StationData
 	std::vector<CallbackFnPtr<T>> subscriber;
 };
 
-
 namespace StationSystem
 {
 	namespace 
 	{
-		// The compiler creates one station for each data type.
+		// The compiler creates one station for each data type when using templates in combination with static
 		template <typename T>
 		static StationData<T> station; 
 	}
@@ -51,7 +48,7 @@ namespace StationSystem
 	{
 		std::cout << "Registered function" << std::endl;
 
-		// <T> is necessary in order to target correct station.
+		// <T> is necessary in order to target correct station
 		station<T>.subscriber.push_back(callback); 
 	}
 

@@ -32,6 +32,7 @@ public:
 	virtual void ClearEntry(Entity& entity) override
 	{
 		storageMap.erase(entity);
+		std::cout << "Clear entry from Storage" << std::endl;
 	}
 
 private:
