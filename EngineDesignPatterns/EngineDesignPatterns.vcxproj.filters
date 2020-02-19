@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ECS\ECS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ECS\EntityManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -48,9 +45,6 @@
     <ClInclude Include="Concepts\FunctionPointers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\Key.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DOD\Data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -66,16 +60,28 @@
     <ClInclude Include="DOD\Station.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\DataStorage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DOD\System.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\DataRegistry.h">
+    <ClInclude Include="DOD\Thoughts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\SystemRegistry.h">
+    <ClInclude Include="ECS\EntityComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DOD\Storage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DOD\EntityFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DOD\StorageRegister.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DOD\SystemRegister.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DOD\StationTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

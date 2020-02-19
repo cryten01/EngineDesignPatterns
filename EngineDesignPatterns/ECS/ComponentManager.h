@@ -3,7 +3,7 @@
 #include <unordered_map>
 #include <iostream>
 
-#include "ECS.h"
+#include "EntityComponent.h"
 #include "Component.h"
 
 class ComponentManager

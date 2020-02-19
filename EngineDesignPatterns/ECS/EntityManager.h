@@ -1,5 +1,5 @@
 #pragma once
-#include "ECS.h"
+#include "EntityComponent.h"
 #include <queue>
 #include <array>
 #include <cassert>

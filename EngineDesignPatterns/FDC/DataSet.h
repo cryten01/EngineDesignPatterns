@@ -18,10 +18,10 @@ struct LightData : Set
 	glm::vec3 attenuation;
 };
 
-struct KeyInputData : Set
+struct entityInputData : Set
 {
 	bool isPressed = false;
-	int keycode = 0;
+	int entitycode = 0;
 };
 
 

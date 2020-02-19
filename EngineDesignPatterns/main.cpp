@@ -3,46 +3,22 @@
 #include "FDC/DataSet.h"
 #include "FDC/FunctionSet.h"
 
-#include "DOD/Key.h"
+#include "DOD/EntityFactory.h"
 #include "DOD/Data.h"
-#include "DOD/DataStorage.h"
-#include "DOD/DataRegistry.h"
-#include "DOD/SystemRegistry.h"
+#include "DOD/Storage.h"
+#include "DOD/StorageRegister.h"
+#include "DOD/SystemRegister.h"
 #include "DOD/Station.h"
+#include "DOD/StationTest.h"
 
 #include "Concepts/FunctionPointers.h"
 #include "Concepts/InheritanceByData.h"
 #include "Concepts/InheritanceBySystem.h"
 #include "Concepts/StaticCasting.h"
 
-/**
- *	Entity Component System (Separation Function/Data, Composition over inheritance, Save Multi Threading)
- *	Functional Programming (Immutability, Reduce Side effects, Save Multi Threading)
- *	Actor Model (Event Based, Save Multi Threading)
- */
-
- // Data types
- // Groups of different data types (0-n)
-
- // Function types
- // Groups of function types (0-n)
-
- // Separate isolated units
-
- // Node = Container of functionality that processes data, composed of other nodes
- // Message = Container of data that can be send across links
- // Connections = represented by the amount of node references each node has
-
- // Static methods are loaded during runtime (no loading control)
-
 
 void RunFDCTest()
 {
-	//std::shared_ptr<TransformData> td = std::make_shared<TransformData>();
-
-	// Simple Function Container  (no functions)
-	// Base Function Container (basic functions)
-
 	// Game object Data
 	Container dsContainer1;
 	Container dsContainer2;
@@ -56,7 +32,6 @@ void RunFDCTest()
 	TransformFuncs tfs;
 	fsContainer1.sets.AttachSet(fsContainer1, tfs);
 	fsContainer1.sets.GetSet(fsContainer1, tfs);
-
 
 	// Container Test
 	TransformData td = fsContainer1.sets.CreateSet<TransformData>();
@@ -75,9 +50,9 @@ void RunFDCTest()
 }
 
 
-bool OnReceive(KeyEvent data) 
+bool OnReceive(EntityEvent data) 
 {
-	std::cout << "Received data from event" << std::endl;
+	std::cout << "Main received entity event" << std::endl;
 	return true;
 }
 
@@ -85,43 +60,36 @@ bool OnReceive(KeyEvent data)
 
 void RunDODEventTest()
 {
-	Station<KeyEvent> station; 	// Subscribe to a system not data
+	StationData<EntityEvent> station; 	// Subscribe to a system not data
 
-	KeyEvent e;
-	e.key = 10;
-
-	// Get Station
-	// 
-	// Call ClearAllEntries();
+	EntityEvent e;
+	e.entity = 10;
 
 
-	StationSystem::Subscribe(station, OnReceive);
-	StationSystem::Publish(station, e);
-	StationSystem::Unsubscribe(station, OnReceive);
+	StationSystem::Subscribe(OnReceive);
+	StationSystem::Subscribe(OnFoo);
+	StationSystem::Publish(e);
+	StationSystem::Unsubscribe(OnReceive);
 }
 
 
 void RunDODTest() 
 {
-	SystemRegistryData sysRegData;
-	DataRegistryData reg;
-	KeyFactoryData factory;
+	EntityFactoryData factory;
 
 	// Init systems
-	SystemRegistrySystem sysreg;
-
-	sysreg.AddSystem<DataRegistrySystem>(sysRegData);
-	sysreg.AddSystem<KeyFactorySystem>(sysRegData);
+	SystemRegister::Add<StorageRegister>();
+	SystemRegister::Add<EntityFactorySystem>();
 
 	// Init data
-	std::shared_ptr<DataRegistrySystem> regSystem = sysreg.GetSystem<DataRegistrySystem>(sysRegData);
-	std::shared_ptr<KeyFactorySystem> keySystem = sysreg.GetSystem<KeyFactorySystem>(sysRegData);
+	std::shared_ptr<StorageRegister> storageSys = SystemRegister::Get<StorageRegister>();
+	std::shared_ptr<EntityFactorySystem> entitySys = SystemRegister::Get<EntityFactorySystem>();
 
-	Key key1 = keySystem->IssueKey(factory);
-	Key key2 = keySystem->IssueKey(factory);
+	Entity entity1 = entitySys->IssueEntity(factory);
+	Entity entity2 = entitySys->IssueEntity(factory);
 
 	// Create test data
-	regSystem->RegisterStorageSystem<MeshData>(reg);
+	storageSys->AddStorage<MeshData>();
 
 	for (size_t i = 0; i < 20; i++)
 	{
@@ -130,8 +98,8 @@ void RunDODTest()
 		data.y = i + 1;
 		data.z = i + 2;
 
-		regSystem->MakeEntry<MeshData>(reg, key1, data);
-		data = regSystem->GetEntry<MeshData>(reg, key1);
+		storageSys->MakeEntry<MeshData>(entity1, data);
+		data = storageSys->GetEntry<MeshData>(entity1);
 
 		std::cout << data.x << " " << data.y << " " << data.z << std::endl;
 	}
@@ -141,6 +109,7 @@ int main()
 {
 	RunDODTest();
 	RunDODEventTest();
+
 	//RunVoidFuncPtrTest();
 	//RunParamFuncPtrTest();
 

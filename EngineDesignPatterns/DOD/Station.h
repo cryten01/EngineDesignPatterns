@@ -4,22 +4,24 @@
 
 // Behavior changes in different classes 
 // Behavior is always the same
-// Subscribe:	Depots can subscribe in order to get notified when a key is returned.
-// Publish:		Key owners can return their key. This notifies all depots (Event listeners)
+// Subscribe:	Depots can subscribe in order to get notified when a entity is returned.
+// Publish:		entity owners can return their entity. This notifies all depots (Event listeners)
 // Function callback
+
+
+
+
+/**
+ * Stations allow systems to communicate with each other without knowing the exact recipient.
+ * This is being realized with routing an event through a station<T>.
+ */
 
 template <typename T>
 using CallbackFnPtr = bool(*)(T);
 
 
-/**
- * Stations allow systems to communicate with each other without knowing the exact recipient.
- * This is being realized with routing everything through a station.
- */
-
-
 template <typename T>
-struct Station
+struct StationData
 {
 	std::vector<CallbackFnPtr<T>> subscriber;
 };
@@ -27,10 +29,18 @@ struct Station
 
 namespace StationSystem
 {
-	template <typename T>
-	void Publish(Station<T>& station, T event)
+	namespace 
 	{
-		for (auto callback : station.subscriber)
+		// The compiler creates one station for each data type.
+		template <typename T>
+		static StationData<T> station; 
+	}
+
+	template <typename T>
+	void Publish(T event)
+	{
+		// Publish event to station members
+		for (auto callback : station<T>.subscriber)
 		{
 			std::cout << "Publish called" << std::endl;
 			callback(event);
@@ -38,21 +48,23 @@ namespace StationSystem
 	}
 
 	template <typename T>
-	void Subscribe(Station<T>& station, CallbackFnPtr<T> callback)
+	void Subscribe(CallbackFnPtr<T> callback)
 	{
 		std::cout << "Registered function" << std::endl;
-		station.subscriber.push_back(callback);
+
+		// <T> is necessary in order to target correct station.
+		station<T>.subscriber.push_back(callback); 
 	}
 
 	template <typename T>
-	void Unsubscribe(Station<T>& station, CallbackFnPtr<T> callback)
+	void Unsubscribe(CallbackFnPtr<T> callback)
 	{
-		for (size_t i = 0; i < station.subscriber.size(); i++)
+		for (size_t i = 0; i < station<T>.subscriber.size(); i++)
 		{
-			if (station.subscriber.at(i) == callback)
+			if (station<T>.subscriber.at(i) == callback)
 			{
 				std::cout << "Unregistered function" << std::endl;
-				station.subscriber.erase(station.subscriber.begin() + i);
+				station<T>.subscriber.erase(station<T>.subscriber.begin() + i);
 			}
 		}
 	}

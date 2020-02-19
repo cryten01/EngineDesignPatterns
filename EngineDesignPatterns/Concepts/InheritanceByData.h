@@ -66,7 +66,7 @@ public:
 
 
 /**
- * Note that T is here to store the IData type as key and to cast the IData into the specific type.
+ * Note that T is here to store the IData type as entity and to cast the IData into the specific type.
  */
 class MapRegisterSystem
 {

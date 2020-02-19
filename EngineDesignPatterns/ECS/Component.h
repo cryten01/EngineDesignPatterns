@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ECS.h"
+#include "EntityComponent.h"
 
 // The one instance of virtual inheritance in the entire implementation.
 // An interface is needed so that the ComponentManager (seen later)

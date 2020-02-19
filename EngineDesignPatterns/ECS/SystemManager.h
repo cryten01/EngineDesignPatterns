@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ECS.h"
+#include "EntityComponent.h"
 #include "System.h"
 #include <iostream>
 #include <unordered_map>

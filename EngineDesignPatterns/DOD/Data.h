@@ -4,9 +4,9 @@ struct Data
 {};
 
 
-struct KeyEvent : Data 
+struct EntityEvent : Data 
 {
-	Key key;
+	Entity entity;
 	bool handled;
 };
 
