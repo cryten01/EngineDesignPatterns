@@ -50,14 +50,6 @@ void RunFDCTest()
 }
 
 
-bool OnReceive(EntityEvent data) 
-{
-	std::cout << "Main received entity event" << std::endl;
-	return true;
-}
-
-
-
 void RunDODEventTest()
 {
 	StationData<EntityEvent> station; 	// Subscribe to a system not data
@@ -65,11 +57,18 @@ void RunDODEventTest()
 	EntityEvent e;
 	e.entity = 10;
 
+	AType atype;
+	BType btype;
 
-	StationSystem::Subscribe(OnReceive);
-	StationSystem::Subscribe(OnFoo);
-	StationSystem::Publish(e);
-	StationSystem::Unsubscribe(OnReceive);
+	atype.Subscribe();
+	btype.Subscribe();
+
+	StationSystem::Publish(EntityEvent());
+
+	//StationSystem::Subscribe<EntityEvent>(btype.OnReceive);
+	//StationSystem::Subscribe<EntityEvent>(atype.OnFoo);
+	//StationSystem::Publish(e);
+	//StationSystem::Unsubscribe<EntityEvent>(btype.OnReceive);
 }
 
 

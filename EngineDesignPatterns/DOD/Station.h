@@ -9,15 +9,14 @@
 // Function callback
 
 
-
-
 /**
  * Stations allow systems to communicate with each other without knowing the exact recipient.
  * This is being realized with routing an event through a station<T>.
  */
 
 template <typename T>
-using CallbackFnPtr = bool(*)(T);
+using CallbackFnPtr = std::function<bool(T)>; // Use lambdas because those are type independent
+
 
 
 template <typename T>
