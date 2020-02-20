@@ -3,7 +3,7 @@
 #include <iostream>
 #include <functional>
 
-#include "Data.h"
+#include "Component.h"
 #include "System.h"
 #include "Station.h"
 

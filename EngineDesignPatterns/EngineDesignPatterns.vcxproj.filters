@@ -15,24 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ECS\EntityManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ECS\Component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ECS\ComponentManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ECS\System.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ECS\SystemManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ECS\Coordinator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="FDC\DataSet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -45,9 +27,6 @@
     <ClInclude Include="Concepts\FunctionPointers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\Data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Concepts\InheritanceByData.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -57,31 +36,34 @@
     <ClInclude Include="Concepts\StaticCasting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\Station.h">
+    <ClInclude Include="ECS\Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\System.h">
+    <ClInclude Include="ECS\ComponentManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\Thoughts.h">
+    <ClInclude Include="ECS\ComponentStorage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\EntityComponent.h">
+    <ClInclude Include="ECS\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\Storage.h">
+    <ClInclude Include="ECS\EntityManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\EntityFactory.h">
+    <ClInclude Include="ECS\Station.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\StorageRegister.h">
+    <ClInclude Include="ECS\StationTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\SystemRegister.h">
+    <ClInclude Include="ECS\System.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DOD\StationTest.h">
+    <ClInclude Include="ECS\SystemManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ECS\Thoughts.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

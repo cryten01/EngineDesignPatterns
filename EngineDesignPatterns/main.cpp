@@ -3,13 +3,13 @@
 #include "FDC/DataSet.h"
 #include "FDC/FunctionSet.h"
 
-#include "DOD/EntityFactory.h"
-#include "DOD/Data.h"
-#include "DOD/Storage.h"
-#include "DOD/StorageRegister.h"
-#include "DOD/SystemRegister.h"
-#include "DOD/Station.h"
-#include "DOD/StationTest.h"
+#include "ECS/EntityManager.h"
+#include "ECS/Component.h"
+#include "ECS/ComponentStorage.h"
+#include "ECS/ComponentManager.h"
+#include "ECS/SystemManager.h"
+#include "ECS/Station.h"
+#include "ECS/StationTest.h"
 
 #include "Concepts/FunctionPointers.h"
 #include "Concepts/InheritanceByData.h"
@@ -79,18 +79,18 @@ void RunDODEventTest()
 
 void RunDODTest() 
 {
-	EntityFactoryData factory;
+	EntityManagerData factory;
 
 	// Init systems
-	SystemRegister::Add<StorageRegister>();
-	SystemRegister::Add<EntityFactorySystem>();
+	SystemManager::Add<ComponentManagerSystem>();
+	SystemManager::Add<EntityManagerSystem>();
 
 	// Init data
-	std::shared_ptr<StorageRegister> storageSys = SystemRegister::Get<StorageRegister>();
-	std::shared_ptr<EntityFactorySystem> entitySys = SystemRegister::Get<EntityFactorySystem>();
+	std::shared_ptr<ComponentManagerSystem> storageSys = SystemManager::Get<ComponentManagerSystem>();
+	std::shared_ptr<EntityManagerSystem> entitySys = SystemManager::Get<EntityManagerSystem>();
 
-	Entity entity1 = entitySys->IssueEntity(factory);
-	Entity entity2 = entitySys->IssueEntity(factory);
+	EntityID entity1 = entitySys->IssueEntity(factory);
+	EntityID entity2 = entitySys->IssueEntity(factory);
 
 	// Create test data
 	storageSys->AddStorage<MeshData>();
@@ -102,11 +102,11 @@ void RunDODTest()
 		data.x = i;
 		data.y = i + 1;
 		data.z = i + 2;
-		storageSys->MakeEntry<MeshData>(entity2, data);
+		storageSys->AddComponent<MeshData>(entity2, data);
 
 		TestData t;
 		t.y = 10;
-		storageSys->MakeEntry<TestData>(entity2, t);
+		storageSys->AddComponent<TestData>(entity2, t);
 
 		//data = storageSys->GetEntry<MeshData>(entity2);
 		//std::cout << data.x << " " << data.y << " " << data.z << std::endl;

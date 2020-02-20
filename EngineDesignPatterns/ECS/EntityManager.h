@@ -1,68 +1,62 @@
 #pragma once
-#include "EntityComponent.h"
 #include <queue>
+#include <vector>
 #include <array>
-#include <cassert>
+#include <bitset>
 
-class EntityManager
+#include "Entity.h"
+#include "System.h"
+#include "Station.h"
+
+
+struct EntityManagerData
+{
+	EntityID livingEntities = 0; // shows how many entities are currently in use
+
+	std::queue<EntityID> availableEntities{};
+
+	std::bitset<MAX_ENTITIES> usedEntities{}; // 0 = unused / 1 = used / index = id
+
+	std::array<Signature, MAX_ENTITIES> signatures{};
+};
+
+class EntityManagerSystem : public System
 {
 public:
-	EntityManager()
+	EntityID IssueEntity(EntityManagerData& factory)
 	{
-		// Initialize the queue with all possible entity IDs
-		for (Entity entity = 0; entity < MAX_ENTITIES; ++entity)
+		if (factory.availableEntities.size() > 0)
 		{
-			mAvailableEntities.push(entity);
+			EntityID entity = factory.availableEntities.front();
+			factory.availableEntities.pop();
+			return entity;
+		}
+		else
+		{
+			factory.livingEntities++;
+			return factory.livingEntities;
 		}
 	}
 
-	Entity CreateEntity()
+	void ReturnEntity(EntityManagerData& factory, EntityID entity)
 	{
-		assert(mLivingEntityCount < MAX_ENTITIES && "Too many entities in existence.");
+		// Reset components signature to 0
+		factory.signatures[entity].reset();
 
-		// Take an ID from the front of the queue
-		Entity id = mAvailableEntities.front();
-		mAvailableEntities.pop();
-		++mLivingEntityCount;
+		// Recycle entity
+		factory.availableEntities.push(entity);
 
-		return id;
+		// Notify storages over station that entity has been returned
+		StationSystem::Publish<EntityID>(entity);
 	}
 
-	void DestroyEntity(Entity entity)
+	void SetSignature(EntityManagerData& factory, EntityID entity, Signature signature)
 	{
-		//assert(entity < MAX_ENTITIES && "Entity out of range.");
-
-		// Invalidate the destroyed entity's signature
-		mSignatures[entity].reset();
-
-		// Put the destroyed ID at the back of the queue
-		mAvailableEntities.push(entity);
-		--mLivingEntityCount;
+		factory.signatures[entity] = signature;
 	}
 
-	void SetSignature(Entity entity, Signature signature)
+	Signature GetSignature(EntityManagerData& factory, EntityID entity)
 	{
-		assert(entity < MAX_ENTITIES && "Entity out of range.");
-
-		// Put this entity's signature into the array
-		mSignatures[entity] = signature;
+		return factory.signatures[entity];
 	}
-
-	Signature GetSignature(Entity entity)
-	{
-		assert(entity < MAX_ENTITIES && "Entity out of range.");
-
-		// Get this entity's signature from the array
-		return mSignatures[entity];
-	}
-
-private:
-	// Queue of unused entity IDs
-	std::queue<Entity> mAvailableEntities{};
-
-	// Array of signatures where the index corresponds to the entity ID
-	std::array<Signature, MAX_ENTITIES> mSignatures{};
-
-	// Total living entities - used to keep limits on how many exist
-	uint32_t mLivingEntityCount{};
 };

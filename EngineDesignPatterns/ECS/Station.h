@@ -2,25 +2,18 @@
 #include <vector>
 #include <functional>
 
-// Behavior changes in different classes 
-// Behavior is always the same
-// Subscribe:	Depots can subscribe in order to get notified when a entity is returned.
-// Publish:		entity owners can return their entity. This notifies all depots (Event listeners)
-// Function callback
-
-
 /**
  * Stations allow systems to communicate with each other without knowing the recipient.
  * This is being realized with routing an event through a station<T>.
  */
 
 template <typename T>
-using CallbackFnPtr = std::function<bool(T)>; // Use lambdas because those are type independent
+using Callback = std::function<bool(T)>; // Use lambdas because those are type independent
 
 template <typename T>
 struct StationData
 {
-	std::vector<CallbackFnPtr<T>> subscriber;
+	std::vector<Callback<T>> subscriber;
 };
 
 namespace StationSystem
@@ -44,16 +37,14 @@ namespace StationSystem
 	}
 
 	template <typename T>
-	void Subscribe(CallbackFnPtr<T> callback)
+	void Subscribe(Callback<T> callback)
 	{
 		std::cout << "Registered function" << std::endl;
-
-		// <T> is necessary in order to target correct station
 		station<T>.subscriber.push_back(callback); 
 	}
 
 	template <typename T>
-	void Unsubscribe(CallbackFnPtr<T> callback)
+	void Unsubscribe(Callback<T>& callback)
 	{
 		for (size_t i = 0; i < station<T>.subscriber.size(); i++)
 		{
