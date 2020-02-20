@@ -8,8 +8,8 @@
 #include "ECS/ComponentStorage.h"
 #include "ECS/ComponentManager.h"
 #include "ECS/SystemManager.h"
-#include "ECS/Station.h"
-#include "ECS/StationTest.h"
+#include "Event/Station.h"
+#include "Event/StationTest.h"
 
 #include "Concepts/FunctionPointers.h"
 #include "Concepts/InheritanceByData.h"

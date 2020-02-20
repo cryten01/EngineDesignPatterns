@@ -3,8 +3,8 @@
 #include <iostream>
 #include <functional>
 
-#include "Component.h"
-#include "System.h"
+#include "../ECS/Component.h"
+#include "../ECS/System.h"
 #include "Station.h"
 
 

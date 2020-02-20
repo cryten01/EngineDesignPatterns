@@ -1,7 +1,7 @@
 #pragma once
 #include "ComponentStorage.h"
 #include "System.h"
-#include "Station.h"
+#include "Event/Station.h"
 
 // Aka Component Manager
 class ComponentManagerSystem : public System

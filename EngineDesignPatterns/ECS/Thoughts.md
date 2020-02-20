@@ -51,6 +51,9 @@ public:
 **Actor model**
 *  For save multithreading.
 
+**Data oriented design**
+
+
 ## Benefits
 * Easy component interaction
 * Easy saving and loading of data

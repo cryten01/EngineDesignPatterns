@@ -51,19 +51,19 @@
     <ClInclude Include="ECS\EntityManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Station.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ECS\StationTest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ECS\System.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ECS\SystemManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Thoughts.h">
+    <ClInclude Include="ECS\Thoughts.md">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Event\Station.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Event\StationTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
