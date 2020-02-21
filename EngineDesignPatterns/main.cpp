@@ -1,128 +1,46 @@
 #include <iostream>
 
-#include "FDC/DataSet.h"
-#include "FDC/FunctionSet.h"
-
-#include "ECS/Coordinator.h"
-
-#include "Event/Station.h"
-#include "Event/StationTest.h"
-
 #include "Concepts/FunctionPointers.h"
 #include "Concepts/InheritanceByData.h"
 #include "Concepts/InheritanceBySystem.h"
 #include "Concepts/StaticCasting.h"
 
+#include "ECS/Coordinator.h"
+#include "Event/Station.h"
+#include "Testing/ComponentTypes.h"
+#include "Testing/EventTypes.h"
 
-void RunFDCTest()
+void RunEventTest()
 {
-	// Game object Data
-	Container dsContainer1;
-	Container dsContainer2;
+	//StationData<EntityEvent> station; 	// Subscribe to a system not data
 
-	// Game object Behavior
-	FSContainer fsContainer1;	
-	FSContainer fsContainer2;
-	FSContainer fsContainer3;
+	//AType a;
+	//a.InitCallbacks();
 
-	//TransformFS tfs;
-	TransformFuncs tfs;
-	fsContainer1.sets.AttachSet(fsContainer1, tfs);
-	fsContainer1.sets.GetSet(fsContainer1, tfs);
+	//BType b;
+	//b.InitCallbacks();
 
-	// Container Test
-	TransformData td = fsContainer1.sets.CreateSet<TransformData>();
-	LightData lds = fsContainer1.sets.CreateSet<LightData>();
-	fsContainer1.sets.AttachSet(dsContainer1, td);
-	fsContainer1.sets.AttachSet(dsContainer1, lds);
-	fsContainer2.sets.GetSet(dsContainer1, td);
-	fsContainer2.sets.GetSet(dsContainer1, lds);
-	fsContainer2.sets.RemoveSet<TransformData>(dsContainer1);
-	fsContainer2.sets.RemoveSet<LightData>(dsContainer1);
-	bool check = fsContainer2.sets.HasSet<TransformData>(dsContainer1);
+	//EntityEvent e;
+	//e.entity = 10;
 
-	// Messaging Test
-	fsContainer1.messaging.Send({ fsContainer2.messaging }, dsContainer1);
-	fsContainer2.messaging.Send({ fsContainer1.messaging, fsContainer3.messaging }, dsContainer2);
-}
+	//CollisionEvent c;
+	//c.isColliding = true;
 
-
-void RunDODEventTest()
-{
-	StationData<EntityEvent> station; 	// Subscribe to a system not data
-
-
-	AType a;
-	a.InitCallbacks();
-
-	BType b;
-	b.InitCallbacks();
-
-	EntityEvent e;
-	e.entity = 10;
-
-	CollisionEvent c;
-	c.isColliding = true;
-
-	StationSystem::Publish(e);
-	StationSystem::Publish(c);
+	//StationSystem::Publish(e);
+	//StationSystem::Publish(c);
 
 	//StationSystem::Subscribe<EntityEvent>(btype.OnReceive);
 	//StationSystem::Subscribe<EntityEvent>(atype.OnFoo);
-
 	//StationSystem::Unsubscribe<EntityEvent>(btype.OnReceive);
 }
 
-
-void RunDODTest() 
+void RunECSTest() 
 {
-	// Init systems
-	SystemManager sysManager;
-
-	sysManager.AddSystem<ComponentManager>();
-	sysManager.AddSystem<EntityManager>();
-
-	// Init data
-	std::shared_ptr<ComponentManager> storageSys = sysManager.GetSystem<ComponentManager>();
-	std::shared_ptr<EntityManager> entitySys = sysManager.GetSystem<EntityManager>();
-
-	EntityID entity1 = entitySys->CreateEntity();
-	EntityID entity2 = entitySys->CreateEntity();
-
-	// Create test data
-	storageSys->RegisterComponentStorage<MeshData>();
-	storageSys->RegisterComponentStorage<TestData>();
-
-	for (size_t i = 0; i < 20; i++)
-	{
-		MeshData data;
-		data.x = i;
-		data.y = i + 1;
-		data.z = i + 2;
-		storageSys->AddComponent<MeshData>(entity2, data);
-
-		TestData t;
-		t.y = 10;
-		storageSys->AddComponent<TestData>(entity2, t);
-
-		//data = storageSys->GetEntry<MeshData>(entity2);
-		//std::cout << data.x << " " << data.y << " " << data.z << std::endl;
-	}
-
-	entitySys->DestroyEntity(entity2);
 }
 
 int main()
 {
-	RunDODTest();
-	//RunDODEventTest();
-
-	//RunVoidFuncPtrTest();
-	//RunParamFuncPtrTest();
-
-	//Casting();
-	//InheritanceByData();
-	//InheritanceByInterface();
-
+	RunECSTest();
+	//RunEventTest();
 	std::cin.get();
 }

@@ -3,9 +3,11 @@
 #include <iostream>
 #include <functional>
 
-#include "../ECS/Component.h"
-#include "../ECS/System.h"
-#include "Station.h"
+#include "../ECS/Coordinator.h"
+#include "../Event/Station.h"
+
+#include "ComponentTypes.h"
+#include "EventTypes.h"
 
 
 struct AType

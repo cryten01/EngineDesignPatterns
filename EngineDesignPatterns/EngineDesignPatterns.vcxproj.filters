@@ -36,9 +36,6 @@
     <ClInclude Include="Concepts\StaticCasting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Component.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ECS\ComponentManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -54,19 +51,25 @@
     <ClInclude Include="ECS\SystemManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ECS\Thoughts.md">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Event\Station.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Event\StationTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ECS\ECS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ECS\Coordinator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Testing\ComponentTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Testing\EventTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Testing\StationTest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\Thoughts.md">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "System.h"
-#include "Component.h"
-#include "ComponentStorage.h"
+#include <assert.h>
 
+#include "System.h"
+#include "ComponentStorage.h"
 #include "Event/Station.h"
 
 

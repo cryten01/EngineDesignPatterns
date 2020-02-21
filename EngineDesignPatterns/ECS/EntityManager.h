@@ -3,6 +3,7 @@
 #include <vector>
 #include <array>
 #include <bitset>
+#include <assert.h>
 
 #include "ECS.h"
 #include "System.h"

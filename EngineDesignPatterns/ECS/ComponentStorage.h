@@ -2,7 +2,6 @@
 #include <map>
 
 #include "ECS.h"
-#include "Component.h"
 
 /**
  * This interface is needed so that the component manager 
