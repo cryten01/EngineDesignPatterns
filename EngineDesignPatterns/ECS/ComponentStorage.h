@@ -4,6 +4,13 @@
 #include "ECS.h"
 #include "Component.h"
 
+/**
+ * This interface is needed so that the component manager 
+ * can tell a generic Component Storage that an entity has been destroyed
+ * and therefore need to update its entry.
+ *
+ * TODO: Use station and lambdas for directly contacting each storage.
+ */
 class IComponentStorageSystem
 {
 public:
@@ -18,7 +25,8 @@ class ComponentStorageSystem : public IComponentStorageSystem
 public:
 	void MakeEntry(EntityID& entity, T value)
 	{
-		storageMap.erase(entity); // TODO: Replacing a value is only possible by erasing the entity first
+		// TODO: Replacing a value is only possible by erasing the entity first
+		storageMap.erase(entity); 
 		storageMap.emplace(entity, value);
 	}
 
@@ -34,5 +42,6 @@ public:
 	}
 
 private:
-	std::map<EntityID, T> storageMap; // n-log(n) access times
+	// N-log(n) access times
+	std::map<EntityID, T> storageMap;
 };

@@ -21,6 +21,7 @@ struct EntityManagerData
 	std::array<Signature, MAX_ENTITIES> signatures{};
 };
 
+
 class EntityManagerSystem : public System
 {
 public:
