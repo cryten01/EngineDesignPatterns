@@ -2,7 +2,7 @@
 
 struct SpeedComponent 
 {
-	int y;
+	float speed;
 };
 
 struct MeshComponent

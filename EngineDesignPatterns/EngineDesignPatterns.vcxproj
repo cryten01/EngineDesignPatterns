@@ -125,6 +125,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Testing\TestSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Concepts\FunctionPointers.h" />
@@ -146,6 +147,7 @@
     <ClInclude Include="FDC\FunctionSet.h" />
     <ClInclude Include="ECS\ComponentStorage.h" />
     <ClInclude Include="ECS\EntityManager.h" />
+    <ClInclude Include="Testing\TestSystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

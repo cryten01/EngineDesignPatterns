@@ -43,7 +43,7 @@ public:
 	template<typename T>
 	void SetSignature(Signature signature)
 	{
-		size_t type = typeid(T).name();
+		size_t type = typeid(T).hash_code();
 
 		assert(systemsMap.find(type) != systemsMap.end() && "System used before registered.");
 

@@ -4,7 +4,7 @@
 
 #include "System.h"
 #include "ComponentStorage.h"
-#include "Event/Station.h"
+#include "../Event/Station.h"
 
 
 class ComponentManager : public System
@@ -23,7 +23,7 @@ public:
 	}
 
 	template<typename T>
-	void RegisterComponentStorage()
+	void AddStorage()
 	{
 		size_t type = typeid(T).hash_code();
 

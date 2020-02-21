@@ -38,9 +38,9 @@ public:
 
 	// Component methods
 	template<typename T>
-	void RegisterComponentStorage()
+	void RegisterComponent()
 	{
-		mComponentManager->RegisterComponentStorage<T>();
+		mComponentManager->AddStorage<T>();
 	}
 
 	template<typename T>
@@ -82,9 +82,15 @@ public:
 
 	// System methods
 	template<typename T>
-	std::shared_ptr<T> RegisterSystem()
+	void RegisterSystem()
 	{
-		return mSystemManager->AddSystem<T>();
+		mSystemManager->AddSystem<T>();
+	}
+
+	template<typename T>
+	std::shared_ptr<T> GetSystem()
+	{
+		return mSystemManager->GetSystem<T>();
 	}
 
 	template<typename T>
