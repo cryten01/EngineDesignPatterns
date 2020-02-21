@@ -1,10 +1,8 @@
 #pragma once
 #include <map>
 
-#include "../FDC/DataSet.h"
-#include "Entity.h"
+#include "ECS.h"
 #include "Component.h"
-
 
 class IComponentStorageSystem
 {

@@ -1,27 +1,25 @@
 #pragma once
 
-struct Component
-{};
 
 
-struct CollisionEvent : Component 
+struct CollisionEvent 
 {
 	bool isColliding;
 };
 
-struct EntityEvent : Component 
+struct EntityEvent 
 {
 	EntityID entity;
 	bool handled;
 };
 
 
-struct TestData : Component 
+struct TestData 
 {
 	int y;
 };
 
-struct MeshData : Component
+struct MeshData
 {
 	float x, y, z;
 };

@@ -4,59 +4,78 @@
 #include <array>
 #include <bitset>
 
-#include "Entity.h"
+#include "ECS.h"
 #include "System.h"
 #include "Event/Station.h"
 
 
 struct EntityManagerData
 {
-	EntityID livingEntities = 0; // shows how many entities are currently in use
+	// Total living entities - used to keep limits on how many exist
+	size_t livingEntities{};
 
+	// Queue of unused entity IDs
 	std::queue<EntityID> availableEntities{};
 
-	std::bitset<MAX_ENTITIES> usedEntities{}; // 0 = unused / 1 = used / index = id
-
+	// Array of signatures where the index corresponds to the entity ID
 	std::array<Signature, MAX_ENTITIES> signatures{};
 };
 
 class EntityManagerSystem : public System
 {
 public:
-	EntityID IssueEntity(EntityManagerData& factory)
+	EntityManagerSystem() 
 	{
-		if (factory.availableEntities.size() > 0)
+		// Initialize the queue with all possible entity IDs
+		for (EntityID entity = 0; entity < MAX_ENTITIES; ++entity)
 		{
-			EntityID entity = factory.availableEntities.front();
-			factory.availableEntities.pop();
-			return entity;
-		}
-		else
-		{
-			factory.livingEntities++;
-			return factory.livingEntities;
+			factory.availableEntities.push(entity);
 		}
 	}
 
-	void ReturnEntity(EntityManagerData& factory, EntityID entity)
+	EntityID IssueEntity()
 	{
-		// Reset components signature to 0
+		assert(factory.livingEntities < MAX_ENTITIES && "Too many entities in existence.");
+
+		// Take an ID from the front of the queue
+		EntityID id = factory.availableEntities.front();
+		factory.availableEntities.pop();
+		++factory.livingEntities;
+
+		return id;
+	}
+
+	void ReturnEntity(EntityID entity)
+	{
+		assert(entity < MAX_ENTITIES && "Entity out of range.");
+
+		// Invalidate the returned entity's signature
 		factory.signatures[entity].reset();
 
-		// Recycle entity
+		// Put the returned ID at the back of the queue
 		factory.availableEntities.push(entity);
+		--factory.livingEntities;
 
 		// Notify storages over station that entity has been returned
 		StationSystem::Publish<EntityID>(entity);
 	}
 
-	void SetSignature(EntityManagerData& factory, EntityID entity, Signature signature)
+	void SetSignature(EntityID entity, Signature signature)
 	{
+		assert(entity < MAX_ENTITIES && "Entity out of range.");
+
+		// Put this entity's signature into the array
 		factory.signatures[entity] = signature;
 	}
 
-	Signature GetSignature(EntityManagerData& factory, EntityID entity)
+	Signature GetSignature(EntityID entity)
 	{
+		assert(entity < MAX_ENTITIES && "Entity out of range.");
+
+		// Get this entity's signature from the array
 		return factory.signatures[entity];
 	}
+
+private:
+	EntityManagerData factory;
 };

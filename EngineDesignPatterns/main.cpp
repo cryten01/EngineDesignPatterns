@@ -89,8 +89,8 @@ void RunDODTest()
 	std::shared_ptr<ComponentManagerSystem> storageSys = SystemManager::Get<ComponentManagerSystem>();
 	std::shared_ptr<EntityManagerSystem> entitySys = SystemManager::Get<EntityManagerSystem>();
 
-	EntityID entity1 = entitySys->IssueEntity(factory);
-	EntityID entity2 = entitySys->IssueEntity(factory);
+	EntityID entity1 = entitySys->IssueEntity();
+	EntityID entity2 = entitySys->IssueEntity();
 
 	// Create test data
 	storageSys->AddStorage<MeshData>();
@@ -112,7 +112,7 @@ void RunDODTest()
 		//std::cout << data.x << " " << data.y << " " << data.z << std::endl;
 	}
 
-	entitySys->ReturnEntity(factory, entity2);
+	entitySys->ReturnEntity(entity2);
 }
 
 int main()
