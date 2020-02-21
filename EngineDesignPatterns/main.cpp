@@ -79,15 +79,15 @@ void RunDODEventTest()
 
 void RunDODTest() 
 {
-	EntityManagerData factory;
-
 	// Init systems
-	SystemManager::Add<ComponentManagerSystem>();
-	SystemManager::Add<EntityManagerSystem>();
+	SystemManager sysManager;
+
+	sysManager.AddSystem<ComponentManagerSystem>();
+	sysManager.AddSystem<EntityManagerSystem>();
 
 	// Init data
-	std::shared_ptr<ComponentManagerSystem> storageSys = SystemManager::Get<ComponentManagerSystem>();
-	std::shared_ptr<EntityManagerSystem> entitySys = SystemManager::Get<EntityManagerSystem>();
+	std::shared_ptr<ComponentManagerSystem> storageSys = sysManager.GetSystem<ComponentManagerSystem>();
+	std::shared_ptr<EntityManagerSystem> entitySys = sysManager.GetSystem<EntityManagerSystem>();
 
 	EntityID entity1 = entitySys->IssueEntity();
 	EntityID entity2 = entitySys->IssueEntity();
