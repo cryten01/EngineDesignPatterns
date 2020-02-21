@@ -7,14 +7,14 @@
 #include "Event/Station.h"
 
 
-class ComponentManagerSystem : public System
+class ComponentManager : public System
 {
 public:
-	ComponentManagerSystem() 
+	ComponentManager() 
 	{
 		auto onEntityReturned = [this](EntityID e) -> bool
 		{
-			this->RemoveAllComponents(e);
+			this->OnEntityDestroyed(e);
 
 			return true;
 		};
@@ -23,7 +23,7 @@ public:
 	}
 
 	template<typename T>
-	void AddStorage()
+	void RegisterComponentStorage()
 	{
 		size_t type = typeid(T).hash_code();
 
@@ -98,7 +98,7 @@ public:
 		system->ClearEntry(entity);
 	}
 
-	void RemoveAllComponents(EntityID& entity)
+	void OnEntityDestroyed(EntityID& entity)
 	{
 		// Notify each component storage that an entity has been destroyed
 		// If it has a component for that entity, it will remove it

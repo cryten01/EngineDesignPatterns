@@ -132,6 +132,7 @@
     <ClInclude Include="Concepts\InheritanceByData.h" />
     <ClInclude Include="Concepts\StaticCasting.h" />
     <ClInclude Include="ECS\Component.h" />
+    <ClInclude Include="ECS\Coordinator.h" />
     <ClInclude Include="ECS\ECS.h" />
     <ClInclude Include="Event\Station.h" />
     <ClInclude Include="Event\StationTest.h" />

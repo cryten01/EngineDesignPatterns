@@ -22,10 +22,10 @@ struct EntityManagerData
 };
 
 
-class EntityManagerSystem : public System
+class EntityManager : public System
 {
 public:
-	EntityManagerSystem() 
+	EntityManager() 
 	{
 		// Initialize the queue with all possible entity IDs
 		for (EntityID entity = 0; entity < MAX_ENTITIES; ++entity)
@@ -34,7 +34,7 @@ public:
 		}
 	}
 
-	EntityID IssueEntity()
+	EntityID CreateEntity()
 	{
 		assert(factory.livingEntities < MAX_ENTITIES && "Too many entities in existence.");
 
@@ -46,7 +46,7 @@ public:
 		return id;
 	}
 
-	void ReturnEntity(EntityID entity)
+	void DestroyEntity(EntityID entity)
 	{
 		assert(entity < MAX_ENTITIES && "Entity out of range.");
 

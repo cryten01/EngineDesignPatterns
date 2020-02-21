@@ -3,11 +3,8 @@
 #include "FDC/DataSet.h"
 #include "FDC/FunctionSet.h"
 
-#include "ECS/EntityManager.h"
-#include "ECS/Component.h"
-#include "ECS/ComponentStorage.h"
-#include "ECS/ComponentManager.h"
-#include "ECS/SystemManager.h"
+#include "ECS/Coordinator.h"
+
 #include "Event/Station.h"
 #include "Event/StationTest.h"
 
@@ -82,19 +79,19 @@ void RunDODTest()
 	// Init systems
 	SystemManager sysManager;
 
-	sysManager.AddSystem<ComponentManagerSystem>();
-	sysManager.AddSystem<EntityManagerSystem>();
+	sysManager.AddSystem<ComponentManager>();
+	sysManager.AddSystem<EntityManager>();
 
 	// Init data
-	std::shared_ptr<ComponentManagerSystem> storageSys = sysManager.GetSystem<ComponentManagerSystem>();
-	std::shared_ptr<EntityManagerSystem> entitySys = sysManager.GetSystem<EntityManagerSystem>();
+	std::shared_ptr<ComponentManager> storageSys = sysManager.GetSystem<ComponentManager>();
+	std::shared_ptr<EntityManager> entitySys = sysManager.GetSystem<EntityManager>();
 
-	EntityID entity1 = entitySys->IssueEntity();
-	EntityID entity2 = entitySys->IssueEntity();
+	EntityID entity1 = entitySys->CreateEntity();
+	EntityID entity2 = entitySys->CreateEntity();
 
 	// Create test data
-	storageSys->AddStorage<MeshData>();
-	storageSys->AddStorage<TestData>();
+	storageSys->RegisterComponentStorage<MeshData>();
+	storageSys->RegisterComponentStorage<TestData>();
 
 	for (size_t i = 0; i < 20; i++)
 	{
@@ -112,7 +109,7 @@ void RunDODTest()
 		//std::cout << data.x << " " << data.y << " " << data.z << std::endl;
 	}
 
-	entitySys->ReturnEntity(entity2);
+	entitySys->DestroyEntity(entity2);
 }
 
 int main()
