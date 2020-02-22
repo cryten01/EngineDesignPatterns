@@ -42,6 +42,12 @@ public:
 	}
 
 	template<typename T>
+	void DeregisterComponent() 
+	{
+		mComponentManager->RemoveStorage<T>();
+	}
+
+	template<typename T>
 	void AddComponent(EntityID entity, T component)
 	{
 		mComponentManager->AddComponent<T>(entity, component);

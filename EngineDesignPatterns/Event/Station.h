@@ -1,57 +1,110 @@
 #pragma once
 #include <vector>
+#include <queue>
 #include <functional>
+#include <utility>
 
 /**
  * Stations allow systems to communicate with each other without knowing the recipient.
  * This is being realized with routing an event through a station<T>.
  */
 
+
+using CallbackID = std::uint32_t;
+
 template <typename T>
-using Callback = std::function<bool(T)>; // Use lambdas because those are type independent
+using CallbackFunctionPtr = std::function<bool(T)>; // Use lambdas as value because those are type independent
+
+
 
 template <typename T>
 struct StationData
 {
-	std::vector<Callback<T>> subscriber;
+	// An id generator
+	CallbackID nextCallbackID = 0;
+
+	// Queue of unused entity IDs
+	std::queue<CallbackID> availableIDs{};
+
+	// A vector with pairs of callback ids and their corresponding function pointers
+	std::vector<std::pair<CallbackID, CallbackFunctionPtr<T>>> subscribers;
 };
 
 namespace StationSystem
 {
 	namespace 
 	{
-		// The compiler creates one station for each data type when using templates in combination with static
+		// The compiler creates one station for each data type 
+		// when using templates in combination with static.
 		template <typename T>
 		static StationData<T> station; 
 	}
 
 	template <typename T>
+	CallbackID GenerateID()
+	{
+		CallbackID id;
+
+		// Use already generated ids first
+		if (!station<T>.availableIDs.empty())
+		{
+			id = station<T>.availableIDs.front();
+			station<T>.availableIDs.pop();
+		}
+		else 
+		{
+			id = station<T>.nextCallbackID;
+		}
+
+		// Increment the value so that the next callbackID registered will be different
+		station<T>.nextCallbackID++;
+
+		std::cout << "Registered function with id: " << id << std::endl;
+
+		return id;
+	}
+
+	template <typename T>
+	void DestroyID(CallbackID id) 
+	{
+		// Push id back into queue
+		station<T>.availableIDs.push(id);
+	}
+
+
+	template <typename T>
 	void Publish(T event)
 	{
-		for (auto callback : station<T>.subscriber)
+		for (auto pair : station<T>.subscribers)
 		{
 			std::cout << "Publish called" << std::endl;
-			callback(event);
+			pair.second(event);
 		}
 	}
 
 	template <typename T>
-	void Subscribe(Callback<T> callback)
+	CallbackID Subscribe(CallbackFunctionPtr<T> callback)
 	{
-		std::cout << "Registered function" << std::endl;
-		station<T>.subscriber.push_back(callback); 
+		CallbackID id = GenerateID<T>();
+
+		station<T>.subscribers.push_back(std::make_pair(id, callback));
+
+		return id;
 	}
 
 	template <typename T>
-	void Unsubscribe(Callback<T>& callback)
+	void Unsubscribe(CallbackID id)
 	{
-		for (size_t i = 0; i < station<T>.subscriber.size(); i++)
+		for (size_t i = 0; i < station<T>.subscribers.size(); i++)
 		{
-			if (station<T>.subscriber.at(i) == callback)
+			if (station<T>.subscribers.at(i).first == id)
 			{
-				std::cout << "Unregistered function" << std::endl;
-				station<T>.subscriber.erase(station<T>.subscriber.begin() + i);
+				DestroyID<T>(id);
+
+				station<T>.subscribers.erase(station<T>.subscribers.begin() + i);
 			}
 		}
+
+		std::cout << "Unregistered function" << std::endl;
 	}
 };

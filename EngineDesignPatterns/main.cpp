@@ -70,6 +70,8 @@ void RunECSTest()
 		coordinator.DestroyEntity(entity);
 	}
 
+	coordinator.DeregisterComponent<MeshComponent>();
+	coordinator.DeregisterComponent<SpeedComponent>();
 
 	//for (auto& entity : entities)
 	//{
