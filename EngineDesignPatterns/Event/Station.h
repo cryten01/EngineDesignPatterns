@@ -43,21 +43,22 @@ namespace StationSystem
 	template <typename T>
 	CallbackID GenerateID()
 	{
+		StationData<T>& instance = station<T>;
 		CallbackID id;
 
 		// Use already generated ids first
-		if (!station<T>.availableIDs.empty())
+		if (!instance.availableIDs.empty())
 		{
-			id = station<T>.availableIDs.front();
-			station<T>.availableIDs.pop();
+			id = instance.availableIDs.front();
+			instance.availableIDs.pop();
 		}
 		else 
 		{
-			id = station<T>.nextCallbackID;
+			id = instance.nextCallbackID;
 		}
 
 		// Increment the value so that the next callbackID registered will be different
-		station<T>.nextCallbackID++;
+		instance.nextCallbackID++;
 
 		std::cout << "Registered function with id: " << id << std::endl;
 
@@ -67,15 +68,19 @@ namespace StationSystem
 	template <typename T>
 	void DestroyID(CallbackID id) 
 	{
+		StationData<T>& instance = station<T>;
+
 		// Push id back into queue
-		station<T>.availableIDs.push(id);
+		instance.availableIDs.push(id);
 	}
 
 
 	template <typename T>
 	void Publish(T event)
 	{
-		for (auto pair : station<T>.subscribers)
+		StationData<T>& instance = station<T>;
+
+		for (auto pair : instance.subscribers)
 		{
 			std::cout << "Publish called" << std::endl;
 			pair.second(event);
@@ -85,9 +90,10 @@ namespace StationSystem
 	template <typename T>
 	CallbackID Subscribe(CallbackFunctionPtr<T> callback)
 	{
+		StationData<T>& instance = station<T>;
 		CallbackID id = GenerateID<T>();
 
-		station<T>.subscribers.push_back(std::make_pair(id, callback));
+		instance.subscribers.push_back(std::make_pair(id, callback));
 
 		return id;
 	}
@@ -95,13 +101,15 @@ namespace StationSystem
 	template <typename T>
 	void Unsubscribe(CallbackID id)
 	{
-		for (size_t i = 0; i < station<T>.subscribers.size(); i++)
+		StationData<T>& instance = station<T>;
+
+		for (size_t i = 0; i < instance.subscribers.size(); i++)
 		{
-			if (station<T>.subscribers.at(i).first == id)
+			if (instance.subscribers.at(i).first == id)
 			{
 				DestroyID<T>(id);
 
-				station<T>.subscribers.erase(station<T>.subscribers.begin() + i);
+				instance.subscribers.erase(instance.subscribers.begin() + i);
 			}
 		}
 
