@@ -86,16 +86,6 @@ public:
 		system->ClearEntry(entity);
 	}
 
-	void OnEntityDestroyed(EntityID& entity)
-	{
-		// Notify each component storage that an entity has been destroyed
-		// If it has a component for that entity, it will remove it
-		for (auto entry : storageMap)
-		{
-			entry.second->ClearEntry(entity);
-		}
-	}
-
 private:
 	// The component type to be assigned to the next registered component - starting at 0
 	ComponentID nextComponentType{};

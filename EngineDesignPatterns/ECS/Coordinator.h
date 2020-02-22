@@ -30,8 +30,6 @@ public:
 	{
 		mEntityManager->DestroyEntity(entity);
 
-		mComponentManager->OnEntityDestroyed(entity);
-
 		mSystemManager->OnEntityDestroyed(entity);
 	}
 

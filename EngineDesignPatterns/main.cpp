@@ -61,16 +61,25 @@ void RunECSTest()
 	std::uniform_real_distribution<float> randCoords(-100.0f, 100.0f);
 	std::uniform_real_distribution<float> randSpeed(0.0f, 3.0f);
 
-	for (auto& entity : entities)
+
+	for (size_t i = 0; i < 2; i++)
 	{
-		entity = coordinator.CreateEntity();
+		EntityID entity = coordinator.CreateEntity();
 		coordinator.AddComponent(entity, MeshComponent{ 1.0f, randCoords(generator), randCoords(generator) });
 		coordinator.AddComponent(entity, SpeedComponent{ randSpeed(generator) });
-
 		coordinator.DestroyEntity(entity);
 	}
 
-	float dt = 0.0f;
+
+	//for (auto& entity : entities)
+	//{
+	//	entity = coordinator.CreateEntity();
+	//	coordinator.AddComponent(entity, MeshComponent{ 1.0f, randCoords(generator), randCoords(generator) });
+	//	coordinator.AddComponent(entity, SpeedComponent{ randSpeed(generator) });
+	//	coordinator.DestroyEntity(entity);
+	//}
+
+	//float dt = 0.0f;
 
 	//while (true)
 	//{
