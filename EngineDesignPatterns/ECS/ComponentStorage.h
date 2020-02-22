@@ -3,6 +3,8 @@
 #include <iostream>
 
 #include "ECS.h"
+#include "../Event/Station.h"
+#include "../Testing/EventTypes.h"
 
 /**
  * This interface is needed so that the component manager 
@@ -23,6 +25,17 @@ template <typename T>
 class ComponentStorageSystem : public IComponentStorageSystem
 {
 public:
+	ComponentStorageSystem() 
+	{
+		auto OnEntityDestroyed = [this](EntityDestroyedEvent e) -> bool
+		{
+			this->ClearEntry(e.id);
+			return true;
+		};
+
+		StationSystem::Subscribe<EntityDestroyedEvent>(OnEntityDestroyed);
+	}
+
 	void MakeEntry(EntityID& entity, T value)
 	{
 		// TODO: Replacing a value is only possible by erasing the entity first

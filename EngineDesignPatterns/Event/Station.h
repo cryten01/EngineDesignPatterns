@@ -28,7 +28,6 @@ namespace StationSystem
 	template <typename T>
 	void Publish(T event)
 	{
-		// Publish event to station members
 		for (auto callback : station<T>.subscriber)
 		{
 			std::cout << "Publish called" << std::endl;

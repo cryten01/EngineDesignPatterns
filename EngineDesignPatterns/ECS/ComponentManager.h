@@ -10,18 +10,6 @@
 class ComponentManager : public System
 {
 public:
-	ComponentManager() 
-	{
-		auto onEntityReturned = [this](EntityID e) -> bool
-		{
-			this->OnEntityDestroyed(e);
-
-			return true;
-		};
-
-		StationSystem::Subscribe<EntityID>(onEntityReturned);
-	}
-
 	template<typename T>
 	void AddStorage()
 	{

@@ -8,6 +8,7 @@
 #include "ECS.h"
 #include "System.h"
 #include "../Event/Station.h"
+#include "../Testing/EventTypes.h"
 
 
 struct EntityManagerData
@@ -59,7 +60,9 @@ public:
 		--factory.livingEntities;
 
 		// Notify storages over station that entity has been returned
-		StationSystem::Publish<EntityID>(entity);
+		EntityDestroyedEvent event;
+		event.id = entity;
+		StationSystem::Publish(event);
 	}
 
 	void SetSignature(EntityID entity, Signature signature)

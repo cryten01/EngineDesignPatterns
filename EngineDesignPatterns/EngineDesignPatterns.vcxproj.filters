@@ -69,10 +69,13 @@
     <ClInclude Include="Testing\StationTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Misc\Thoughts.md">
+    <ClInclude Include="Testing\TestSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Testing\TestSystem.h">
+    <ClInclude Include="Concepts\Other.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\ECS.md">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

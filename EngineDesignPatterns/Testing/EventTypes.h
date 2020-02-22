@@ -5,8 +5,8 @@ struct CollisionEvent
 	bool isColliding;
 };
 
-struct EntityEvent
+struct EntityDestroyedEvent
 {
-	EntityID entity;
+	EntityID id;
 	bool handled;
 };
