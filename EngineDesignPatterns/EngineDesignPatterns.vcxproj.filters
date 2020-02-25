@@ -91,6 +91,7 @@
     <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\Graphics\Shader.h" />
     <ClInclude Include="src\Graphics\GPULog.h" />
+    <ClInclude Include="src\Systems\RenderSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\GLAD\src\glad.c">
@@ -103,5 +104,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Shader.cpp" />
+    <ClCompile Include="src\Systems\RenderSystem.cpp" />
   </ItemGroup>
 </Project>

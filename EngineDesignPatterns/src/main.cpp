@@ -21,7 +21,7 @@
 Coordinator gCoordinator; // necessary for extern
 
 
-void RunECSTest()
+void InitECS()
 {
 	gCoordinator.Init();
 
@@ -36,56 +36,37 @@ void RunECSTest()
 	signature.set(gCoordinator.GetComponentType<SpeedComponent>());
 	gCoordinator.SetSystemSignature<TestSystem>(signature);
 
-	std::vector<EntityID> entities(MAX_ENTITIES);
+	std::vector<EntityID> entities(10);
 
 	std::default_random_engine generator;
 	std::uniform_real_distribution<float> randCoords(-100.0f, 100.0f);
 	std::uniform_real_distribution<float> randSpeed(0.0f, 3.0f);
 
-
-	for (size_t i = 0; i < 2; i++)
+	for (auto& entity : entities)
 	{
-		EntityID entity = gCoordinator.CreateEntity();
+		entity = gCoordinator.CreateEntity();
 		gCoordinator.AddComponent(entity, MeshComponent{ 1.0f, randCoords(generator), randCoords(generator) });
 		gCoordinator.AddComponent(entity, SpeedComponent{ randSpeed(generator) });
 		gCoordinator.DestroyEntity(entity);
 	}
-
-	gCoordinator.DeregisterComponent<MeshComponent>();
-	gCoordinator.DeregisterComponent<SpeedComponent>();
-
-	//for (auto& entity : entities)
-	//{
-	//	entity = coordinator.CreateEntity();
-	//	coordinator.AddComponent(entity, MeshComponent{ 1.0f, randCoords(generator), randCoords(generator) });
-	//	coordinator.AddComponent(entity, SpeedComponent{ randSpeed(generator) });
-	//	coordinator.DestroyEntity(entity);
-	//}
-
-	//float dt = 0.0f;
-
-	//while (true)
-	//{
-	//	auto startTime = std::chrono::high_resolution_clock::now();
-
-	//	testSystem->Update(dt);
-
-	//	auto stopTime = std::chrono::high_resolution_clock::now();
-
-	//	dt = std::chrono::duration<float, std::chrono::seconds::period>(stopTime - startTime).count();
-	//}
 }
 
 int main()
 {
 	GLFWwindow* window = Window::Create("EngineDesignPatterns", 800, 600);
-
+	
 	GPULog::Init();
+
+	InitECS();
 
 	Shader shader("assets/shaders/flatColor.vert", "assets/shaders/flatColor.frag");
 
+	float dt = 0.0f;
+
 	while (!glfwWindowShouldClose(window))
 	{
+		auto startTime = std::chrono::high_resolution_clock::now();
+
 		// Process input here
 
 		// Render
@@ -95,6 +76,10 @@ int main()
 		// Swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+
+		auto stopTime = std::chrono::high_resolution_clock::now();
+
+		dt = std::chrono::duration<float, std::chrono::seconds::period>(stopTime - startTime).count();
 	}
 
 	Window::Destroy();

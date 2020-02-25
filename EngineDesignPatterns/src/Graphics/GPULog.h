@@ -61,6 +61,7 @@ namespace GPULog
 		// Registers your callback function
 		glDebugMessageCallback(GLDebugLogCallback, NULL);
 
+		// Enables debug output
 		glEnable(GL_DEBUG_OUTPUT);
 
 		// Enables synchronous callbacks 

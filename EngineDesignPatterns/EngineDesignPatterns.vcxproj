@@ -96,6 +96,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Systems\RenderSystem.h" />
     <ClInclude Include="src\Graphics\GPULog.h" />
     <ClInclude Include="src\Graphics\Shader.h" />
     <ClInclude Include="src\Concepts\FunctionPointers.h" />
@@ -122,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\GLAD\src\glad.c" />
+    <ClCompile Include="src\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
     <ClCompile Include="src\Testing\TestSystem.cpp" />
     <ClCompile Include="src\main.cpp" />
