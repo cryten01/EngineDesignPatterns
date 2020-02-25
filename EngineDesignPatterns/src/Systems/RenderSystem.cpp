@@ -18,10 +18,10 @@ void RenderSystem::Init()
 	// Attach components
 	Transform transform;
 	transform.position = glm::vec3(0.0f, 0.0f, 500.0f);
-	gCoordinator.AddComponent(mCamera,transform);
+	gCoordinator.AddComponent(mCamera, transform);
 
 	Camera camera;
-	camera.projectionMatrix = Camera::MakeProjectionTransform(45.0f, 0.1f, 1024/768, 1000.0f);
+	camera.projectionMatrix = MakeProjectionTransform(45.0f, 0.1f, 1024 / 768, 1000.0f);
 	gCoordinator.AddComponent(mCamera, camera);
 
 	// Create cube shape
@@ -49,7 +49,51 @@ void RenderSystem::Update(float dt)
 		view[1][3] = -cameraTransform.position.y;
 		view[2][3] = -cameraTransform.position.z;
 
-		glm::mat4 model = glm::mat4(1.0f);
+		glm::mat4 rotY;
+
+		float cos_theta_y = cosf(transform.rotation.y);
+		float sin_theta_y = sinf(transform.rotation.y);
+
+		rotY[0][0] = cos_theta_y;
+		rotY[2][0] = -sin_theta_y;
+		rotY[0][2] = sin_theta_y;
+		rotY[2][2] = cos_theta_y;
+
+
+		glm::mat4 rotX;
+
+		float cosThetaX = cosf(transform.rotation.x);
+		float sinThetaX = sinf(transform.rotation.x);
+
+		rotX[1][1] = cosThetaX;
+		rotX[2][1] = sinThetaX;
+		rotX[1][2] = -sinThetaX;
+		rotX[2][2] = cosThetaX;
+
+
+		glm::mat4 rotZ;
+
+		float cosThetaZ = cosf(transform.rotation.z);
+		float sinThetaZ = sinf(transform.rotation.z);
+
+		rotZ[0][0] = cosThetaZ;
+		rotZ[1][0] = sinThetaZ;
+		rotZ[0][1] = -sinThetaZ;
+		rotZ[1][1] = cosThetaZ;
+
+
+		glm::mat4 translate;
+		translate[0][3] = transform.position.x;
+		translate[1][3] = transform.position.y;
+		translate[2][3] = transform.position.z;
+
+		glm::mat4 scaleMat;
+		scaleMat[0][0] = transform.scale.x;
+		scaleMat[1][1] = transform.scale.y;
+		scaleMat[2][2] = transform.scale.z;
+
+		glm::mat4 model = translate * scaleMat * rotY;
+
 		glm::mat4 projection = camera.projectionMatrix;
 
 		shader->SetMat4("uModel", model);
@@ -163,4 +207,9 @@ void RenderSystem::CreateCube()
 	glEnableVertexAttribArray(1);
 
 	glBindVertexArray(0);
+}
+
+glm::mat4 RenderSystem::MakeProjectionTransform(float fov, float aspect, float nearClip, float farClip)
+{
+	return glm::perspective(glm::radians(fov), aspect, nearClip, farClip);
 }

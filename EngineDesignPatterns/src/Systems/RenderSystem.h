@@ -13,6 +13,7 @@ public:
 	void Init();
 	void Update(float dt);
 	void CreateCube();
+	glm::mat4 MakeProjectionTransform(float fov, float aspect, float nearClip, float farClip);
 
 private:
 	std::unique_ptr<Shader> shader;

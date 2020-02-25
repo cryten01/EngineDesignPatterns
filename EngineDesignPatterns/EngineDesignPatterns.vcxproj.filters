@@ -83,6 +83,10 @@
     <ClInclude Include="src\Components\Transform.h" />
     <ClInclude Include="src\Components\Camera.h" />
     <ClInclude Include="src\Components\Renderable.h" />
+    <ClInclude Include="src\Systems\PhysicsSystem.h" />
+    <ClInclude Include="src\Components\Thrust.h" />
+    <ClInclude Include="src\Components\Rigidbody.h" />
+    <ClInclude Include="src\Components\Gravity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\GLAD\src\glad.c">
@@ -93,5 +97,6 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\Shader.cpp" />
     <ClCompile Include="src\Systems\RenderSystem.cpp" />
+    <ClCompile Include="src\Systems\PhysicsSystem.cpp" />
   </ItemGroup>
 </Project>

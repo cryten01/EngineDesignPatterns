@@ -45,6 +45,13 @@ namespace Window
 		return window;
 	}
 
+	void Update(GLFWwindow* window)
+	{
+		// Swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+	}
+
 	int Destroy() 
 	{
 		// Terminate, clearing all previously allocated GLFW resources.

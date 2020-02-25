@@ -7,9 +7,4 @@
 struct Camera 
 {
 	glm::mat4 projectionMatrix;
-
-	static glm::mat4 MakeProjectionTransform(float fov, float aspect, float nearClip, float farClip)
-	{
-		return glm::perspective(glm::radians(fov), aspect, nearClip, farClip);
-	}
 };

@@ -12,9 +12,13 @@
 #include "Graphics/GPULog.h"
 
 #include "Systems/RenderSystem.h"
+#include "Systems/PhysicsSystem.h"
 
+#include "Components/Gravity.h"
+#include "Components/Rigidbody.h"
 #include "Components/Camera.h"
 #include "Components/Transform.h"
+#include "Components/Thrust.h"
 #include "Components/Renderable.h"
 
 Coordinator gCoordinator; // necessary for extern
@@ -27,9 +31,24 @@ int main()
 
 	gCoordinator.Init();
 
+	gCoordinator.RegisterComponent<Gravity>();
+	gCoordinator.RegisterComponent<RigidBody>();
+	gCoordinator.RegisterComponent<Thrust>();
+	gCoordinator.RegisterComponent<Renderable>();
 	gCoordinator.RegisterComponent<Transform>();
 	gCoordinator.RegisterComponent<Camera>();
-	gCoordinator.RegisterComponent<Renderable>();
+
+	auto physicsSystem = gCoordinator.RegisterSystem<PhysicsSystem>();
+	{
+		Signature signature;
+		signature.set(gCoordinator.GetComponentType<Gravity>());
+		signature.set(gCoordinator.GetComponentType<RigidBody>());
+		signature.set(gCoordinator.GetComponentType<Transform>());
+		gCoordinator.SetSystemSignature<PhysicsSystem>(signature);
+	}
+
+	physicsSystem->Init();
+
 
 	auto renderSystem = gCoordinator.RegisterSystem<RenderSystem>();
 	{
@@ -41,7 +60,8 @@ int main()
 
 	renderSystem->Init();
 
-	std::vector<EntityID> entities(10);
+
+	std::vector<EntityID> entities(1000);
 
 	std::default_random_engine generator;
 	std::uniform_real_distribution<float> randPosition(-100.0f, 100.0f);
@@ -56,15 +76,24 @@ int main()
 	{
 		entity = gCoordinator.CreateEntity();
 
-		Transform t;
-		t.position = glm::vec3(randPosition(generator), randPosition(generator), randPosition(generator));
-		t.rotation = glm::vec3(randRotation(generator), randRotation(generator), randRotation(generator));
-		t.scale = glm::vec3(scale, scale, scale);
-		gCoordinator.AddComponent(entity, t);
+		Gravity gravity;
+		gravity.force = glm::vec3(0.0f, randGravity(generator), 0.0f);
+		gCoordinator.AddComponent<Gravity>(entity, gravity);
+
+		RigidBody rigidbody;
+		rigidbody.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
+		rigidbody.acceleration = glm::vec3(0.0f, 0.0f, 0.0f);
+		gCoordinator.AddComponent(entity, rigidbody);
+
+		Transform transform;
+		transform.position = glm::vec3(randPosition(generator), randPosition(generator), randPosition(generator));
+		transform.rotation = glm::vec3(randRotation(generator), randRotation(generator), randRotation(generator));
+		transform.scale = glm::vec3(scale, scale, scale);
+		gCoordinator.AddComponent(entity, transform);
 	
-		Renderable r;
-		r.color = glm::vec3(randColor(generator), randColor(generator), randColor(generator));
-		gCoordinator.AddComponent(entity, r);
+		Renderable renderable;
+		renderable.color = glm::vec3(randColor(generator), randColor(generator), randColor(generator));
+		gCoordinator.AddComponent(entity, renderable);
 	}
 
 
@@ -75,12 +104,11 @@ int main()
 	{
 		auto startTime = std::chrono::high_resolution_clock::now();
 
-		// Update systems here
-		renderSystem->Update(dt);
+		physicsSystem->Update(dt);
 		
-		// Swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
-		glfwSwapBuffers(window);
-		glfwPollEvents();
+		renderSystem->Update(dt);
+
+		Window::Update(window);
 
 		auto stopTime = std::chrono::high_resolution_clock::now();
 
