@@ -2,7 +2,7 @@
 
 #include <set>
 
-#include "ECS.h"
+#include "ECS/ECS.h"
 
 struct System
 {

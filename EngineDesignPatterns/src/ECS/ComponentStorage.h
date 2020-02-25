@@ -3,8 +3,8 @@
 #include <iostream>
 
 #include "ECS.h"
-#include "../Event/Station.h"
-#include "../Testing/EventTypes.h"
+#include "Event/Station.h"
+#include "Testing/EventTypes.h"
 
 
 class IComponentStorageSystem

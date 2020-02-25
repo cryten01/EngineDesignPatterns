@@ -2,10 +2,10 @@
 
 #include <memory>
 
-#include "ComponentManager.h"
-#include "EntityManager.h"
-#include "SystemManager.h"
-#include "ECS.h"
+#include "ECS/ComponentManager.h"
+#include "ECS/EntityManager.h"
+#include "ECS/SystemManager.h"
+#include "ECS/ECS.h"
 
 
 class Coordinator

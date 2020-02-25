@@ -3,8 +3,8 @@
 #include <map>
 #include <iostream>
 
-#include "ECS.h"
-#include "System.h"
+#include "ECS/ECS.h"
+#include "ECS/System.h"
 
 
 class SystemManager

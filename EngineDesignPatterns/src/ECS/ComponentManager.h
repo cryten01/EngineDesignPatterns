@@ -2,9 +2,9 @@
 
 #include <assert.h>
 
-#include "System.h"
-#include "ComponentStorage.h"
-#include "../Event/Station.h"
+#include "ECS/System.h"
+#include "ECS/ComponentStorage.h"
+#include "Event/Station.h"
 
 
 class ComponentManager : public System

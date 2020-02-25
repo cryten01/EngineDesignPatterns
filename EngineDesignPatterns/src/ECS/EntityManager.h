@@ -6,9 +6,9 @@
 #include <assert.h>
 
 #include "ECS.h"
-#include "System.h"
-#include "../Event/Station.h"
-#include "../Testing/EventTypes.h"
+#include "ECS/System.h"
+#include "Event/Station.h"
+#include "Testing/EventTypes.h"
 
 
 struct EntityManagerData

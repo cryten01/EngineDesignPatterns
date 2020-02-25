@@ -14,46 +14,22 @@
 #include "Testing/TestSystem.h"
 
 
-Coordinator coordinator; // necessary for extern
-
-void RunEventTest()
-{
-	//StationData<EntityEvent> station; 	// Subscribe to a system not data
-
-	//AType a;
-	//a.InitCallbacks();
-
-	//BType b;
-	//b.InitCallbacks();
-
-	//EntityEvent e;
-	//e.entity = 10;
-
-	//CollisionEvent c;
-	//c.isColliding = true;
-
-	//StationSystem::Publish(e);
-	//StationSystem::Publish(c);
-
-	//StationSystem::Subscribe<EntityEvent>(btype.OnReceive);
-	//StationSystem::Subscribe<EntityEvent>(atype.OnFoo);
-	//StationSystem::Unsubscribe<EntityEvent>(btype.OnReceive);
-}
+Coordinator gCoordinator; // necessary for extern
 
 void RunECSTest()
 {
-	coordinator.Init();
+	gCoordinator.Init();
 
-	coordinator.RegisterComponent<MeshComponent>();
-	coordinator.RegisterComponent<SpeedComponent>();
+	gCoordinator.RegisterComponent<MeshComponent>();
+	gCoordinator.RegisterComponent<SpeedComponent>();
 
-	coordinator.RegisterSystem<TestSystem>();
-	auto testSystem = coordinator.GetSystem<TestSystem>();
+	gCoordinator.RegisterSystem<TestSystem>();
+	auto testSystem = gCoordinator.GetSystem<TestSystem>();
 
 	Signature signature;
-	signature.set(coordinator.GetComponentType<MeshComponent>());
-	signature.set(coordinator.GetComponentType<SpeedComponent>());
-	coordinator.SetSystemSignature<TestSystem>(signature);
+	signature.set(gCoordinator.GetComponentType<MeshComponent>());
+	signature.set(gCoordinator.GetComponentType<SpeedComponent>());
+	gCoordinator.SetSystemSignature<TestSystem>(signature);
 
 	std::vector<EntityID> entities(MAX_ENTITIES);
 
@@ -64,14 +40,14 @@ void RunECSTest()
 
 	for (size_t i = 0; i < 2; i++)
 	{
-		EntityID entity = coordinator.CreateEntity();
-		coordinator.AddComponent(entity, MeshComponent{ 1.0f, randCoords(generator), randCoords(generator) });
-		coordinator.AddComponent(entity, SpeedComponent{ randSpeed(generator) });
-		coordinator.DestroyEntity(entity);
+		EntityID entity = gCoordinator.CreateEntity();
+		gCoordinator.AddComponent(entity, MeshComponent{ 1.0f, randCoords(generator), randCoords(generator) });
+		gCoordinator.AddComponent(entity, SpeedComponent{ randSpeed(generator) });
+		gCoordinator.DestroyEntity(entity);
 	}
 
-	coordinator.DeregisterComponent<MeshComponent>();
-	coordinator.DeregisterComponent<SpeedComponent>();
+	gCoordinator.DeregisterComponent<MeshComponent>();
+	gCoordinator.DeregisterComponent<SpeedComponent>();
 
 	//for (auto& entity : entities)
 	//{

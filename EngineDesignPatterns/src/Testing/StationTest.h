@@ -3,18 +3,17 @@
 #include <iostream>
 #include <functional>
 
-#include "../ECS/Coordinator.h"
-#include "../Event/Station.h"
-
-#include "ComponentTypes.h"
-#include "EventTypes.h"
+#include "ECS/Coordinator.h"
+#include "Event/Station.h"
+#include "Testing/ComponentTypes.h"
+#include "Testing/EventTypes.h"
 
 
 struct AType
 {
 	int m_Value = 20;
 
-	bool OnEntityEvent(EntityEvent e) 
+	bool OnEntityEvent(EntityDestroyedEvent e) 
 	{
 		std::cout << "AType member function OnEntityEvent(EntityEvent e) bound with std::bind received event " << m_Value * 2 << std::endl;
 		return true;
@@ -24,7 +23,7 @@ struct AType
 	void InitCallbacks()
 	{
 		// Capture [this] for accessing class instance variables
-		auto lambda = [this](EntityEvent data) -> bool
+		auto lambda = [this](EntityDestroyedEvent data) -> bool
 		{
 			// Possibility of calling member functions
 			this->OnEntityEvent(data);
@@ -36,10 +35,10 @@ struct AType
 		};
 
 		// Use lambdas when not using outside variables (faster and more modern!)
-		StationSystem::Subscribe<EntityEvent>(lambda);
+		StationSystem::Subscribe<EntityDestroyedEvent>(lambda);
 
 		// Use std::bind when using function needs to be called outside as well
-		StationSystem::Subscribe<EntityEvent>(std::bind(&AType::OnEntityEvent, this, std::placeholders::_1));
+		StationSystem::Subscribe<EntityDestroyedEvent>(std::bind(&AType::OnEntityEvent, this, std::placeholders::_1));
 	}
 };
 
@@ -47,7 +46,7 @@ struct BType
 {
 	std::string m_String = "Hello";
 
-	bool OnEntityEvent(EntityEvent e)
+	bool OnEntityEvent(EntityDestroyedEvent e)
 	{
 		std::cout << "BType member function bound with std::bind received event " << std::endl;
 		return true;
@@ -62,7 +61,7 @@ struct BType
 		};
 		StationSystem::Subscribe<CollisionEvent>(lambda);
 
-		StationSystem::Subscribe<EntityEvent>(std::bind(&BType::OnEntityEvent, this, std::placeholders::_1));
+		StationSystem::Subscribe<EntityDestroyedEvent>(std::bind(&BType::OnEntityEvent, this, std::placeholders::_1));
 	}
 };
 

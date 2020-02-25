@@ -8,5 +8,7 @@ struct CollisionEvent
 struct EntityDestroyedEvent
 {
 	EntityID id;
-	bool handled;
 };
+
+struct LayerEvent 
+{};
