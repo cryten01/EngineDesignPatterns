@@ -69,15 +69,6 @@
     <ClInclude Include="src\Event\Station.h">
       <Filter>src\Event</Filter>
     </ClInclude>
-    <ClInclude Include="src\FDC\DCFC.h">
-      <Filter>src\FDC</Filter>
-    </ClInclude>
-    <ClInclude Include="src\FDC\DataSet.h">
-      <Filter>src\FDC</Filter>
-    </ClInclude>
-    <ClInclude Include="src\FDC\FunctionSet.h">
-      <Filter>src\FDC</Filter>
-    </ClInclude>
     <ClInclude Include="src\Testing\ComponentTypes.h">
       <Filter>src\Testing</Filter>
     </ClInclude>
@@ -96,8 +87,10 @@
     <ClInclude Include="src\Testing\TestSystem.h">
       <Filter>src\Testing</Filter>
     </ClInclude>
-    <ClInclude Include="src\Testing\Window.h" />
-    <ClInclude Include="src\Testing\Input.h" />
+    <ClInclude Include="src\Core\Input.h" />
+    <ClInclude Include="src\Core\Window.h" />
+    <ClInclude Include="src\Graphics\Shader.h" />
+    <ClInclude Include="src\Graphics\GPULog.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\GLAD\src\glad.c">
@@ -109,5 +102,6 @@
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Shader.cpp" />
   </ItemGroup>
 </Project>

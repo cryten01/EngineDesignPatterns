@@ -13,7 +13,9 @@
 #include "Testing/ComponentTypes.h"
 #include "Testing/EventTypes.h"
 #include "Testing/TestSystem.h"
-#include "Testing/Window.h"
+#include "Core/Window.h"
+#include "Graphics/Shader.h"
+#include "Graphics/GPULog.h"
 
 
 Coordinator gCoordinator; // necessary for extern
@@ -77,13 +79,17 @@ void RunECSTest()
 int main()
 {
 	GLFWwindow* window = Window::Create("EngineDesignPatterns", 800, 600);
-	
+
+	GPULog::Init();
+
+	Shader shader("assets/shaders/flatColor.vert", "assets/shaders/flatColor.frag");
+
 	while (!glfwWindowShouldClose(window))
 	{
 		// Process input here
 
 		// Render
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Swap buffers and poll IO events (keys pressed/released, mouse moved etc.)

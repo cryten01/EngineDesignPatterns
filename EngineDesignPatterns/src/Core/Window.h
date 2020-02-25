@@ -3,7 +3,7 @@
 #include <glad/glad.h> // include before GLFW!
 #include <GLFW/glfw3.h>
 
-#include "Testing/Input.h"
+#include "Core/Input.h"
 
 namespace Window
 {

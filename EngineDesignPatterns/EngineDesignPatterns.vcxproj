@@ -96,6 +96,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Graphics\GPULog.h" />
+    <ClInclude Include="src\Graphics\Shader.h" />
     <ClInclude Include="src\Concepts\FunctionPointers.h" />
     <ClInclude Include="src\Concepts\InheritanceByData.h" />
     <ClInclude Include="src\Concepts\InheritanceBySystem.h" />
@@ -109,20 +111,18 @@
     <ClInclude Include="src\ECS\System.h" />
     <ClInclude Include="src\ECS\SystemManager.h" />
     <ClInclude Include="src\Event\Station.h" />
-    <ClInclude Include="src\FDC\DCFC.h" />
-    <ClInclude Include="src\FDC\DataSet.h" />
-    <ClInclude Include="src\FDC\FunctionSet.h" />
     <ClInclude Include="src\Testing\ComponentTypes.h" />
     <ClInclude Include="src\Testing\EventTypes.h" />
     <ClInclude Include="src\Testing\ExampleLayer.h" />
-    <ClInclude Include="src\Testing\Input.h" />
+    <ClInclude Include="src\Core\Input.h" />
     <ClInclude Include="src\Testing\Layer.h" />
     <ClInclude Include="src\Testing\StationTest.h" />
     <ClInclude Include="src\Testing\TestSystem.h" />
-    <ClInclude Include="src\Testing\Window.h" />
+    <ClInclude Include="src\Core\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\GLAD\src\glad.c" />
+    <ClCompile Include="src\Graphics\Shader.cpp" />
     <ClCompile Include="src\Testing\TestSystem.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
