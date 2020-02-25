@@ -1,6 +1,7 @@
-#include <iostream>
+
 #include <random>
 #include <chrono>
+#include <iostream>
 
 #include "Concepts/FunctionPointers.h"
 #include "Concepts/InheritanceByData.h"
@@ -12,9 +13,11 @@
 #include "Testing/ComponentTypes.h"
 #include "Testing/EventTypes.h"
 #include "Testing/TestSystem.h"
+#include "Testing/Window.h"
 
 
 Coordinator gCoordinator; // necessary for extern
+
 
 void RunECSTest()
 {
@@ -73,6 +76,20 @@ void RunECSTest()
 
 int main()
 {
-	RunECSTest();
-	std::cin.get();
+	GLFWwindow* window = Window::Create("EngineDesignPatterns", 800, 600);
+	
+	while (!glfwWindowShouldClose(window))
+	{
+		// Process input here
+
+		// Render
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		// Swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+	}
+
+	Window::Destroy();
 }

@@ -64,10 +64,12 @@ project "EngineDesignPatterns"
     -- Build configurations (runtime sets runtime library to /MDd for Debug and /MD to all other configs)
     filter "configurations:Debug"
         defines "Debug"
+        buildoptions "/MDd" -- needed because glfw is build dynamically
         runtime "Debug"
         symbols "on"
 
     filter "configurations:Release"
         defines "Release"
+        buildoptions "/MD" -- needed because glfw is build dynamically
         runtime "Release"
         optimize "on"

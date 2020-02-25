@@ -62,6 +62,7 @@
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -83,6 +84,7 @@
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -113,9 +115,11 @@
     <ClInclude Include="src\Testing\ComponentTypes.h" />
     <ClInclude Include="src\Testing\EventTypes.h" />
     <ClInclude Include="src\Testing\ExampleLayer.h" />
+    <ClInclude Include="src\Testing\Input.h" />
     <ClInclude Include="src\Testing\Layer.h" />
     <ClInclude Include="src\Testing\StationTest.h" />
     <ClInclude Include="src\Testing\TestSystem.h" />
+    <ClInclude Include="src\Testing\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\GLAD\src\glad.c" />

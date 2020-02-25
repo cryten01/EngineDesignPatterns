@@ -96,6 +96,8 @@
     <ClInclude Include="src\Testing\TestSystem.h">
       <Filter>src\Testing</Filter>
     </ClInclude>
+    <ClInclude Include="src\Testing\Window.h" />
+    <ClInclude Include="src\Testing\Input.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\GLAD\src\glad.c">
