@@ -1,5 +1,24 @@
 #pragma once
-class RenderSystem
+
+#include <glad/glad.h>
+#include <memory>
+
+#include "Graphics/Shader.h"
+#include "ECS/System.h"
+#include "ECS/ECS.h"
+
+class RenderSystem : public System
 {
+public:
+	void Init();
+	void Update(float dt);
+
+private:
+	std::unique_ptr<Shader> shader;
+	EntityID mCamera;
+
+	GLuint mVao{};
+	GLuint mVboVertices{};
+	GLuint mVboNormals{};
 };
 

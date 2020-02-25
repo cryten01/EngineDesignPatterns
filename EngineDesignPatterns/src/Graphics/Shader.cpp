@@ -9,8 +9,8 @@ Shader::Shader(const char* vertFilePath, const char* fragFilePath)
 {
 	m_ProgramID = glCreateProgram();
 
-	std::string vertexSource = ReadInSingleFile(vertFilePath);
-	std::string fragmentSource = ReadInSingleFile(fragFilePath);
+	std::string vertexSource = ReadInFile(vertFilePath);
+	std::string fragmentSource = ReadInFile(fragFilePath);
 
 	AddToProgram(GL_VERTEX_SHADER, vertexSource.c_str());
 	AddToProgram(GL_FRAGMENT_SHADER, fragmentSource.c_str());
@@ -34,7 +34,7 @@ void Shader::Unuse() const
 	glUseProgram(0);
 }
 
-std::string Shader::ReadInSingleFile(const char* filePath)
+std::string Shader::ReadInFile(const char* filePath)
 {
 	std::string fileContent;
 	std::ifstream fileStream(filePath, std::ios::in);
@@ -53,12 +53,12 @@ std::string Shader::ReadInSingleFile(const char* filePath)
 
 void Shader::AddToProgram(GLenum shaderType, const char* shaderSource)
 {
-	GLuint shaderID = CompileShader(shaderType, shaderSource);
+	GLuint shaderID = CompileProgram(shaderType, shaderSource);
 	glAttachShader(m_ProgramID, shaderID);
 	glDeleteShader(shaderID);
 }
 
-GLuint Shader::CompileShader(GLenum type, const char* source)
+GLuint Shader::CompileProgram(GLenum type, const char* source)
 {
 	// Necessary because OpenGL needs a raw string
 	const char* shaderSource = source;

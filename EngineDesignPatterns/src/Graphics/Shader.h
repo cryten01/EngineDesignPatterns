@@ -26,8 +26,8 @@ private:
 	GLuint m_ProgramID;
 
 private:
-	std::string ReadInSingleFile(const char* filePath);
+	std::string ReadInFile(const char* filePath);
 	void AddToProgram(GLenum shaderType, const char* shaderSource);
-	GLuint CompileShader(GLenum type, const char* source);
+	GLuint CompileProgram(GLenum type, const char* source);
 };
 
