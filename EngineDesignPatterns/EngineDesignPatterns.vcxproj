@@ -15,6 +15,7 @@
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>EngineDesignPatterns</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -96,6 +97,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\Camera.h" />
+    <ClInclude Include="src\Components\Renderable.h" />
+    <ClInclude Include="src\Components\Transform.h" />
     <ClInclude Include="src\Systems\RenderSystem.h" />
     <ClInclude Include="src\Graphics\GPULog.h" />
     <ClInclude Include="src\Graphics\Shader.h" />
@@ -112,20 +116,15 @@
     <ClInclude Include="src\ECS\System.h" />
     <ClInclude Include="src\ECS\SystemManager.h" />
     <ClInclude Include="src\Event\Station.h" />
-    <ClInclude Include="src\Testing\ComponentTypes.h" />
     <ClInclude Include="src\Testing\EventTypes.h" />
-    <ClInclude Include="src\Testing\ExampleLayer.h" />
     <ClInclude Include="src\Core\Input.h" />
-    <ClInclude Include="src\Testing\Layer.h" />
     <ClInclude Include="src\Testing\StationTest.h" />
-    <ClInclude Include="src\Testing\TestSystem.h" />
     <ClInclude Include="src\Core\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\GLAD\src\glad.c" />
     <ClCompile Include="src\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
-    <ClCompile Include="src\Testing\TestSystem.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

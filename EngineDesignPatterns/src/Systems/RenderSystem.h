@@ -12,6 +12,7 @@ class RenderSystem : public System
 public:
 	void Init();
 	void Update(float dt);
+	void CreateCube();
 
 private:
 	std::unique_ptr<Shader> shader;

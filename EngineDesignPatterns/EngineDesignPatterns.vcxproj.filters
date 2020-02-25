@@ -69,22 +69,10 @@
     <ClInclude Include="src\Event\Station.h">
       <Filter>src\Event</Filter>
     </ClInclude>
-    <ClInclude Include="src\Testing\ComponentTypes.h">
-      <Filter>src\Testing</Filter>
-    </ClInclude>
     <ClInclude Include="src\Testing\EventTypes.h">
       <Filter>src\Testing</Filter>
     </ClInclude>
-    <ClInclude Include="src\Testing\ExampleLayer.h">
-      <Filter>src\Testing</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Testing\Layer.h">
-      <Filter>src\Testing</Filter>
-    </ClInclude>
     <ClInclude Include="src\Testing\StationTest.h">
-      <Filter>src\Testing</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Testing\TestSystem.h">
       <Filter>src\Testing</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Input.h" />
@@ -92,13 +80,13 @@
     <ClInclude Include="src\Graphics\Shader.h" />
     <ClInclude Include="src\Graphics\GPULog.h" />
     <ClInclude Include="src\Systems\RenderSystem.h" />
+    <ClInclude Include="src\Components\Transform.h" />
+    <ClInclude Include="src\Components\Camera.h" />
+    <ClInclude Include="src\Components\Renderable.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\GLAD\src\glad.c">
       <Filter>external\GLAD\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Testing\TestSystem.cpp">
-      <Filter>src\Testing</Filter>
     </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>

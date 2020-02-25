@@ -3,16 +3,9 @@
 #include <chrono>
 #include <iostream>
 
-#include "Concepts/FunctionPointers.h"
-#include "Concepts/InheritanceByData.h"
-#include "Concepts/InheritanceBySystem.h"
-#include "Concepts/StaticCasting.h"
-
 #include "ECS/Coordinator.h"
 #include "Event/Station.h"
-#include "Testing/ComponentTypes.h"
 #include "Testing/EventTypes.h"
-#include "Testing/TestSystem.h"
 #include "Core/Window.h"
 
 #include "Graphics/Shader.h"
@@ -20,53 +13,62 @@
 
 #include "Systems/RenderSystem.h"
 
+#include "Components/Camera.h"
+#include "Components/Transform.h"
+#include "Components/Renderable.h"
+
 Coordinator gCoordinator; // necessary for extern
 
 int main()
 {
-	// Create window
-	GLFWwindow* window = Window::Create("EngineDesignPatterns", 800, 600);
-	
-	// Init gpu log for debugging
+	GLFWwindow* window = Window::Create("EngineDesignPatterns", 1024, 768);
+
 	GPULog::Init();
 
-	// Init coordinator
 	gCoordinator.Init();
 
-	// Register components
-	gCoordinator.RegisterComponent<MeshComponent>();
-	gCoordinator.RegisterComponent<SpeedComponent>();
+	gCoordinator.RegisterComponent<Transform>();
+	gCoordinator.RegisterComponent<Camera>();
+	gCoordinator.RegisterComponent<Renderable>();
 
-	gCoordinator.RegisterSystem<TestSystem>();
-	auto testSystem = gCoordinator.GetSystem<TestSystem>();
+	auto renderSystem = gCoordinator.RegisterSystem<RenderSystem>();
+	{
+		Signature signature;
+		signature.set(gCoordinator.GetComponentType<Renderable>());
+		signature.set(gCoordinator.GetComponentType<Transform>());
+		gCoordinator.SetSystemSignature<RenderSystem>(signature);
+	}
 
-	Signature signature;
-	signature.set(gCoordinator.GetComponentType<MeshComponent>());
-	signature.set(gCoordinator.GetComponentType<SpeedComponent>());
-	gCoordinator.SetSystemSignature<TestSystem>(signature);
+	renderSystem->Init();
 
-	// Register render system
-	gCoordinator.RegisterSystem<RenderSystem>();
-	auto renderSystem = gCoordinator.GetSystem<RenderSystem>();
-
-	// Create entities
 	std::vector<EntityID> entities(10);
 
-	// Create random generator for populating component values
 	std::default_random_engine generator;
-	std::uniform_real_distribution<float> randCoords(-100.0f, 100.0f);
-	std::uniform_real_distribution<float> randSpeed(0.0f, 3.0f);
+	std::uniform_real_distribution<float> randPosition(-100.0f, 100.0f);
+	std::uniform_real_distribution<float> randRotation(0.0f, 3.0f);
+	std::uniform_real_distribution<float> randScale(3.0f, 5.0f);
+	std::uniform_real_distribution<float> randColor(0.0f, 1.0f);
+	std::uniform_real_distribution<float> randGravity(-10.0f, -1.0f);
 
-	// Populate component values
+	float scale = randScale(generator);
+
 	for (auto& entity : entities)
 	{
 		entity = gCoordinator.CreateEntity();
-		gCoordinator.AddComponent(entity, MeshComponent{ 1.0f, randCoords(generator), randCoords(generator) });
-		gCoordinator.AddComponent(entity, SpeedComponent{ randSpeed(generator) });
-		gCoordinator.DestroyEntity(entity);
+
+		Transform t;
+		t.position = glm::vec3(randPosition(generator), randPosition(generator), randPosition(generator));
+		t.rotation = glm::vec3(randRotation(generator), randRotation(generator), randRotation(generator));
+		t.scale = glm::vec3(scale, scale, scale);
+		gCoordinator.AddComponent(entity, t);
+	
+		Renderable r;
+		r.color = glm::vec3(randColor(generator), randColor(generator), randColor(generator));
+		gCoordinator.AddComponent(entity, r);
 	}
 
-	// Start render loop
+
+
 	float dt = 0.0f;
 
 	while (!glfwWindowShouldClose(window))
