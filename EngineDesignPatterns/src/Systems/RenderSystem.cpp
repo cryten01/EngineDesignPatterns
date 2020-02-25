@@ -96,8 +96,12 @@ void RenderSystem::Update(float dt)
 
 		glm::mat4 projection = camera.projectionMatrix;
 
-		shader->SetMat4("uModel", model);
-		shader->SetMat4("uView", view);
+
+		// TODO: remove
+		glm::mat4 viewDebug = glm::lookAt(glm::vec3(0,0,4), glm::vec3(0), glm::vec3(0,1,0));
+
+		shader->SetMat4("uModel", glm::mat4(1.0f));
+		shader->SetMat4("uView", viewDebug);
 		shader->SetMat4("uProjection", projection);
 		shader->SetVec3("uColor", renderable.color);
 

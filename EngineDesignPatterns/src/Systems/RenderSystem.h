@@ -12,7 +12,9 @@ class RenderSystem : public System
 public:
 	void Init();
 	void Update(float dt);
+	
 	void CreateCube();
+
 	glm::mat4 MakeProjectionTransform(float fov, float aspect, float nearClip, float farClip);
 
 private:
