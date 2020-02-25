@@ -1,94 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Concepts">
-      <UniqueIdentifier>{C4953EB9-B062-99C4-D97B-876CC5A7CE52}</UniqueIdentifier>
+    <Filter Include="external">
+      <UniqueIdentifier>{2839F3DC-1406-4EE8-3D1F-3C90294B8376}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ECS">
-      <UniqueIdentifier>{60E1870B-CCEA-877C-5566-9E7CC16E937C}</UniqueIdentifier>
+    <Filter Include="external\GLAD">
+      <UniqueIdentifier>{AFECA743-1BAD-237A-E4E7-6CF750676856}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Event">
-      <UniqueIdentifier>{E70B220D-5320-4ABE-1CA2-ED1D887546EF}</UniqueIdentifier>
+    <Filter Include="external\GLAD\src">
+      <UniqueIdentifier>{466A387A-B280-3610-FBF7-C131674D0798}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FDC">
-      <UniqueIdentifier>{B2E5870B-1EEF-877C-A76A-9E7C1373937C}</UniqueIdentifier>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Testing">
-      <UniqueIdentifier>{63FFD639-CFDE-55D5-D8F6-E0AB4455BC36}</UniqueIdentifier>
+    <Filter Include="src\Concepts">
+      <UniqueIdentifier>{BB98B8E9-A7FB-478E-5081-80443CC31311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ECS">
+      <UniqueIdentifier>{F76D2FA9-634D-AE44-6C65-391BD8C314A6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Event">
+      <UniqueIdentifier>{3E1ADFB2-AA84-9329-F3C2-44CF5F6C717E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\FDC">
+      <UniqueIdentifier>{49722FA9-B551-AE44-BE69-391B2AC814A6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Testing">
+      <UniqueIdentifier>{7AFF1043-E6B4-8938-6FA9-830FDB5D803C}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Concepts\FunctionPointers.h">
-      <Filter>Concepts</Filter>
+      <Filter>src\Concepts</Filter>
     </ClInclude>
     <ClInclude Include="src\Concepts\InheritanceByData.h">
-      <Filter>Concepts</Filter>
+      <Filter>src\Concepts</Filter>
     </ClInclude>
     <ClInclude Include="src\Concepts\InheritanceBySystem.h">
-      <Filter>Concepts</Filter>
+      <Filter>src\Concepts</Filter>
     </ClInclude>
     <ClInclude Include="src\Concepts\Other.h">
-      <Filter>Concepts</Filter>
+      <Filter>src\Concepts</Filter>
     </ClInclude>
     <ClInclude Include="src\Concepts\StaticCasting.h">
-      <Filter>Concepts</Filter>
+      <Filter>src\Concepts</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\ComponentManager.h">
-      <Filter>ECS</Filter>
+      <Filter>src\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\ComponentStorage.h">
-      <Filter>ECS</Filter>
+      <Filter>src\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\Coordinator.h">
-      <Filter>ECS</Filter>
+      <Filter>src\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\ECS.h">
-      <Filter>ECS</Filter>
+      <Filter>src\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\EntityManager.h">
-      <Filter>ECS</Filter>
+      <Filter>src\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\System.h">
-      <Filter>ECS</Filter>
+      <Filter>src\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\SystemManager.h">
-      <Filter>ECS</Filter>
+      <Filter>src\ECS</Filter>
     </ClInclude>
     <ClInclude Include="src\Event\Station.h">
-      <Filter>Event</Filter>
+      <Filter>src\Event</Filter>
     </ClInclude>
     <ClInclude Include="src\FDC\DCFC.h">
-      <Filter>FDC</Filter>
+      <Filter>src\FDC</Filter>
     </ClInclude>
     <ClInclude Include="src\FDC\DataSet.h">
-      <Filter>FDC</Filter>
+      <Filter>src\FDC</Filter>
     </ClInclude>
     <ClInclude Include="src\FDC\FunctionSet.h">
-      <Filter>FDC</Filter>
+      <Filter>src\FDC</Filter>
     </ClInclude>
     <ClInclude Include="src\Testing\ComponentTypes.h">
-      <Filter>Testing</Filter>
+      <Filter>src\Testing</Filter>
     </ClInclude>
     <ClInclude Include="src\Testing\EventTypes.h">
-      <Filter>Testing</Filter>
+      <Filter>src\Testing</Filter>
     </ClInclude>
     <ClInclude Include="src\Testing\ExampleLayer.h">
-      <Filter>Testing</Filter>
+      <Filter>src\Testing</Filter>
     </ClInclude>
     <ClInclude Include="src\Testing\Layer.h">
-      <Filter>Testing</Filter>
+      <Filter>src\Testing</Filter>
     </ClInclude>
     <ClInclude Include="src\Testing\StationTest.h">
-      <Filter>Testing</Filter>
+      <Filter>src\Testing</Filter>
     </ClInclude>
     <ClInclude Include="src\Testing\TestSystem.h">
-      <Filter>Testing</Filter>
+      <Filter>src\Testing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Testing\TestSystem.cpp">
-      <Filter>Testing</Filter>
+    <ClCompile Include="external\GLAD\src\glad.c">
+      <Filter>external\GLAD\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Testing\TestSystem.cpp">
+      <Filter>src\Testing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

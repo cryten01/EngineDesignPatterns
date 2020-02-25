@@ -35,7 +35,8 @@ project "EngineDesignPatterns"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp",
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/external/GLAD/src/glad.c"
 	}
 
     -- Sets additional include directories (adds files to a project)
@@ -45,7 +46,6 @@ project "EngineDesignPatterns"
         "%{IncludeDir.GLM}",
         "%{IncludeDir.GLFW}",
 		"%{IncludeDir.GLAD}",
-        "EngineDesignPatterns/external/GLAD/src/glad.c"
     }
     
     -- Sets additional dependencies (.lib files)
