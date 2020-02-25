@@ -12,8 +12,9 @@ class RenderSystem : public System
 public:
 	void Init();
 	void Update(float dt);
-	
-	void CreateCube();
+
+	void CreateCube(float width, float height, float depth);
+
 
 	glm::mat4 MakeProjectionTransform(float fov, float aspect, float nearClip, float farClip);
 
@@ -22,7 +23,9 @@ private:
 	EntityID mCamera;
 
 	GLuint mVao{};
+	GLuint mVboIndices{};
 	GLuint mVboVertices{};
 	GLuint mVboNormals{};
+	GLuint mElementCount = 0;
 };
 

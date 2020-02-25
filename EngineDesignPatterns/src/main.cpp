@@ -61,7 +61,7 @@ int main()
 	renderSystem->Init();
 
 
-	std::vector<EntityID> entities(1000);
+	std::vector<EntityID> entities(500);
 
 	std::default_random_engine generator;
 	std::uniform_real_distribution<float> randPosition(-100.0f, 100.0f);
@@ -104,7 +104,7 @@ int main()
 	{
 		auto startTime = std::chrono::high_resolution_clock::now();
 
-		physicsSystem->Update(dt);
+		//physicsSystem->Update(dt);
 		
 		renderSystem->Update(dt);
 
