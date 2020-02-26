@@ -13,6 +13,7 @@ struct ViewFrustumDimensions
 
 class CameraObj
 {
+public:
 	 CameraObj(ViewFrustumDimensions dimensions, std::shared_ptr<Shader> shader);
 	~CameraObj() = default;
 

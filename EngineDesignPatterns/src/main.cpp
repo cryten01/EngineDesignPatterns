@@ -26,7 +26,8 @@
 
 Coordinator gCoordinator; // necessary for extern
 
-int main()
+
+void RunECSVersion()
 {
 	GLFWwindow* window = Window::Create("EngineDesignPatterns", 1024, 768);
 
@@ -100,7 +101,6 @@ int main()
 	}
 
 
-
 	float dt = 0.0f;
 
 	while (!glfwWindowShouldClose(window))
@@ -118,6 +118,97 @@ int main()
 		dt = std::chrono::duration<float, std::chrono::seconds::period>(stopTime - startTime).count();
 	}
 
-	// Destroy framework
 	Window::Destroy();
+}
+
+void RunClassicVersion()
+{
+	GLFWwindow* window = Window::Create("EngineDesignPatterns", 1024, 768);
+
+	GPULog::Init();
+
+	// Set GL defaults here
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	// Create default shader
+	std::shared_ptr<Shader> shader = std::make_unique<Shader>("assets/shaders/flatColor.vert", "assets/shaders/flatColor.frag");
+
+	// Create camera
+	ViewFrustumDimensions dimensions;
+	dimensions.aspect = (float)(1024 / 768);
+	dimensions.fov = 45.0f;
+	dimensions.nearPlane = 0.1f;
+	dimensions.farPlane = 1000.0f;
+
+	CameraObj camera(dimensions, shader);
+
+	std::default_random_engine generator;
+	std::uniform_real_distribution<float> randPosition(-100.0f, 100.0f);
+	std::uniform_real_distribution<float> randRotation(0.0f, 3.0f);
+	std::uniform_real_distribution<float> randScale(3.0f, 5.0f);
+	std::uniform_real_distribution<float> randColor(0.0f, 1.0f);
+	std::uniform_real_distribution<float> randGravity(-10.0f, -1.0f);
+
+	float scale = randScale(generator);
+
+	std::vector<std::shared_ptr<GeometryObj>> cubes;
+
+	for (size_t i = 0; i < 1000; i++)
+	{
+		PhysicsObj physics;
+		physics.force = glm::vec3(0.0f, randGravity(generator), 0.0f);
+		physics.velocity = glm::vec3(0.0f, 0.0f, 0.0f);
+		physics.acceleration = glm::vec3(0.0f, 0.0f, 0.0f);
+
+		TransformObj transform;
+		transform._position = glm::vec3(randPosition(generator), randPosition(generator), randPosition(generator));
+		transform._rotation = glm::vec3(randRotation(generator), randRotation(generator), randRotation(generator));
+		transform._scale = glm::vec3(scale, scale, scale);
+
+		glm::vec3 color = glm::vec3(randColor(generator), randColor(generator), randColor(generator));
+
+		GeometryData geometry = GeometryObj::createCubeGeometry(1, 1, 1);
+
+		cubes.push_back(std::make_shared<GeometryObj>(geometry, physics, color, transform, shader));
+	}
+
+
+
+	float dt = 0.0f;
+
+	while (!glfwWindowShouldClose(window))
+	{
+		auto startTime = std::chrono::high_resolution_clock::now();
+
+		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		shader->Use();
+
+		camera.OnUpdate(dt);
+
+		for (auto c : cubes) 
+		{
+			c->OnUpdate(dt);
+		}
+
+		Window::Update(window);
+
+		auto stopTime = std::chrono::high_resolution_clock::now();
+
+		dt = std::chrono::duration<float, std::chrono::seconds::period>(stopTime - startTime).count();
+	}
+
+	Window::Destroy();
+}
+
+
+
+int main()
+{
+	//RunECSVersion();
+	RunClassicVersion();
 }

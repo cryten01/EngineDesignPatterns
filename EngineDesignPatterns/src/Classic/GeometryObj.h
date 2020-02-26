@@ -29,7 +29,7 @@ struct TransformObj
 class GeometryObj
 {
 public:
-	 GeometryObj(GeometryData& data, PhysicsObj& physics, glm::vec3 color, TransformObj& transform, std::shared_ptr<Shader> shader);
+	 GeometryObj(GeometryData data, PhysicsObj physics, glm::vec3 color, TransformObj transform, std::shared_ptr<Shader> shader);
 	~GeometryObj();
 
 	void OnUpdate(float dt);

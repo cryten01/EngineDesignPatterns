@@ -1,7 +1,7 @@
 #include "GeometryObj.h"
 
 
-GeometryObj::GeometryObj(GeometryData& data, PhysicsObj& physics, glm::vec3 color, TransformObj& transform, std::shared_ptr<Shader> shader)
+GeometryObj::GeometryObj(GeometryData data, PhysicsObj physics, glm::vec3 color, TransformObj transform, std::shared_ptr<Shader> shader)
 	: _elements(data.indices.size()), _physics(physics), _color(color), _transform(transform), _shader(shader)
 {
 	// create VAO
@@ -12,7 +12,6 @@ GeometryObj::GeometryObj(GeometryData& data, PhysicsObj& physics, glm::vec3 colo
 	glGenBuffers(1, &_vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
 	glBufferData(GL_ARRAY_BUFFER, data.positions.size() * sizeof(glm::vec3), data.positions.data(), GL_STATIC_DRAW);
-
 	// bind positions to location 0
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -21,7 +20,6 @@ GeometryObj::GeometryObj(GeometryData& data, PhysicsObj& physics, glm::vec3 colo
 	glGenBuffers(1, &_vboNormals);
 	glBindBuffer(GL_ARRAY_BUFFER, _vboNormals);
 	glBufferData(GL_ARRAY_BUFFER, data.normals.size() * sizeof(glm::vec3), data.normals.data(), GL_STATIC_DRAW);
-
 	// bind normals to location 1
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -57,7 +55,6 @@ void GeometryObj::OnUpdate(float dt)
 	modelMatrix = glm::scale(modelMatrix, _transform._scale);
 
 	// Set uniforms
-	_shader->Use();
 	_shader->SetVec3("uColor", _color);
 	_shader->SetMat4("uModel", modelMatrix);
 
