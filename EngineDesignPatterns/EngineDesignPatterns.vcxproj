@@ -97,6 +97,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Classic\GeometryObj.h" />
+    <ClInclude Include="src\Classic\CameraObj.h" />
     <ClInclude Include="src\Components\Gravity.h" />
     <ClInclude Include="src\Components\Rigidbody.h" />
     <ClInclude Include="src\Systems\PhysicsSystem.h" />
@@ -127,6 +129,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\GLAD\src\glad.c" />
+    <ClCompile Include="src\Classic\GeometryObj.cpp" />
+    <ClCompile Include="src\Classic\CameraObj.cpp" />
     <ClCompile Include="src\Systems\PhysicsSystem.cpp" />
     <ClCompile Include="src\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />

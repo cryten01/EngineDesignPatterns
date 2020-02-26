@@ -27,7 +27,7 @@ void RenderSystem::Init()
 	gCoordinator.AddComponent(mCamera, transform);
 
 	Camera camera;
-	camera.projectionMatrix = MakeProjectionTransform(45.0f, 1024 / 768, 0.1f, 1000.0f);
+	camera.projectionMatrix = CalculateProjectionTransform(45.0f, 1024 / 768, 0.1f, 1000.0f);
 	gCoordinator.AddComponent(mCamera, camera);
 
 	// Create cube shape
@@ -194,7 +194,7 @@ void RenderSystem::CreateCube(float width, float height, float depth)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-glm::mat4 RenderSystem::MakeProjectionTransform(float fov, float aspect, float nearClip, float farClip)
+glm::mat4 RenderSystem::CalculateProjectionTransform(float fov, float aspect, float nearClip, float farClip)
 {
 	// Make sure to reset matrix to identity matrix first
 	glm::mat4 viewMatrix = glm::mat4(1.0);

@@ -21,6 +21,9 @@
 #include "Components/Thrust.h"
 #include "Components/Renderable.h"
 
+#include "Classic/CameraObj.h"
+#include "Classic/GeometryObj.h"
+
 Coordinator gCoordinator; // necessary for extern
 
 int main()
@@ -90,7 +93,7 @@ int main()
 		transform.rotation = glm::vec3(randRotation(generator), randRotation(generator), randRotation(generator));
 		transform.scale = glm::vec3(scale, scale, scale);
 		gCoordinator.AddComponent(entity, transform);
-	
+
 		Renderable renderable;
 		renderable.color = glm::vec3(randColor(generator), randColor(generator), randColor(generator));
 		gCoordinator.AddComponent(entity, renderable);
@@ -104,8 +107,8 @@ int main()
 	{
 		auto startTime = std::chrono::high_resolution_clock::now();
 
-		//physicsSystem->Update(dt);
-		
+		physicsSystem->Update(dt);
+
 		renderSystem->Update(dt);
 
 		Window::Update(window);

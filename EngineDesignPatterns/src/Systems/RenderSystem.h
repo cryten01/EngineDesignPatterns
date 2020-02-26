@@ -15,8 +15,7 @@ public:
 
 	void CreateCube(float width, float height, float depth);
 
-
-	glm::mat4 MakeProjectionTransform(float fov, float aspect, float nearClip, float farClip);
+	glm::mat4 CalculateProjectionTransform(float fov, float aspect, float nearClip, float farClip);
 
 private:
 	std::unique_ptr<Shader> shader;
