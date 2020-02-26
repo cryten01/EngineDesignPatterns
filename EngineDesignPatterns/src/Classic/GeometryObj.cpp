@@ -1,8 +1,8 @@
 #include "GeometryObj.h"
 
 
-GeometryObj::GeometryObj(glm::mat4 modelMatrix, GeometryData& data)
-	: _elements(data.indices.size()), _modelMatrix(modelMatrix)
+GeometryObj::GeometryObj(glm::mat4 modelMatrix, GeometryData& data, Physics& physics)
+	: _elements(data.indices.size()), _modelMatrix(modelMatrix), _physics(physics)
 {
 	// create VAO
 	glGenVertexArrays(1, &_vao);
@@ -48,7 +48,7 @@ void GeometryObj::draw(glm::mat4 matrix)
 	glm::mat4 accumModel = matrix * _transformMatrix * _modelMatrix;
 
 	shader->Use();
-
+	shader->SetVec3("uColor", _color);
 	shader->SetMat4("uModel", accumModel);
 
 	glBindVertexArray(_vao);
@@ -56,8 +56,15 @@ void GeometryObj::draw(glm::mat4 matrix)
 	glBindVertexArray(0);
 }
 
-void GeometryObj::transform(glm::mat4 transformation)
+void GeometryObj::transform(glm::mat4 transformation, float dt)
 {
+	// Update position
+	_position += _physics.velocity * dt;
+
+	// Update velocity
+	_physics.velocity += _physics.force * dt;
+
+
 	_modelMatrix = transformation * _modelMatrix;
 }
 

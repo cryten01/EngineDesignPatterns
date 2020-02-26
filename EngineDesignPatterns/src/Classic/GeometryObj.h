@@ -11,9 +11,30 @@ struct GeometryData {
 	std::vector<unsigned int> indices;
 };
 
+struct Physics
+{
+	glm::vec3 force;
+	glm::vec3 velocity;
+	glm::vec3 acceleration;
+};
+
+
 class GeometryObj
 {
-protected:
+public:
+	 GeometryObj(glm::mat4 modelMatrix, GeometryData& data, Physics& physics);
+	~GeometryObj();
+
+	void draw(glm::mat4 matrix = glm::mat4(1.0f));
+	void transform(glm::mat4 transformation, float dt);
+	void setTransformMatrix(glm::mat4 transformMatrix);
+	glm::mat4 getModelMatrix();
+	glm::mat4 getTransformMatrix();
+	void resetModelMatrix();
+
+	static GeometryData createCubeGeometry(float width, float height, float depth);
+
+private:
 	GLuint _vao;
 	GLuint _vbo;
 	GLuint _vboNormals;
@@ -22,19 +43,12 @@ protected:
 
 	Shader* shader;
 
+	glm::vec3 _color;
 	glm::mat4 _modelMatrix;
 	glm::mat4 _transformMatrix;
 
-	 GeometryObj(glm::mat4 modelMatrix, GeometryData& data);
-	~GeometryObj();
+	Physics _physics;
 
-	void draw(glm::mat4 matrix = glm::mat4(1.0f));
-	void transform(glm::mat4 transformation);
-	void setTransformMatrix(glm::mat4 transformMatrix);
-	glm::mat4 getModelMatrix();
-	glm::mat4 getTransformMatrix();
-	void resetModelMatrix();
-
-	static GeometryData createCubeGeometry(float width, float height, float depth);
+	glm::vec3 _position; // TODO
 };
 
