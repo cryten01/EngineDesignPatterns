@@ -1,7 +1,7 @@
 #include "CameraObj.h"
 
-CameraObj::CameraObj(ViewFrustumDimensions dimensions)
-	: m_FrustumDimensions(dimensions)
+CameraObj::CameraObj(ViewFrustumDimensions dimensions, std::shared_ptr<Shader> shader)
+	: m_FrustumDimensions(dimensions), m_LookTarget(glm::vec3(0)), m_Shader(shader)
 {
 	// Initialize projection matrix
 	CalculateProjectionMatrix();
@@ -38,10 +38,11 @@ void CameraObj::OnUpdate(float deltaTime)
 	glm::vec3 localFrontDirection = glm::vec3(0, 0, -1);
 	glm::vec3 localUpDirection = glm::vec3(0, 1, 0);
 
+	// Calculate matrices
 	CalculateViewMatrix(localPosition, localPosition + localFrontDirection, localUpDirection);
 	CalculateProjectionMatrix();
 
 	// Submit uniform data
-	shader->SetMat4("uProjection", m_ProjectionMatrix);
-	shader->SetMat4("uView", m_ViewMatrix);
+	m_Shader->SetMat4("uProjection", m_ProjectionMatrix);
+	m_Shader->SetMat4("uView", m_ViewMatrix);
 }

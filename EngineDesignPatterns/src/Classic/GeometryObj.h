@@ -11,26 +11,28 @@ struct GeometryData {
 	std::vector<unsigned int> indices;
 };
 
-struct Physics
+struct PhysicsObj
 {
 	glm::vec3 force;
 	glm::vec3 velocity;
 	glm::vec3 acceleration;
 };
 
+struct TransformObj
+{
+	glm::vec3 _position;
+	glm::vec3 _rotation;
+	glm::vec3 _scale;
+};
+
 
 class GeometryObj
 {
 public:
-	 GeometryObj(glm::mat4 modelMatrix, GeometryData& data, Physics& physics);
+	 GeometryObj(GeometryData& data, PhysicsObj& physics, glm::vec3 color, TransformObj& transform, std::shared_ptr<Shader> shader);
 	~GeometryObj();
 
-	void draw(glm::mat4 matrix = glm::mat4(1.0f));
-	void transform(glm::mat4 transformation, float dt);
-	void setTransformMatrix(glm::mat4 transformMatrix);
-	glm::mat4 getModelMatrix();
-	glm::mat4 getTransformMatrix();
-	void resetModelMatrix();
+	void OnUpdate(float dt);
 
 	static GeometryData createCubeGeometry(float width, float height, float depth);
 
@@ -41,14 +43,11 @@ private:
 	GLuint _vboIndices;
 	unsigned int _elements;
 
-	Shader* shader;
-
 	glm::vec3 _color;
-	glm::mat4 _modelMatrix;
-	glm::mat4 _transformMatrix;
 
-	Physics _physics;
+	TransformObj _transform;
+	PhysicsObj _physics;
 
-	glm::vec3 _position; // TODO
+	std::shared_ptr<Shader> _shader;
 };
 

@@ -1,8 +1,8 @@
 #include "GeometryObj.h"
 
 
-GeometryObj::GeometryObj(glm::mat4 modelMatrix, GeometryData& data, Physics& physics)
-	: _elements(data.indices.size()), _modelMatrix(modelMatrix), _physics(physics)
+GeometryObj::GeometryObj(GeometryData& data, PhysicsObj& physics, glm::vec3 color, TransformObj& transform, std::shared_ptr<Shader> shader)
+	: _elements(data.indices.size()), _physics(physics), _color(color), _transform(transform), _shader(shader)
 {
 	// create VAO
 	glGenVertexArrays(1, &_vao);
@@ -43,55 +43,33 @@ GeometryObj::~GeometryObj()
 	glDeleteVertexArrays(1, &_vao);
 }
 
-void GeometryObj::draw(glm::mat4 matrix)
+void GeometryObj::OnUpdate(float dt)
 {
-	glm::mat4 accumModel = matrix * _transformMatrix * _modelMatrix;
+	// Update position
+	_transform._position += _physics.velocity * dt;
 
-	shader->Use();
-	shader->SetVec3("uColor", _color);
-	shader->SetMat4("uModel", accumModel);
+	// Update velocity
+	_physics.velocity += _physics.force * dt;
 
+	// Update modelMatrix
+	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), _transform._position);
+	modelMatrix = glm::rotate(modelMatrix, _transform._rotation.y, glm::vec3(0, 1, 0));
+	modelMatrix = glm::scale(modelMatrix, _transform._scale);
+
+	// Set uniforms
+	_shader->Use();
+	_shader->SetVec3("uColor", _color);
+	_shader->SetMat4("uModel", modelMatrix);
+
+	// Draw geometry
 	glBindVertexArray(_vao);
 	glDrawElements(GL_TRIANGLES, _elements, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }
 
-void GeometryObj::transform(glm::mat4 transformation, float dt)
-{
-	// Update position
-	_position += _physics.velocity * dt;
-
-	// Update velocity
-	_physics.velocity += _physics.force * dt;
-
-
-	_modelMatrix = transformation * _modelMatrix;
-}
-
-void GeometryObj::setTransformMatrix(glm::mat4 transformMatrix)
-{
-	_transformMatrix = transformMatrix;
-}
-
-void GeometryObj::resetModelMatrix()
-{
-	_modelMatrix = glm::mat4(1);
-}
-
-glm::mat4 GeometryObj::getModelMatrix()
-{
-	return _modelMatrix;
-}
-
-glm::mat4 GeometryObj::getTransformMatrix()
-{
-	return _transformMatrix;
-}
-
 GeometryData GeometryObj::createCubeGeometry(float width, float height, float depth)
 {
 	GeometryData data;
-
 
 	data.positions = {
 		// front
