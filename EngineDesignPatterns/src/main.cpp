@@ -1,6 +1,9 @@
 
 #include <random>
 #include <chrono>
+#include <string>
+#include <fstream>
+#include <sstream>
 #include <iostream>
 
 #include "ECS/Coordinator.h"
@@ -24,7 +27,44 @@
 #include "Classic/CameraObj.h"
 #include "Classic/GeometryObj.h"
 
-Coordinator gCoordinator; // necessary for extern
+
+// Control params
+const bool ECS_MODE = true;
+const int NR_OF_BOXES = 1000;
+
+// Globals
+Coordinator gCoordinator; 
+int FPS = 0;
+int frameCount = 0;
+float lastFrameTime = float(glfwGetTime());
+
+int startUpFPS; // 1 sec after startup
+int runtimeFPS; // 10 sec after startup
+
+
+
+void WriteFPSIntoFile(std::string filePath, int startUpTime, int runTime)
+{
+	std::ofstream out(filePath, std::ios_base::app);
+
+	out << "#startUpTime: "  << startUpTime << "\t#runTime: " << runTime << std::endl;
+	out.close();
+}
+
+
+void CountFPS() 
+{
+	float currentTime = glfwGetTime();
+
+	frameCount++;
+	if (currentTime - lastFrameTime >= 1.0) {
+		FPS = frameCount;
+		frameCount = 0;
+		lastFrameTime += 1.0;
+	}
+
+	std::cout << "FPS: " << FPS << std::endl;
+}
 
 
 void RunECSVersion()
@@ -64,8 +104,7 @@ void RunECSVersion()
 
 	renderSystem->Init();
 
-
-	std::vector<EntityID> entities(500);
+	std::vector<EntityID> entities(NR_OF_BOXES);
 
 	std::default_random_engine generator;
 	std::uniform_real_distribution<float> randPosition(-100.0f, 100.0f);
@@ -107,6 +146,8 @@ void RunECSVersion()
 	{
 		auto startTime = std::chrono::high_resolution_clock::now();
 
+		CountFPS();
+
 		physicsSystem->Update(dt);
 
 		renderSystem->Update(dt);
@@ -120,6 +161,7 @@ void RunECSVersion()
 
 	Window::Destroy();
 }
+
 
 void RunClassicVersion()
 {
@@ -156,7 +198,7 @@ void RunClassicVersion()
 
 	std::vector<std::shared_ptr<GeometryObj>> cubes;
 
-	for (size_t i = 0; i < 1000; i++)
+	for (size_t i = 0; i < NR_OF_BOXES; i++)
 	{
 		PhysicsObj physics;
 		physics.force = glm::vec3(0.0f, randGravity(generator), 0.0f);
@@ -182,9 +224,12 @@ void RunClassicVersion()
 	while (!glfwWindowShouldClose(window))
 	{
 		auto startTime = std::chrono::high_resolution_clock::now();
+		float currentTime = glfwGetTime();
 
 		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		CountFPS();
 
 		shader->Use();
 
@@ -209,6 +254,14 @@ void RunClassicVersion()
 
 int main()
 {
-	//RunECSVersion();
-	RunClassicVersion();
+	if (ECS_MODE) 
+	{
+		RunECSVersion();
+		WriteFPSIntoFile("assets/profiling/ecs.fps", 20, 10);
+	}
+	else
+	{
+		RunClassicVersion();
+		WriteFPSIntoFile("assets/profiling/classic.fps", 40, 10);
+	}
 }
