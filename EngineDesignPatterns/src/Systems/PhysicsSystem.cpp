@@ -17,14 +17,17 @@ void PhysicsSystem::Init()
 
 void PhysicsSystem::Update(float dt)
 {
-	for (auto const& entity : mEntities)
+	auto rigidBodyStorage = gCoordinator.GetComponentStorage<RigidBody>();
+	auto transformStorage = gCoordinator.GetComponentStorage<Transform>();
+	auto gravityStorage = gCoordinator.GetComponentStorage<Gravity>();
+
+	for (auto entity : mEntities)
 	{
-		auto& rigidBody = gCoordinator.GetComponent<RigidBody>(entity);
-		auto& transform = gCoordinator.GetComponent<Transform>(entity);
+		auto& rigidBody = rigidBodyStorage->GetEntry(entity);
+		auto& transform = transformStorage->GetEntry(entity);
+		auto& gravity = gravityStorage->GetEntry(entity);
 
 		// Forces
-		auto const& gravity = gCoordinator.GetComponent<Gravity>(entity);
-
 		transform.position += rigidBody.velocity * dt;
 
 		rigidBody.velocity += gravity.force * dt;

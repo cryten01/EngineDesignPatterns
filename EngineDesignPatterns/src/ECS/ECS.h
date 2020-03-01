@@ -3,11 +3,14 @@
 #include <cstdint>
 #include <bitset>
 
+#include "Params.h"
+
+
 // A simple type alias
 using EntityID = std::uint32_t;
 
 // Used to define the size of arrays later on (determined by factory)
-const EntityID MAX_ENTITIES = 20000;
+const EntityID MAX_ENTITIES = NR_OF_ENTITIES;
 
 // A simple type alias
 using ComponentID = std::uint8_t;

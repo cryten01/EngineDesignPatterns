@@ -27,10 +27,8 @@
 #include "Classic/CameraObj.h"
 #include "Classic/GeometryObj.h"
 
+#include "Params.h"
 
-// Control params
-const bool ECS_MODE = true;
-const int NR_OF_BOXES = 1000;
 
 // Globals
 Coordinator gCoordinator; 
@@ -38,16 +36,16 @@ int FPS = 0;
 int frameCount = 0;
 float lastFrameTime = float(glfwGetTime());
 
-int startUpFPS; // 1 sec after startup
-int runtimeFPS; // 10 sec after startup
+int startupFPS; // records when FIRST_CAPTURETIME is reached
+int runtimeFPS; // records when SECOND_CAPTURETIME is reached
 
 
 
-void WriteFPSIntoFile(std::string filePath, int startUpTime, int runTime)
+void WriteFPSIntoFile(std::string filePath)
 {
 	std::ofstream out(filePath, std::ios_base::app);
 
-	out << "#startUpTime: "  << startUpTime << "\t#runTime: " << runTime << std::endl;
+	out << "#StartFPS: "  << startupFPS << "\t#RuntimeFPS: " << runtimeFPS << std::endl;
 	out.close();
 }
 
@@ -62,6 +60,11 @@ void CountFPS()
 		frameCount = 0;
 		lastFrameTime += 1.0;
 	}
+
+	if (lastFrameTime >= SECOND_FPS_CAPTURE_TIME)
+		runtimeFPS = FPS;
+	else if (lastFrameTime >= FIRST_FPS_CAPTURE_TIME)
+		startupFPS = FPS;
 
 	std::cout << "FPS: " << FPS << std::endl;
 }
@@ -104,7 +107,7 @@ void RunECSVersion()
 
 	renderSystem->Init();
 
-	std::vector<EntityID> entities(NR_OF_BOXES);
+	std::vector<EntityID> entities(NR_OF_ENTITIES);
 
 	std::default_random_engine generator;
 	std::uniform_real_distribution<float> randPosition(-100.0f, 100.0f);
@@ -198,7 +201,7 @@ void RunClassicVersion()
 
 	std::vector<std::shared_ptr<GeometryObj>> cubes;
 
-	for (size_t i = 0; i < NR_OF_BOXES; i++)
+	for (size_t i = 0; i < NR_OF_ENTITIES; i++)
 	{
 		PhysicsObj physics;
 		physics.force = glm::vec3(0.0f, randGravity(generator), 0.0f);
@@ -257,11 +260,11 @@ int main()
 	if (ECS_MODE) 
 	{
 		RunECSVersion();
-		WriteFPSIntoFile("assets/profiling/ecs.fps", 20, 10);
+		WriteFPSIntoFile("assets/profiling/ecs.fps");
 	}
 	else
 	{
 		RunClassicVersion();
-		WriteFPSIntoFile("assets/profiling/classic.fps", 40, 10);
+		WriteFPSIntoFile("assets/profiling/classic.fps");
 	}
 }

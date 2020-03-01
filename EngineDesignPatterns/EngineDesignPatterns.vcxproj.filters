@@ -89,6 +89,7 @@
     <ClInclude Include="src\Components\Gravity.h" />
     <ClInclude Include="src\Classic\CameraObj.h" />
     <ClInclude Include="src\Classic\GeometryObj.h" />
+    <ClInclude Include="src\Params.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\GLAD\src\glad.c">

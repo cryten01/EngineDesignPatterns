@@ -37,10 +37,14 @@ public:
 		// TODO: Replacing a value is only possible by erasing the entity first
 		mStorageMap.erase(entity); 
 		mStorageMap.emplace(entity, value);
+
+		mStorageArray[entity] = value;
 	}
 
 	T& GetEntry(EntityID& entity)
 	{
+		return mStorageArray[entity];
+
 		return mStorageMap.find(entity)->second;
 	}
 
@@ -51,6 +55,9 @@ public:
 	}
 
 private:
+	std::array<T, MAX_ENTITIES> mStorageArray; // O(1) access times
+	size_t mArraySize = 0;
+
 	std::map<EntityID, T> mStorageMap; // N-log(n) access times
 	CallbackID mOnEntityDestroyedID;
 };

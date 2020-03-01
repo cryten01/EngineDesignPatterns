@@ -101,6 +101,7 @@
     <ClInclude Include="src\Classic\CameraObj.h" />
     <ClInclude Include="src\Components\Gravity.h" />
     <ClInclude Include="src\Components\Rigidbody.h" />
+    <ClInclude Include="src\Params.h" />
     <ClInclude Include="src\Systems\PhysicsSystem.h" />
     <ClInclude Include="src\Components\Camera.h" />
     <ClInclude Include="src\Components\Renderable.h" />

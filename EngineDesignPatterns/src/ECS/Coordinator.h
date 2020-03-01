@@ -42,7 +42,7 @@ public:
 	}
 
 	template<typename T>
-	void DeregisterComponent() 
+	void DeregisterComponent()
 	{
 		mComponentManager->RemoveStorage<T>();
 	}
@@ -81,6 +81,12 @@ public:
 	ComponentID GetComponentType()
 	{
 		return mComponentManager->GetComponentType<T>();
+	}
+
+	template<typename T>
+	std::shared_ptr<ComponentStorageSystem<T>> GetComponentStorage()
+	{
+		return mComponentManager->GetStorage<T>();
 	}
 
 

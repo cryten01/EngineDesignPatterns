@@ -45,19 +45,23 @@ void RenderSystem::Update(float dt)
 	auto& cameraTransform = gCoordinator.GetComponent<Transform>(mCamera);
 	auto& camera = gCoordinator.GetComponent<Camera>(mCamera);
 
-	for (auto const& entity : mEntities)
+	// Calculate view/projection matrix once per frame
+	glm::mat4 viewMatrix = glm::lookAt(cameraTransform.position, glm::vec3(0), glm::vec3(0, 1, 0));
+	glm::mat4 projectionMatrix = camera.projectionMatrix;
+
+	// Get storage references once per frame
+	auto transformStorage = gCoordinator.GetComponentStorage<Transform>();
+	auto renderableStorage = gCoordinator.GetComponentStorage<Renderable>();
+
+	for (auto entity : mEntities)
 	{
-		auto const& transform = gCoordinator.GetComponent<Transform>(entity);
-		auto const& renderable = gCoordinator.GetComponent<Renderable>(entity);
+		auto const& transform = transformStorage->GetEntry(entity);
+		auto const& renderable = renderableStorage->GetEntry(entity);
 
 		glm::mat4 modelMatrix = glm::mat4(1.0);
 		modelMatrix = glm::translate(modelMatrix, transform.position);
-		modelMatrix = glm::rotate(modelMatrix, transform.rotation.y, glm::vec3(0,1,0));
+		//modelMatrix = glm::rotate(modelMatrix, transform.rotation.y, glm::vec3(0, 1, 0)); // Note: Represents an expensive operation!
 		modelMatrix = glm::scale(modelMatrix, transform.scale);
-
-		glm::mat4 viewMatrix = glm::lookAt(cameraTransform.position, glm::vec3(0), glm::vec3(0, 1, 0));
-
-		glm::mat4 projectionMatrix = camera.projectionMatrix;
 
 		shader->SetMat4("uModel", modelMatrix);
 		shader->SetMat4("uView", viewMatrix);
@@ -66,7 +70,6 @@ void RenderSystem::Update(float dt)
 
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glDrawElements(GL_TRIANGLES, mElementCount, GL_UNSIGNED_INT, NULL);
-
 	}
 
 	glBindVertexArray(0);

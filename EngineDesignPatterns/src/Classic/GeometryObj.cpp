@@ -51,7 +51,7 @@ void GeometryObj::OnUpdate(float dt)
 
 	// Update modelMatrix
 	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), _transform._position);
-	modelMatrix = glm::rotate(modelMatrix, _transform._rotation.y, glm::vec3(0, 1, 0));
+	//modelMatrix = glm::rotate(modelMatrix, _transform._rotation.y, glm::vec3(0, 1, 0));
 	modelMatrix = glm::scale(modelMatrix, _transform._scale);
 
 	// Set uniforms
