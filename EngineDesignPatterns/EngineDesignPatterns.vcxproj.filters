@@ -69,9 +69,6 @@
     <ClInclude Include="src\Event\Station.h">
       <Filter>src\Event</Filter>
     </ClInclude>
-    <ClInclude Include="src\Testing\EventTypes.h">
-      <Filter>src\Testing</Filter>
-    </ClInclude>
     <ClInclude Include="src\Testing\StationTest.h">
       <Filter>src\Testing</Filter>
     </ClInclude>
@@ -84,12 +81,14 @@
     <ClInclude Include="src\Components\Camera.h" />
     <ClInclude Include="src\Components\Renderable.h" />
     <ClInclude Include="src\Systems\PhysicsSystem.h" />
-    <ClInclude Include="src\Components\Thrust.h" />
     <ClInclude Include="src\Components\Rigidbody.h" />
     <ClInclude Include="src\Components\Gravity.h" />
     <ClInclude Include="src\Classic\CameraObj.h" />
     <ClInclude Include="src\Classic\GeometryObj.h" />
     <ClInclude Include="src\Params.h" />
+    <ClInclude Include="src\Event\EventTypes.h">
+      <Filter>src\Testing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\GLAD\src\glad.c">

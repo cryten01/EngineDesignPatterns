@@ -4,8 +4,6 @@
 #include <iostream>
 #include <map>
 
-// Let abstract logic be abstract logic without needing to know a IData type
-
 /**
  * INHERITANCE BY DATA
  *

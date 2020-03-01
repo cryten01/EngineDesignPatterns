@@ -8,7 +8,7 @@
 #include "ECS.h"
 #include "ECS/System.h"
 #include "Event/Station.h"
-#include "Testing/EventTypes.h"
+#include "Event/EventTypes.h"
 
 
 struct EntityManagerData
@@ -32,18 +32,18 @@ public:
 		// Initialize the queue with all possible entity IDs
 		for (EntityID entity = 0; entity < MAX_ENTITIES; ++entity)
 		{
-			factory.availableEntities.push(entity);
+			m_Factory.availableEntities.push(entity);
 		}
 	}
 
 	EntityID CreateEntity()
 	{
-		assert(factory.livingEntities < MAX_ENTITIES && "Too many entities in existence.");
+		assert(m_Factory.livingEntities < MAX_ENTITIES && "Too many entities in existence.");
 
 		// Take an ID from the front of the queue
-		EntityID id = factory.availableEntities.front();
-		factory.availableEntities.pop();
-		++factory.livingEntities;
+		EntityID id = m_Factory.availableEntities.front();
+		m_Factory.availableEntities.pop();
+		++m_Factory.livingEntities;
 
 		return id;
 	}
@@ -53,11 +53,11 @@ public:
 		assert(entity < MAX_ENTITIES && "Entity out of range.");
 
 		// Invalidate the returned entity's signature
-		factory.signatures[entity].reset();
+		m_Factory.signatures[entity].reset();
 
 		// Put the returned ID at the back of the queue
-		factory.availableEntities.push(entity);
-		--factory.livingEntities;
+		m_Factory.availableEntities.push(entity);
+		--m_Factory.livingEntities;
 
 		// Notify storages over station that entity has been returned
 		EntityDestroyedEvent event;
@@ -70,7 +70,7 @@ public:
 		assert(entity < MAX_ENTITIES && "Entity out of range.");
 
 		// Put this entity's signature into the array
-		factory.signatures[entity] = signature;
+		m_Factory.signatures[entity] = signature;
 	}
 
 	Signature GetSignature(EntityID entity)
@@ -78,9 +78,9 @@ public:
 		assert(entity < MAX_ENTITIES && "Entity out of range.");
 
 		// Get this entity's signature from the array
-		return factory.signatures[entity];
+		return m_Factory.signatures[entity];
 	}
 
 private:
-	EntityManagerData factory;
+	EntityManagerData m_Factory;
 };

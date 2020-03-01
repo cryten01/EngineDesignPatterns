@@ -7,8 +7,10 @@
 #include <iostream>
 
 #include "ECS/Coordinator.h"
+
 #include "Event/Station.h"
-#include "Testing/EventTypes.h"
+#include "Event/EventTypes.h"
+
 #include "Core/Window.h"
 
 #include "Graphics/Shader.h"
@@ -21,7 +23,6 @@
 #include "Components/Rigidbody.h"
 #include "Components/Camera.h"
 #include "Components/Transform.h"
-#include "Components/Thrust.h"
 #include "Components/Renderable.h"
 
 #include "Classic/CameraObj.h"
@@ -30,7 +31,10 @@
 #include "Params.h"
 
 
+//---------------------------
 // Globals
+//---------------------------
+
 Coordinator gCoordinator; 
 
 int FPS = 0;
@@ -85,7 +89,6 @@ void RunECSVersion()
 
 	gCoordinator.RegisterComponent<Gravity>();
 	gCoordinator.RegisterComponent<RigidBody>();
-	gCoordinator.RegisterComponent<Thrust>();
 	gCoordinator.RegisterComponent<Renderable>();
 	gCoordinator.RegisterComponent<Transform>();
 	gCoordinator.RegisterComponent<Camera>();
@@ -112,6 +115,7 @@ void RunECSVersion()
 
 	renderSystem->Init();
 
+
 	std::vector<EntityID> entities(MAX_ENTITIES - 1);
 
 	std::default_random_engine generator;
@@ -122,6 +126,7 @@ void RunECSVersion()
 	std::uniform_real_distribution<float> randGravity(-10.0f, -1.0f);
 
 	float scale = randScale(generator);
+
 
 	for (auto& entity : entities)
 	{
@@ -214,9 +219,9 @@ void RunClassicVersion()
 		physics.acceleration = glm::vec3(0.0f, 0.0f, 0.0f);
 
 		TransformObj transform;
-		transform._position = glm::vec3(randPosition(generator), randPosition(generator), randPosition(generator));
-		transform._rotation = glm::vec3(randRotation(generator), randRotation(generator), randRotation(generator));
-		transform._scale = glm::vec3(scale, scale, scale);
+		transform.position = glm::vec3(randPosition(generator), randPosition(generator), randPosition(generator));
+		transform.rotation = glm::vec3(randRotation(generator), randRotation(generator), randRotation(generator));
+		transform.scale = glm::vec3(scale, scale, scale);
 
 		glm::vec3 color = glm::vec3(randColor(generator), randColor(generator), randColor(generator));
 

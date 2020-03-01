@@ -15,12 +15,12 @@ public:
 	{
 		size_t type = typeid(T).hash_code();
 
-		assert(systemsMap.find(type) == systemsMap.end() && "Registering system more than once.");
+		assert(m_SystemsMap.find(type) == m_SystemsMap.end() && "Registering system more than once.");
 
 		// Create a pointer to the system and add it to the systems map
 		std::shared_ptr<System> entry = std::make_shared<T>();
 
-		systemsMap.emplace(type, entry);
+		m_SystemsMap.emplace(type, entry);
 	}
 
 	template<typename T>
@@ -28,7 +28,7 @@ public:
 	{
 		size_t type = typeid(T).hash_code();
 
-		auto entry = systemsMap.find(type)->second;
+		auto entry = m_SystemsMap.find(type)->second;
 
 		return std::static_pointer_cast<T>(entry);
 	}
@@ -37,7 +37,7 @@ public:
 	void RemoveSystem()
 	{
 		size_t type = typeid(T).hash_code();
-		systemsMap.erase(type);
+		m_SystemsMap.erase(type);
 	}
 
 	template<typename T>
@@ -45,52 +45,52 @@ public:
 	{
 		size_t type = typeid(T).hash_code();
 
-		assert(systemsMap.find(type) != systemsMap.end() && "System used before registered.");
+		assert(m_SystemsMap.find(type) != m_SystemsMap.end() && "System used before registered.");
 
 		// Set the signature for this system
-		mSignatures.insert({ type, signature });
+		m_Signatures.insert({ type, signature });
 	}
 
 	void OnEntityDestroyed(EntityID entity) 
 	{
 		// Erase a destroyed entity from all system lists
 		// mEntities is a set so no check needed
-		for (auto const& entry : systemsMap)
+		for (auto const& entry : m_SystemsMap)
 		{
 			auto const& system = entry.second;
 
-			system->mEntities.erase(entity);
+			system->m_Entities.erase(entity);
 		}
 	}
 
 	void OnEntitySignatureChanged(EntityID entity, Signature entitySignature)
 	{
 		// Notify each system that an entity's signature changed (occurs when a component is added, removed or an entity is destroyed)
-		for (auto const& entry : systemsMap)
+		for (auto const& entry : m_SystemsMap)
 		{
 			auto const& type = entry.first;
 			auto const& system = entry.second;
-			auto const& systemSignature = mSignatures[type];
+			auto const& systemSignature = m_Signatures[type];
 
 			// Entity signature matches system signature - insert into set
 			if ((entitySignature & systemSignature) == systemSignature)
 			{
-				system->mEntities.insert(entity);
+				system->m_Entities.insert(entity);
 			}
 			// Entity signature does not match system signature - erase from set
 			else
 			{
-				system->mEntities.erase(entity);
+				system->m_Entities.erase(entity);
 			}
 		}
 	}
 
 private:
 	// Map from type hash to a system pointer
-	std::map<size_t, std::shared_ptr<System>> systemsMap;
+	std::map<size_t, std::shared_ptr<System>> m_SystemsMap;
 
 	// Map from type hash to a signature
-	std::map<size_t, Signature> mSignatures{};
+	std::map<size_t, Signature> m_Signatures{};
 };
 
 

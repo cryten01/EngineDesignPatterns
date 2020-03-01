@@ -3,7 +3,6 @@
 
 #include "Components/Gravity.h"
 #include "Components/RigidBody.h"
-#include "Components/Thrust.h"
 #include "Components/Transform.h"
 #include "ECS/Coordinator.h"
 
@@ -21,7 +20,7 @@ void PhysicsSystem::Update(float dt)
 	auto transformStorage = gCoordinator.GetComponentStorage<Transform>();
 	auto gravityStorage = gCoordinator.GetComponentStorage<Gravity>();
 
-	for (auto entity : mEntities)
+	for (auto entity : m_Entities)
 	{
 		auto& rigidBody = rigidBodyStorage->GetEntry(entity);
 		auto& transform = transformStorage->GetEntry(entity);

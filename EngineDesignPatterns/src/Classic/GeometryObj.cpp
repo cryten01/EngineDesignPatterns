@@ -2,31 +2,31 @@
 
 
 GeometryObj::GeometryObj(GeometryData data, PhysicsObj physics, glm::vec3 color, TransformObj transform, std::shared_ptr<Shader> shader)
-	: _elements(data.indices.size()), _physics(physics), _color(color), _transform(transform), _shader(shader)
+	: m_Elements(data.indices.size()), m_Physics(physics), m_Color(color), m_Transform(transform), m_Shader(shader)
 {
 	// create VAO
-	glGenVertexArrays(1, &_vao);
-	glBindVertexArray(_vao);
+	glGenVertexArrays(1, &m_Vao);
+	glBindVertexArray(m_Vao);
 
 	// create positions VBO
-	glGenBuffers(1, &_vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+	glGenBuffers(1, &m_Vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, m_Vbo);
 	glBufferData(GL_ARRAY_BUFFER, data.positions.size() * sizeof(glm::vec3), data.positions.data(), GL_STATIC_DRAW);
 	// bind positions to location 0
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	// create normals VBO
-	glGenBuffers(1, &_vboNormals);
-	glBindBuffer(GL_ARRAY_BUFFER, _vboNormals);
+	glGenBuffers(1, &m_VboNormals);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VboNormals);
 	glBufferData(GL_ARRAY_BUFFER, data.normals.size() * sizeof(glm::vec3), data.normals.data(), GL_STATIC_DRAW);
 	// bind normals to location 1
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	// create and bind indices VBO
-	glGenBuffers(1, &_vboIndices);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vboIndices);
+	glGenBuffers(1, &m_VboIndices);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_VboIndices);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, data.indices.size() * sizeof(unsigned int), data.indices.data(), GL_STATIC_DRAW);
 
 	glBindVertexArray(0);
@@ -35,32 +35,32 @@ GeometryObj::GeometryObj(GeometryData data, PhysicsObj physics, glm::vec3 color,
 
 GeometryObj::~GeometryObj()
 {
-	glDeleteBuffers(1, &_vbo);
-	glDeleteBuffers(1, &_vboNormals);
-	glDeleteBuffers(1, &_vboIndices);
-	glDeleteVertexArrays(1, &_vao);
+	glDeleteBuffers(1, &m_Vbo);
+	glDeleteBuffers(1, &m_VboNormals);
+	glDeleteBuffers(1, &m_VboIndices);
+	glDeleteVertexArrays(1, &m_Vao);
 }
 
 void GeometryObj::OnUpdate(float dt)
 {
 	// Update position
-	_transform._position += _physics.velocity * dt;
+	m_Transform.position += m_Physics.velocity * dt;
 
 	// Update velocity
-	_physics.velocity += _physics.force * dt;
+	m_Physics.velocity += m_Physics.force * dt;
 
 	// Update modelMatrix
-	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), _transform._position);
-	//modelMatrix = glm::rotate(modelMatrix, _transform._rotation.y, glm::vec3(0, 1, 0));
-	modelMatrix = glm::scale(modelMatrix, _transform._scale);
+	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), m_Transform.position);
+	modelMatrix = glm::rotate(modelMatrix, m_Transform.rotation.y, glm::vec3(0, 1, 0));
+	modelMatrix = glm::scale(modelMatrix, m_Transform.scale);
 
 	// Set uniforms
-	_shader->SetVec3("uColor", _color);
-	_shader->SetMat4("uModel", modelMatrix);
+	m_Shader->SetVec3("uColor", m_Color);
+	m_Shader->SetMat4("uModel", modelMatrix);
 
 	// Draw geometry
-	glBindVertexArray(_vao);
-	glDrawElements(GL_TRIANGLES, _elements, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(m_Vao);
+	glDrawElements(GL_TRIANGLES, m_Elements, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }
 

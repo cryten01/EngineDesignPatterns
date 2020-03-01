@@ -4,7 +4,7 @@
 
 #include "ECS.h"
 #include "Event/Station.h"
-#include "Testing/EventTypes.h"
+#include "Event/EventTypes.h"
 
 
 class IComponentStorageSystem
@@ -24,17 +24,17 @@ public:
 			return true;
 		};
 
-		mOnEntityDestroyedID = StationSystem::Subscribe<EntityDestroyedEvent>(onEntityDestroyedFunction);
+		m_OnEntityDestroyedID = StationSystem::Subscribe<EntityDestroyedEvent>(onEntityDestroyedFunction);
 	}
 
 	~ComponentStorageSystem() 
 	{
-		StationSystem::Unsubscribe<EntityDestroyedEvent>(mOnEntityDestroyedID);
+		StationSystem::Unsubscribe<EntityDestroyedEvent>(m_OnEntityDestroyedID);
 	}
 
 	void MakeEntry(EntityID& entity, T value)
 	{
-		mStorageArray[entity] = value;
+		m_StorageArray[entity] = value;
 
 		// TODO: Replacing a value is only possible by erasing the entity first
 		//mStorageMap.erase(entity); 
@@ -43,23 +43,23 @@ public:
 
 	T& GetEntry(EntityID& entity)
 	{
-		return mStorageArray[entity];
+		return m_StorageArray[entity];
 
 		//return mStorageMap.find(entity)->second;
 	}
 
 	void ClearEntry(EntityID& entity)
 	{
-		mStorageMap.erase(entity);
+		m_StorageMap.erase(entity);
 		std::cout << "Clear entry from Storage" << std::endl;
 
 		// TODO: Support entry deletion for array
 	}
 
 private:
-	std::array<T, MAX_ENTITIES> mStorageArray;	// O(1) access times
-	size_t mArraySize = 0;
+	std::array<T, MAX_ENTITIES> m_StorageArray;	// O(1) access times
+	size_t m_ArraySize = 0;
 
-	std::map<EntityID, T> mStorageMap;			// N-log(n) access times
-	CallbackID mOnEntityDestroyedID;
+	std::map<EntityID, T> m_StorageMap;			// N-log(n) access times
+	CallbackID m_OnEntityDestroyedID;
 };

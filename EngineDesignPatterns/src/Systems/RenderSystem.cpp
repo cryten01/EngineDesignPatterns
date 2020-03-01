@@ -53,14 +53,14 @@ void RenderSystem::Update(float dt)
 	auto transformStorage = gCoordinator.GetComponentStorage<Transform>();
 	auto renderableStorage = gCoordinator.GetComponentStorage<Renderable>();
 
-	for (auto entity : mEntities)
+	for (auto entity : m_Entities)
 	{
 		auto const& transform = transformStorage->GetEntry(entity);
 		auto const& renderable = renderableStorage->GetEntry(entity);
 
 		glm::mat4 modelMatrix = glm::mat4(1.0);
 		modelMatrix = glm::translate(modelMatrix, transform.position);
-		//modelMatrix = glm::rotate(modelMatrix, transform.rotation.y, glm::vec3(0, 1, 0)); // Note: Represents an expensive operation!
+		modelMatrix = glm::rotate(modelMatrix, transform.rotation.y, glm::vec3(0, 1, 0)); // Note: Represents an expensive operation!
 		modelMatrix = glm::scale(modelMatrix, transform.scale);
 
 		shader->SetMat4("uModel", modelMatrix);

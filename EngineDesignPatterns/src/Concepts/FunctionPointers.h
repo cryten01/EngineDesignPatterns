@@ -3,7 +3,7 @@
 #include <iostream>
 #include <functional>
 
-// Aliases can be used for a specific function with void signature
+// Aliases can be used for a specific function with the determined signature
 using AliasVoidFunc = std::function<void()>;
 
 using AliasParamFunc = std::function<int(int)>;

@@ -13,7 +13,6 @@ struct Specific : Abstract
 };
 
 
-
 void Casting() 
 {
 	// Raw pointer version (no guarantee that value is alive!)

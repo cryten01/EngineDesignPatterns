@@ -6,7 +6,7 @@
 #include "ECS/Coordinator.h"
 #include "Event/Station.h"
 #include "Testing/ComponentTypes.h"
-#include "Testing/EventTypes.h"
+#include "Event/EventTypes.h"
 
 
 struct AType

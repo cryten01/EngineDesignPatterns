@@ -15,17 +15,17 @@ public:
 	{
 		size_t type = typeid(T).hash_code();
 
-		assert(componentTypes.find(type) == componentTypes.end() && "Adding storage for component type more than once.");
+		assert(m_ComponentTypes.find(type) == m_ComponentTypes.end() && "Adding storage for component type more than once.");
 
 		// Add this component type to the component type map
-		componentTypes.insert({ type, nextComponentType });
+		m_ComponentTypes.insert({ type, m_NextComponentType });
 
 		// Create a component storage pointer and add it to the storage map
 		auto entry = std::make_shared<ComponentStorageSystem<T>>();
-		storageMap.emplace(type, entry);
+		m_StorageMap.emplace(type, entry);
 
 		// Increment the value so that the next component registered will be different
-		++nextComponentType;
+		++m_NextComponentType;
 	}
 
 	template<typename T>
@@ -33,9 +33,9 @@ public:
 	{
 		size_t type = typeid(T).hash_code();
 
-		assert(componentTypes.find(type) != componentTypes.end() && "Component not registered before use.");
+		assert(m_ComponentTypes.find(type) != m_ComponentTypes.end() && "Component not registered before use.");
 
-		auto entry = storageMap.find(type)->second;
+		auto entry = m_StorageMap.find(type)->second;
 
 		return std::static_pointer_cast<ComponentStorageSystem<T>>(entry);
 	}
@@ -44,7 +44,7 @@ public:
 	void RemoveStorage()
 	{
 		size_t type = typeid(T).hash_code();
-		storageMap.erase(type);
+		m_StorageMap.erase(type);
 	}
 
 public:
@@ -62,10 +62,10 @@ public:
 	{
 		size_t type = typeid(T).hash_code();
 
-		assert(componentTypes.find(type) != componentTypes.end() && "Component not registered before use.");
+		assert(m_ComponentTypes.find(type) != m_ComponentTypes.end() && "Component not registered before use.");
 
 		// Return this component's type - used for creating signatures
-		return componentTypes[type];
+		return m_ComponentTypes[type];
 	}
 
 	template<typename T>
@@ -88,13 +88,13 @@ public:
 
 private:
 	// The component type to be assigned to the next registered component - starting at 0
-	ComponentID nextComponentType{};
+	ComponentID m_NextComponentType{};
 
 	// Map from type hash code to a component id
-	std::map<size_t, ComponentID> componentTypes{};
+	std::map<size_t, ComponentID> m_ComponentTypes{};
 
 	// Map from type hash code to a storage
-	std::map<size_t, std::shared_ptr<IComponentStorageSystem>> storageMap{};
+	std::map<size_t, std::shared_ptr<IComponentStorageSystem>> m_StorageMap{};
 };
 
 

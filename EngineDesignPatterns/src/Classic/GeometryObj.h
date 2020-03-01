@@ -1,11 +1,14 @@
 #pragma once
 
-#include "Graphics/Shader.h"
 #include <glad/glad.h>
 #include <vector>
 #include <glm\gtc\matrix_transform.hpp>
 
-struct GeometryData {
+#include "Graphics/Shader.h"
+
+
+struct GeometryData 
+{
 	std::vector<glm::vec3> positions;
 	std::vector<glm::vec3> normals;
 	std::vector<unsigned int> indices;
@@ -20,9 +23,9 @@ struct PhysicsObj
 
 struct TransformObj
 {
-	glm::vec3 _position;
-	glm::vec3 _rotation;
-	glm::vec3 _scale;
+	glm::vec3 position;
+	glm::vec3 rotation;
+	glm::vec3 scale;
 };
 
 
@@ -37,17 +40,16 @@ public:
 	static GeometryData createCubeGeometry(float width, float height, float depth);
 
 private:
-	GLuint _vao;
-	GLuint _vbo;
-	GLuint _vboNormals;
-	GLuint _vboIndices;
-	unsigned int _elements;
+	GLuint m_Vao;
+	GLuint m_Vbo;
+	GLuint m_VboNormals;
+	GLuint m_VboIndices;
+	unsigned int m_Elements;
 
-	glm::vec3 _color;
+	TransformObj m_Transform;
+	PhysicsObj m_Physics;
+	glm::vec3 m_Color;
 
-	TransformObj _transform;
-	PhysicsObj _physics;
-
-	std::shared_ptr<Shader> _shader;
+	std::shared_ptr<Shader> m_Shader;
 };
 
