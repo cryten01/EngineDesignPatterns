@@ -68,7 +68,6 @@ void RenderSystem::Update(float dt)
 		shader->SetMat4("uProjection", projectionMatrix);
 		shader->SetVec3("uColor", renderable.color);
 
-		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glDrawElements(GL_TRIANGLES, mElementCount, GL_UNSIGNED_INT, NULL);
 	}
 
