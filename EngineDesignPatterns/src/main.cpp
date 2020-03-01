@@ -32,6 +32,7 @@
 
 // Globals
 Coordinator gCoordinator; 
+
 int FPS = 0;
 int frameCount = 0;
 float lastFrameTime = float(glfwGetTime());
@@ -62,11 +63,15 @@ void CountFPS()
 	}
 
 	if (lastFrameTime >= SECOND_FPS_CAPTURE_TIME)
+	{
 		runtimeFPS = FPS;
+	}
 	else if (lastFrameTime >= FIRST_FPS_CAPTURE_TIME)
+	{
 		startupFPS = FPS;
+	}
 
-	std::cout << "FPS: " << FPS << std::endl;
+	std::cout << "FPS: " << FPS << std::endl; // for debugging only
 }
 
 
@@ -107,7 +112,7 @@ void RunECSVersion()
 
 	renderSystem->Init();
 
-	std::vector<EntityID> entities(NR_OF_ENTITIES);
+	std::vector<EntityID> entities(MAX_ENTITIES - 1);
 
 	std::default_random_engine generator;
 	std::uniform_real_distribution<float> randPosition(-100.0f, 100.0f);
@@ -201,7 +206,7 @@ void RunClassicVersion()
 
 	std::vector<std::shared_ptr<GeometryObj>> cubes;
 
-	for (size_t i = 0; i < NR_OF_ENTITIES; i++)
+	for (size_t i = 0; i < MAX_ENTITIES - 1; i++)
 	{
 		PhysicsObj physics;
 		physics.force = glm::vec3(0.0f, randGravity(generator), 0.0f);

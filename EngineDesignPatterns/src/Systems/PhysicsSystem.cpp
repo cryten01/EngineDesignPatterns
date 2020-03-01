@@ -29,7 +29,6 @@ void PhysicsSystem::Update(float dt)
 
 		// Forces
 		transform.position += rigidBody.velocity * dt;
-
 		rigidBody.velocity += gravity.force * dt;
 	}
 }

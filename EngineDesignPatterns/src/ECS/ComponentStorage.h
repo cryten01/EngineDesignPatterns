@@ -34,30 +34,32 @@ public:
 
 	void MakeEntry(EntityID& entity, T value)
 	{
-		// TODO: Replacing a value is only possible by erasing the entity first
-		mStorageMap.erase(entity); 
-		mStorageMap.emplace(entity, value);
-
 		mStorageArray[entity] = value;
+
+		// TODO: Replacing a value is only possible by erasing the entity first
+		//mStorageMap.erase(entity); 
+		//mStorageMap.emplace(entity, value);
 	}
 
 	T& GetEntry(EntityID& entity)
 	{
 		return mStorageArray[entity];
 
-		return mStorageMap.find(entity)->second;
+		//return mStorageMap.find(entity)->second;
 	}
 
 	void ClearEntry(EntityID& entity)
 	{
 		mStorageMap.erase(entity);
 		std::cout << "Clear entry from Storage" << std::endl;
+
+		// TODO: Support entry deletion for array
 	}
 
 private:
-	std::array<T, MAX_ENTITIES> mStorageArray; // O(1) access times
+	std::array<T, MAX_ENTITIES> mStorageArray;	// O(1) access times
 	size_t mArraySize = 0;
 
-	std::map<EntityID, T> mStorageMap; // N-log(n) access times
+	std::map<EntityID, T> mStorageMap;			// N-log(n) access times
 	CallbackID mOnEntityDestroyedID;
 };
