@@ -1,0 +1,21 @@
+Tested on:
+
+*) Windows 10 Pro v.1903
+*) Visual Studio CE 2019
+*) Intel Iris Graphics 6100
+
+Classic FPS:
+#StartFPS: 48	#RuntimeFPS: 47
+#StartFPS: 52	#RuntimeFPS: 43
+#StartFPS: 50	#RuntimeFPS: 54
+#StartFPS: 36	#RuntimeFPS: 50
+#StartFPS: 43	#RuntimeFPS: 54
+
+ECS FPS:
+#StartFPS: 50	#RuntimeFPS: 77
+#StartFPS: 71	#RuntimeFPS: 79
+#StartFPS: 58	#RuntimeFPS: 77
+#StartFPS: 60	#RuntimeFPS: 75
+#StartFPS: 61	#RuntimeFPS: 68
+
+

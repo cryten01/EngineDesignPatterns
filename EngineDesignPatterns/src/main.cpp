@@ -29,6 +29,7 @@
 
 #include "Classic/CameraObj.h"
 #include "Classic/GeometryObj.h"
+#include "Classic/AFObjects.h"
 
 #include "Params.h"
 
@@ -83,6 +84,8 @@ void CountFPS()
 
 void RunECSVersion()
 {
+	// Initialization
+
 	GLFWwindow* window = Window::Create("EngineDesignPatterns", 1024, 768);
 
 	GPULog::Init();
@@ -94,27 +97,6 @@ void RunECSVersion()
 	gCoordinator.RegisterComponent<Renderable>();
 	gCoordinator.RegisterComponent<Transform>();
 	gCoordinator.RegisterComponent<Camera>();
-
-	gCoordinator.RegisterComponent<ComponentA>();
-	gCoordinator.RegisterComponent<ComponentB>();
-	gCoordinator.RegisterComponent<ComponentC>();
-	gCoordinator.RegisterComponent<ComponentD>();
-	gCoordinator.RegisterComponent<ComponentE>();
-	gCoordinator.RegisterComponent<ComponentF>();
-
-	auto testSystem = gCoordinator.RegisterSystem<TestSystem>();
-	{
-		Signature signature;
-		signature.set(gCoordinator.GetComponentType<ComponentA>());
-		signature.set(gCoordinator.GetComponentType<ComponentB>());
-		signature.set(gCoordinator.GetComponentType<ComponentC>());
-		signature.set(gCoordinator.GetComponentType<ComponentD>());
-		signature.set(gCoordinator.GetComponentType<ComponentE>());
-		signature.set(gCoordinator.GetComponentType<ComponentF>());
-		gCoordinator.SetSystemSignature<TestSystem>(signature);
-	}
-
-	testSystem->Init();
 
 	auto physicsSystem = gCoordinator.RegisterSystem<PhysicsSystem>();
 	{
@@ -139,6 +121,32 @@ void RunECSVersion()
 	renderSystem->Init();
 
 
+	// AF Component Overhead
+
+	gCoordinator.RegisterComponent<ComponentA>();
+	gCoordinator.RegisterComponent<ComponentB>();
+	gCoordinator.RegisterComponent<ComponentC>();
+	gCoordinator.RegisterComponent<ComponentD>();
+	gCoordinator.RegisterComponent<ComponentE>();
+	gCoordinator.RegisterComponent<ComponentF>();
+
+	auto testSystem = gCoordinator.RegisterSystem<TestSystem>();
+	{
+		Signature signature;
+		signature.set(gCoordinator.GetComponentType<ComponentA>());
+		signature.set(gCoordinator.GetComponentType<ComponentB>());
+		signature.set(gCoordinator.GetComponentType<ComponentC>());
+		signature.set(gCoordinator.GetComponentType<ComponentD>());
+		signature.set(gCoordinator.GetComponentType<ComponentE>());
+		signature.set(gCoordinator.GetComponentType<ComponentF>());
+		gCoordinator.SetSystemSignature<TestSystem>(signature);
+	}
+
+	testSystem->Init();
+
+
+	// Entity creation
+
 	std::vector<EntityID> entities(MAX_ENTITIES - 1);
 
 	std::default_random_engine generator;
@@ -150,6 +158,8 @@ void RunECSVersion()
 
 	float scale = randScale(generator);
 
+
+	// Update loop
 
 	for (auto& entity : entities)
 	{
@@ -261,6 +271,7 @@ void RunClassicVersion()
 	float scale = randScale(generator);
 
 	std::vector<std::shared_ptr<GeometryObj>> cubes;
+	std::vector<std::shared_ptr<ObjectE>> AFObjects;
 
 	for (size_t i = 0; i < MAX_ENTITIES - 1; i++)
 	{
@@ -279,6 +290,8 @@ void RunClassicVersion()
 		GeometryData geometry = GeometryObj::createCubeGeometry(1, 1, 1);
 
 		cubes.push_back(std::make_shared<GeometryObj>(geometry, physics, color, transform, shader));
+
+		AFObjects.push_back(std::make_shared<ObjectE>());
 	}
 
 
@@ -302,6 +315,11 @@ void RunClassicVersion()
 		for (auto c : cubes) 
 		{
 			c->OnUpdate(dt);
+		}
+
+		for (auto o : AFObjects)
+		{
+			o->OnUpdate(dt);
 		}
 
 		Window::Update(window);

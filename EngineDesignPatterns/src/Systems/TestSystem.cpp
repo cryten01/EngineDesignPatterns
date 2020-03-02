@@ -28,22 +28,22 @@ void TestSystem::Update(float dt)
 		ComponentE& e = componentEStorage->GetEntry(entity);
 		ComponentF& f = componentFStorage->GetEntry(entity);
 
-		a.floatValue = 10.0f;
-		a.vec3Value = glm::vec3(1);
+		a.floatValue = 1.0f;
+		a.vec3Value = glm::vec3(1.0f);
 
-		b.floatValue = 10.0f;
-		b.vec3Value = glm::vec3(1);
+		b.floatValue = 1.0f;
+		b.vec3Value = glm::vec3(1.0f);
 
-		c.floatValue = 10.0f;
-		c.vec3Value = glm::vec3(1);
+		c.floatValue = 1.0f;
+		c.vec3Value = glm::vec3(1.0f);
 
-		d.floatValue = 10.0f;
-		d.vec3Value = glm::vec3(1);
+		d.floatValue = 1.0f;
+		d.vec3Value = glm::vec3(1.0f);
 
-		e.floatValue = 10.0f;
-		e.vec3Value = glm::vec3(1);
+		e.floatValue = 1.0f;
+		e.vec3Value = glm::vec3(1.0f);
 
-		f.floatValue = 10.0f;
-		f.vec3Value = glm::vec3(1);
+		f.floatValue = 1.0f;
+		f.vec3Value = glm::vec3(1.0f);
 	}
 }

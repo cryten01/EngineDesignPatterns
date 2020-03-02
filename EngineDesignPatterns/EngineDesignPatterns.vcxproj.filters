@@ -131,6 +131,7 @@
     </ClInclude>
     <ClInclude Include="src\Components\AFComponents.h" />
     <ClInclude Include="src\Systems\TestSystem.h" />
+    <ClInclude Include="src\Classic\AFObjects.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\GLAD\src\glad.c">
