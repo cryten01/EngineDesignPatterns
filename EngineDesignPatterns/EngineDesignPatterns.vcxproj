@@ -15,7 +15,6 @@
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>EngineDesignPatterns</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -58,7 +57,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>Debug;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EDP_Debug;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;external\GLM;external\GLFW\include;external\GLAD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
@@ -77,7 +76,7 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>Release;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>EDP_Release;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;external\GLM;external\GLFW\include;external\GLAD\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -97,23 +96,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Classic\GeometryObj.h" />
     <ClInclude Include="src\Classic\CameraObj.h" />
-    <ClInclude Include="src\Components\Gravity.h" />
-    <ClInclude Include="src\Components\Rigidbody.h" />
-    <ClInclude Include="src\Params.h" />
-    <ClInclude Include="src\Systems\PhysicsSystem.h" />
+    <ClInclude Include="src\Classic\GeometryObj.h" />
     <ClInclude Include="src\Components\Camera.h" />
+    <ClInclude Include="src\Components\Gravity.h" />
     <ClInclude Include="src\Components\Renderable.h" />
+    <ClInclude Include="src\Components\Rigidbody.h" />
     <ClInclude Include="src\Components\Transform.h" />
-    <ClInclude Include="src\Systems\RenderSystem.h" />
-    <ClInclude Include="src\Graphics\GPULog.h" />
-    <ClInclude Include="src\Graphics\Shader.h" />
     <ClInclude Include="src\Concepts\FunctionPointers.h" />
     <ClInclude Include="src\Concepts\InheritanceByData.h" />
     <ClInclude Include="src\Concepts\InheritanceBySystem.h" />
     <ClInclude Include="src\Concepts\Other.h" />
     <ClInclude Include="src\Concepts\StaticCasting.h" />
+    <ClInclude Include="src\Core\Input.h" />
+    <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\ECS\ComponentManager.h" />
     <ClInclude Include="src\ECS\ComponentStorage.h" />
     <ClInclude Include="src\ECS\Coordinator.h" />
@@ -121,19 +117,22 @@
     <ClInclude Include="src\ECS\EntityManager.h" />
     <ClInclude Include="src\ECS\System.h" />
     <ClInclude Include="src\ECS\SystemManager.h" />
-    <ClInclude Include="src\Event\Station.h" />
     <ClInclude Include="src\Event\EventTypes.h" />
-    <ClInclude Include="src\Core\Input.h" />
+    <ClInclude Include="src\Event\Station.h" />
+    <ClInclude Include="src\Graphics\GPULog.h" />
+    <ClInclude Include="src\Graphics\Shader.h" />
+    <ClInclude Include="src\Params.h" />
+    <ClInclude Include="src\Systems\PhysicsSystem.h" />
+    <ClInclude Include="src\Systems\RenderSystem.h" />
     <ClInclude Include="src\Testing\StationTest.h" />
-    <ClInclude Include="src\Core\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="external\GLAD\src\glad.c" />
-    <ClCompile Include="src\Classic\GeometryObj.cpp" />
     <ClCompile Include="src\Classic\CameraObj.cpp" />
+    <ClCompile Include="src\Classic\GeometryObj.cpp" />
+    <ClCompile Include="src\Graphics\Shader.cpp" />
     <ClCompile Include="src\Systems\PhysicsSystem.cpp" />
     <ClCompile Include="src\Systems\RenderSystem.cpp" />
-    <ClCompile Include="src\Graphics\Shader.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

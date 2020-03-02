@@ -13,8 +13,17 @@
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Classic">
+      <UniqueIdentifier>{7EF78035-EAAC-F92A-73A1-F301DF55F02E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Components">
+      <UniqueIdentifier>{221ADC4D-0EE8-CF53-F77B-407AE3E8ABB8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Concepts">
       <UniqueIdentifier>{BB98B8E9-A7FB-478E-5081-80443CC31311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core">
+      <UniqueIdentifier>{A5D31CCF-91A0-77DA-BAB9-6582A6E5AC68}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\ECS">
       <UniqueIdentifier>{F76D2FA9-634D-AE44-6C65-391BD8C314A6}</UniqueIdentifier>
@@ -22,14 +31,38 @@
     <Filter Include="src\Event">
       <UniqueIdentifier>{3E1ADFB2-AA84-9329-F3C2-44CF5F6C717E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\FDC">
-      <UniqueIdentifier>{49722FA9-B551-AE44-BE69-391B2AC814A6}</UniqueIdentifier>
+    <Filter Include="src\Graphics">
+      <UniqueIdentifier>{0D564864-F9B8-D708-A23E-10BF8E80A38B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Systems">
+      <UniqueIdentifier>{34DEBD24-A093-361A-2988-30F1953C2D1E}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Testing">
       <UniqueIdentifier>{7AFF1043-E6B4-8938-6FA9-830FDB5D803C}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Classic\CameraObj.h">
+      <Filter>src\Classic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Classic\GeometryObj.h">
+      <Filter>src\Classic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\Camera.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\Gravity.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\Renderable.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\Rigidbody.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Components\Transform.h">
+      <Filter>src\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Concepts\FunctionPointers.h">
       <Filter>src\Concepts</Filter>
     </ClInclude>
@@ -44,6 +77,12 @@
     </ClInclude>
     <ClInclude Include="src\Concepts\StaticCasting.h">
       <Filter>src\Concepts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Input.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Window.h">
+      <Filter>src\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\ComponentManager.h">
       <Filter>src\ECS</Filter>
@@ -66,27 +105,28 @@
     <ClInclude Include="src\ECS\SystemManager.h">
       <Filter>src\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="src\Event\EventTypes.h">
+      <Filter>src\Event</Filter>
+    </ClInclude>
     <ClInclude Include="src\Event\Station.h">
       <Filter>src\Event</Filter>
     </ClInclude>
-    <ClInclude Include="src\Testing\StationTest.h">
-      <Filter>src\Testing</Filter>
+    <ClInclude Include="src\Graphics\GPULog.h">
+      <Filter>src\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Input.h" />
-    <ClInclude Include="src\Core\Window.h" />
-    <ClInclude Include="src\Graphics\Shader.h" />
-    <ClInclude Include="src\Graphics\GPULog.h" />
-    <ClInclude Include="src\Systems\RenderSystem.h" />
-    <ClInclude Include="src\Components\Transform.h" />
-    <ClInclude Include="src\Components\Camera.h" />
-    <ClInclude Include="src\Components\Renderable.h" />
-    <ClInclude Include="src\Systems\PhysicsSystem.h" />
-    <ClInclude Include="src\Components\Rigidbody.h" />
-    <ClInclude Include="src\Components\Gravity.h" />
-    <ClInclude Include="src\Classic\CameraObj.h" />
-    <ClInclude Include="src\Classic\GeometryObj.h" />
-    <ClInclude Include="src\Params.h" />
-    <ClInclude Include="src\Event\EventTypes.h">
+    <ClInclude Include="src\Graphics\Shader.h">
+      <Filter>src\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Params.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Systems\PhysicsSystem.h">
+      <Filter>src\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Systems\RenderSystem.h">
+      <Filter>src\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Testing\StationTest.h">
       <Filter>src\Testing</Filter>
     </ClInclude>
   </ItemGroup>
@@ -94,13 +134,23 @@
     <ClCompile Include="external\GLAD\src\glad.c">
       <Filter>external\GLAD\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Classic\CameraObj.cpp">
+      <Filter>src\Classic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Classic\GeometryObj.cpp">
+      <Filter>src\Classic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Shader.cpp">
+      <Filter>src\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Systems\PhysicsSystem.cpp">
+      <Filter>src\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Systems\RenderSystem.cpp">
+      <Filter>src\Systems</Filter>
+    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\Shader.cpp" />
-    <ClCompile Include="src\Systems\RenderSystem.cpp" />
-    <ClCompile Include="src\Systems\PhysicsSystem.cpp" />
-    <ClCompile Include="src\Classic\CameraObj.cpp" />
-    <ClCompile Include="src\Classic\GeometryObj.cpp" />
   </ItemGroup>
 </Project>
