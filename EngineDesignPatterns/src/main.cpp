@@ -18,12 +18,14 @@
 
 #include "Systems/RenderSystem.h"
 #include "Systems/PhysicsSystem.h"
+#include "Systems/TestSystem.h"
 
 #include "Components/Gravity.h"
 #include "Components/Rigidbody.h"
 #include "Components/Camera.h"
 #include "Components/Transform.h"
 #include "Components/Renderable.h"
+#include "Components/AFComponents.h"
 
 #include "Classic/CameraObj.h"
 #include "Classic/GeometryObj.h"
@@ -93,6 +95,27 @@ void RunECSVersion()
 	gCoordinator.RegisterComponent<Transform>();
 	gCoordinator.RegisterComponent<Camera>();
 
+	gCoordinator.RegisterComponent<ComponentA>();
+	gCoordinator.RegisterComponent<ComponentB>();
+	gCoordinator.RegisterComponent<ComponentC>();
+	gCoordinator.RegisterComponent<ComponentD>();
+	gCoordinator.RegisterComponent<ComponentE>();
+	gCoordinator.RegisterComponent<ComponentF>();
+
+	auto testSystem = gCoordinator.RegisterSystem<TestSystem>();
+	{
+		Signature signature;
+		signature.set(gCoordinator.GetComponentType<ComponentA>());
+		signature.set(gCoordinator.GetComponentType<ComponentB>());
+		signature.set(gCoordinator.GetComponentType<ComponentC>());
+		signature.set(gCoordinator.GetComponentType<ComponentD>());
+		signature.set(gCoordinator.GetComponentType<ComponentE>());
+		signature.set(gCoordinator.GetComponentType<ComponentF>());
+		gCoordinator.SetSystemSignature<TestSystem>(signature);
+	}
+
+	testSystem->Init();
+
 	auto physicsSystem = gCoordinator.RegisterSystem<PhysicsSystem>();
 	{
 		Signature signature;
@@ -150,6 +173,32 @@ void RunECSVersion()
 		Renderable renderable;
 		renderable.color = glm::vec3(randColor(generator), randColor(generator), randColor(generator));
 		gCoordinator.AddComponent(entity, renderable);
+
+
+
+		ComponentA a;
+		a.floatValue = randGravity(generator);
+		a.vec3Value = glm::vec3(randRotation(generator), randRotation(generator), randRotation(generator));
+
+		ComponentB b;
+		b.floatValue = randGravity(generator);
+		b.vec3Value = glm::vec3(randRotation(generator), randRotation(generator), randRotation(generator));
+
+		ComponentC c;
+		c.floatValue = randGravity(generator);
+		c.vec3Value = glm::vec3(randRotation(generator), randRotation(generator), randRotation(generator));
+
+		ComponentD d;
+		d.floatValue = randGravity(generator);
+		d.vec3Value = glm::vec3(randRotation(generator), randRotation(generator), randRotation(generator));
+
+		ComponentE e;
+		e.floatValue = randGravity(generator);
+		e.vec3Value = glm::vec3(randRotation(generator), randRotation(generator), randRotation(generator));
+
+		ComponentF f;
+		f.floatValue = randGravity(generator);
+		f.vec3Value = glm::vec3(randRotation(generator), randRotation(generator), randRotation(generator));
 	}
 
 
@@ -164,6 +213,8 @@ void RunECSVersion()
 		physicsSystem->Update(dt);
 
 		renderSystem->Update(dt);
+
+		testSystem->Update(dt);
 
 		Window::Update(window);
 
